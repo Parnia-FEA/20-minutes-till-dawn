@@ -19,34 +19,32 @@ public class LoginMenuController {
         return user.getPassword().equals(password);
     }
 
-    public void handleLoginMenuInputs() {
-        if (view != null) {
-            if (view.getSignUpButton().isChecked()) {
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getInstance().getSkin()));
-            }
-            else if (view.getForgetPasswordButton().isChecked()) {
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getInstance().getSkin()));
-            }
-            else if (view.getLoginButton().isChecked()) {
-                if (isInfoValid(view.getUsername().getText(), view.getPassword().getText())) {
-                    view.setLoginConditionMessage("Login Successful:)", Color.GREEN);
-                    Timer.schedule(new Timer.Task() {
-                        @Override
-                        public void run() {
-                            Main.getMain().getScreen().dispose();
-                            Main.getMain().setScreen(new MainMenuView(
-                                new MainMenuController(),
-                                GameAssetManager.getInstance().getSkin()
-                            ));
-                        }
-                    }, 2);
+    public void handleLoginButton() {
+        if (isInfoValid(view.getUsername().getText(), view.getPassword().getText())) {
+            view.setLoginConditionMessage("Login Successful:)", Color.GREEN);
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    Main.getMain().getScreen().dispose();
+                    Main.getMain().setScreen(new MainMenuView(
+                        new MainMenuController(),
+                        GameAssetManager.getInstance().getSkin()
+                    ));
                 }
-                else {
-                    view.setLoginConditionMessage("Incorrect Username or Password!", Color.RED);
-                }
-            }
+            }, 2);
         }
+        else {
+            view.setLoginConditionMessage("Incorrect Username or Password!", Color.RED);
+        }
+    }
+
+    public void handleSignUpButton() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void handleForgetPasswordButton() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

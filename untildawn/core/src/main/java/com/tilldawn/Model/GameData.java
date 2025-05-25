@@ -27,6 +27,10 @@ public class GameData {
         return null;
     }
 
+    public void addUser(User user) {
+        users.add(user);
+    }
+
     public User getCurrentUser() {
         return currentUser;
     }

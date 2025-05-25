@@ -15,24 +15,45 @@ import com.tilldawn.Main;
 public class SignUpMenuView implements Screen {
     private Stage stage;
     private final Label title;
-    private final Label usernameField;
-    private final Label passwordField;
+    private final Label usernameLabel;
+    private final Label passwordLabel;
     private final TextField username;
     private final TextField password;
+    private final Label pickQuestionLabel;
+    private final SelectBox<String> securityQuestionsBox;
+    private final Label answerLabel;
+    private final TextField answer;
     private final TextButton signUpButton;
     private final Label signUpConditionMessage;
     private final TextButton guestButton;
     private final TextButton backButton;
     public Table table;
+    public ScrollPane scrollPane;
     private final SignUpMenuController controller;
 
     public SignUpMenuView(SignUpMenuController controller, Skin skin) {
         this.controller = controller;
         this.title = new Label("SIGN UP", skin, "subtitle");
-        this.usernameField = new Label("username", skin);
-        this.passwordField = new Label("password", skin);
+        this.usernameLabel = new Label("username", skin);
+        this.passwordLabel = new Label("password", skin);
         this.username = new TextField("", skin);
         this.password = new TextField("", skin);
+        this.pickQuestionLabel = new Label("Pick a security question", skin);
+
+        String[] questions = {
+            "What is your favorite color?",
+            "What is your pet's name?",
+            "What is your mother's maiden name?",
+            "What was the name of your first school?",
+            "What is your favorite movie?",
+            "Where were you born?",
+            "What is your best friend's name?"
+        };
+        this.securityQuestionsBox = new SelectBox<>(skin);
+        this.securityQuestionsBox.setItems(questions);
+
+        this.answerLabel = new Label("answer", skin);
+        this.answer = new TextField("", skin);
         this.signUpButton = new TextButton("Sign Up", skin);
         this.signUpConditionMessage = new Label("",skin);
         this.guestButton = new TextButton("Play as a guest.", skin);
@@ -49,15 +70,22 @@ public class SignUpMenuView implements Screen {
 
         table.center();
         table.add(title).colspan(2).center();
-        table.row();
-        table.add().height(100).colspan(2);
         table.row().pad(10, 0, 10, 0);
-        table.add(usernameField).width(150).right();
+        table.add(usernameLabel).width(150).right();
         table.add(username).width(600).left();
         table.row().pad(10, 0, 10, 0);
-        table.add(passwordField).width(150).right();
+        table.add(passwordLabel).width(150).right();
         table.add(password).width(600).left();
         table.row().pad(10, 0, 10, 0);
+
+        table.add(pickQuestionLabel).width(150).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(securityQuestionsBox).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(answerLabel).width(150).right();
+        table.add(answer).width(600).left();
+        table.row().pad(10, 0, 10, 0);
+
         table.add(signUpButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(signUpConditionMessage).colspan(2).center();
@@ -86,8 +114,9 @@ public class SignUpMenuView implements Screen {
                 controller.handleBackButton();
             }
         });
-
-        stage.addActor(table);
+        scrollPane = new ScrollPane(table);
+        scrollPane.setFillParent(true);
+        stage.addActor(scrollPane);
     }
 
     @Override
@@ -142,6 +171,14 @@ public class SignUpMenuView implements Screen {
 
     public TextButton getBackButton() {
         return backButton;
+    }
+
+    public SelectBox<String> getSecurityQuestionsBox() {
+        return securityQuestionsBox;
+    }
+
+    public TextField getAnswer() {
+        return answer;
     }
 
     public void setSignUpConditionMessage(String message, Color color) {

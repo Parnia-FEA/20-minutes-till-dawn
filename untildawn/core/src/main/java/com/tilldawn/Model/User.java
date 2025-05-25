@@ -3,10 +3,14 @@ package com.tilldawn.Model;
 public class User {
     private String username;
     private String password;
+    private String securityQuestion;
+    private String answer;
 
-    public User(String username, String password) {
+    public User(String username, String password, String securityQuestion, String answer) {
         this.username = username;
         this.password = password;
+        this.securityQuestion = securityQuestion;
+        this.answer = answer;
     }
 
     public String getUsername() {
@@ -23,5 +27,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public String getAnswer() {
+        return answer;
     }
 }

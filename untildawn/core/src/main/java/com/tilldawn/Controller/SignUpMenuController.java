@@ -32,24 +32,31 @@ public class SignUpMenuController {
     public void handleSignUpButton() {
         String username = view.getUsername().getText();
         String password = view.getPassword().getText();
+        String securityQuestion = view.getSecurityQuestionsBox().getSelected();
+        String answer = view.getAnswer().getText();
         if (isUsernameTaken(username)) {
             view.setSignUpConditionMessage("Username is already taken.", Color.RED);
         }
         else {
             if (isPasswordValid(password)) {
-                view.setSignUpConditionMessage("Sign up Successful:)", Color.GREEN);
-                User user = new User(username, password);
-                GameData.getInstance().addUser(user);
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        Main.getMain().getScreen().dispose();
-                        Main.getMain().setScreen(new LoginMenuView(
-                            new LoginMenuController(),
-                            GameAssetManager.getInstance().getSkin()
-                        ));
-                    }
-                }, 2);
+                if (answer == null || answer.isEmpty()) {
+                    view.setSignUpConditionMessage("Please answer the security question", Color.RED);
+                }
+                else {
+                    view.setSignUpConditionMessage("Signed up Successfully:)", Color.GREEN);
+                    User user = new User(username, password, securityQuestion, answer);
+                    GameData.getInstance().addUser(user);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            Main.getMain().getScreen().dispose();
+                            Main.getMain().setScreen(new LoginMenuView(
+                                new LoginMenuController(),
+                                GameAssetManager.getInstance().getSkin()
+                            ));
+                        }
+                    }, 2);
+                }
             }
             else {
                 view.setSignUpConditionMessage("Password is too weak!", Color.RED);

@@ -16,8 +16,8 @@ public class LoginMenuView implements Screen {
     private Stage stage;
     private final Label title;
     private final Label login;
-    private final Label usernameField;
-    private final Label passwordField;
+    private final Label usernameLabel;
+    private final Label passwordLabel;
     private final TextField username;
     private final TextField password;
     private final TextButton loginButton;
@@ -31,8 +31,8 @@ public class LoginMenuView implements Screen {
         this.controller = controller;
         this.title = new Label("20 MINUTES TILL DAWN", skin, "title");
         this.login = new Label("LOGIN", skin, "subtitle");
-        this.usernameField = new Label("username", skin);
-        this.passwordField = new Label("password", skin);
+        this.usernameLabel = new Label("username", skin);
+        this.passwordLabel = new Label("password", skin);
         this.username = new TextField("", skin);
         this.password = new TextField("", skin);
         this.loginButton = new TextButton("Login", skin);
@@ -58,10 +58,10 @@ public class LoginMenuView implements Screen {
         table.add(login).colspan(2).center();
         table.add().height(30).colspan(2);
         table.row().pad(10, 0, 10, 0);
-        table.add(usernameField).width(150).right();
+        table.add(usernameLabel).width(150).right();
         table.add(username).width(600).left();
         table.row().pad(10, 0, 10, 0);
-        table.add(passwordField).width(150).right();
+        table.add(passwordLabel).width(150).right();
         table.add(password).width(600).left();
         table.row().pad(10, 0, 10, 0);
         table.add(loginButton).colspan(2).center();

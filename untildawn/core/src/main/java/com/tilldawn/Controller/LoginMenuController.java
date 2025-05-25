@@ -21,7 +21,7 @@ public class LoginMenuController {
 
     public void handleLoginButton() {
         if (isInfoValid(view.getUsername().getText(), view.getPassword().getText())) {
-            view.setLoginConditionMessage("Login Successful:)", Color.GREEN);
+            view.setLoginConditionMessage("Logged in Successfully:)", Color.GREEN);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {

@@ -78,7 +78,7 @@ public class SignUpMenuView implements Screen {
         table.add(password).width(600).left();
         table.row().pad(10, 0, 10, 0);
 
-        table.add(pickQuestionLabel).width(150).colspan(2).center();
+        table.add(pickQuestionLabel).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(securityQuestionsBox).colspan(2).center();
         table.row().pad(10, 0, 10, 0);

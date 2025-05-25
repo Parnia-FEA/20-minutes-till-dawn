@@ -2,12 +2,12 @@ package com.tilldawn.View;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.tilldawn.Controller.SettingMenuController;
+import com.tilldawn.Controller.SettingsMenuController;
 
-public class SettingMenuView implements Screen {
-    private final SettingMenuController controller;
+public class SettingsMenuView implements Screen {
+    private final SettingsMenuController controller;
 
-    public SettingMenuView(SettingMenuController controller, Skin skin) {
+    public SettingsMenuView(SettingsMenuController controller, Skin skin) {
         this.controller = controller;
 
         controller.setView(this);

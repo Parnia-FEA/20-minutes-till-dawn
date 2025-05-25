@@ -3,7 +3,7 @@ package com.tilldawn.Controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
-import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.*;
 import com.tilldawn.View.*;
 
 public class LoginMenuController {
@@ -14,19 +14,20 @@ public class LoginMenuController {
     }
 
     private boolean isInfoValid(String username, String password) {
-        //TODO validation
-        return false;
+        User user = GameData.getInstance().findUserByUsername(username);
+        if (user == null) return false;
+        return user.getPassword().equals(password);
     }
 
     public void handleLoginMenuInputs() {
         if (view != null) {
             if (view.getSignUpButton().isChecked()) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getInstance().getSkin()));
             }
             else if (view.getForgetPasswordButton().isChecked()) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+                Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getInstance().getSkin()));
             }
             else if (view.getLoginButton().isChecked()) {
                 if (isInfoValid(view.getUsername().getText(), view.getPassword().getText())) {
@@ -37,7 +38,7 @@ public class LoginMenuController {
                             Main.getMain().getScreen().dispose();
                             Main.getMain().setScreen(new MainMenuView(
                                 new MainMenuController(),
-                                GameAssetManager.getGameAssetManager().getSkin()
+                                GameAssetManager.getInstance().getSkin()
                             ));
                         }
                     }, 2);

@@ -1,13 +1,7 @@
 package com.tilldawn;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.tilldawn.Controller.LoginMenuController;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.View.LoginMenuView;
@@ -21,7 +15,7 @@ public class Main extends Game {
     public void create() {
         main = this;
         batch = new SpriteBatch();
-        main.setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+        main.setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
     @Override

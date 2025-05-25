@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.tilldawn.Controller.LoginMenuController;
+import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.View.LoginMenuView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -18,17 +21,32 @@ public class Main extends Game {
     public void create() {
         main = this;
         batch = new SpriteBatch();
+        main.setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.end();
+        super.render();
     }
 
     @Override
     public void dispose() {
         batch.dispose();
+    }
+
+    public static Main getMain() {
+        return main;
+    }
+
+    public static void setMain(Main main) {
+        Main.main = main;
+    }
+
+    public static SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public static void setBatch(SpriteBatch batch) {
+        Main.batch = batch;
     }
 }

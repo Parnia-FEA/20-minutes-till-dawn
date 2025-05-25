@@ -21,15 +21,24 @@ public class ProfileMenuController {
     }
 
     public void handleChangeUsernameButton() {
-        view.setupChangeUsernameStage();
+        if (GameData.getInstance().getCurrentUser().isGuest())
+            view.setGuestConditionMessage("You are a guest", Color.RED);
+        else
+            view.setupChangeUsernameStage();
     }
 
     public void handleChangePasswordButton() {
-        view.setupChangePasswordStage();
+        if (GameData.getInstance().getCurrentUser().isGuest())
+            view.setGuestConditionMessage("You are a guest", Color.RED);
+        else
+         view.setupChangePasswordStage();
     }
 
     public void handleDeleteAccountButton() {
-        view.setupDeleteAccountStage();
+        if (GameData.getInstance().getCurrentUser().isGuest())
+            view.setGuestConditionMessage("You are a guest", Color.RED);
+        else
+            view.setupDeleteAccountStage();
     }
 
     public void handleBackButton() {

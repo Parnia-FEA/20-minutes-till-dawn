@@ -65,7 +65,11 @@ public class SignUpMenuController {
     }
 
     public void handleGuestButton() {
-        //TODO play as a guest
+        User guest = new User("Guest", null, null, null);
+        guest.setGuest(true);
+        GameData.getInstance().setCurrentUser(guest);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
     public void handleBackButton() {

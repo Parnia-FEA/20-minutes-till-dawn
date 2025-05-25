@@ -56,7 +56,7 @@ public class SignUpMenuView implements Screen {
         this.answer = new TextField("", skin);
         this.signUpButton = new TextButton("Sign Up", skin);
         this.signUpConditionMessage = new Label("",skin);
-        this.guestButton = new TextButton("Play as a guest.", skin);
+        this.guestButton = new TextButton("Play as a Guest", skin);
         this.backButton = new TextButton("Back", skin);
         this.table = new Table();
 

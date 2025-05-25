@@ -6,6 +6,7 @@ public class User {
     private String securityQuestion;
     private String answer;
     private int points = 0;
+    private boolean isGuest = false;
 
     public User(String username, String password, String securityQuestion, String answer) {
         this.username = username;
@@ -48,5 +49,13 @@ public class User {
 
     public void addPoint(int amount) {
         this.points += amount;
+    }
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
+    public void setGuest(boolean guest) {
+        isGuest = guest;
     }
 }

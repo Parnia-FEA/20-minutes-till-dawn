@@ -15,6 +15,7 @@ import com.tilldawn.Main;
 public class ProfileMenuView implements Screen {
     private Stage stage;
     private final Label title;
+    private final Label guestConditionMessage;
     private final TextButton changeUsernameButton;
     private final TextButton setUsernameButton;
     private final Label usernameLabel;
@@ -39,6 +40,7 @@ public class ProfileMenuView implements Screen {
     public ProfileMenuView(ProfileMenuController controller, Skin skin) {
         this.controller = controller;
         this.title = new Label("PROFILE MENU", skin, "subtitle");
+        this.guestConditionMessage = new Label("", skin);
         this.changeUsernameButton = new TextButton("Change Username", skin);
         this.setUsernameButton = new TextButton("Change Username", skin);
         this.changePasswordButton = new TextButton("Change Password", skin);
@@ -66,6 +68,8 @@ public class ProfileMenuView implements Screen {
     public void setupProfileMenuStage() {
         table.clear();
         table.add(title).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(guestConditionMessage).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(changeUsernameButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
@@ -245,5 +249,10 @@ public class ProfileMenuView implements Screen {
     public void setChangePasswordConditionMessage(String message, Color color) {
         changePasswordConditionMessage.setText(message);
         changePasswordConditionMessage.setColor(color);
+    }
+
+    public void setGuestConditionMessage(String message, Color color) {
+        guestConditionMessage.setText(message);
+        guestConditionMessage.setColor(color);
     }
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.User;
+import com.tilldawn.Model.Player;
 import com.tilldawn.View.ForgetPasswordMenuView;
 import com.tilldawn.View.LoginMenuView;
 
@@ -19,20 +19,20 @@ public class ForgetPasswordMenuController {
     }
 
     public void handleContinueButton() {
-        User user = GameData.getInstance().findUserByUsername(view.getUsername().getText());
-        if (user == null) {
+        Player player = GameData.getInstance().findUserByUsername(view.getUsername().getText());
+        if (player == null) {
             view.setUsernameConditionMessage("Invalid Username", Color.RED);
         }
         else {
-            view.setUser(user);
-            view.setQuestion(user.getSecurityQuestion());
+            view.setUser(player);
+            view.setQuestion(player.getSecurityQuestion());
             view.setupSecurityQuestionStage();
         }
     }
 
     public void handleSubmitAnswerButton() {
-        User user = view.getUser();
-        if (view.getAnswer().getText().equals(user.getAnswer())) {
+        Player player = view.getUser();
+        if (view.getAnswer().getText().equals(player.getAnswer())) {
             view.setupNewPasswordStage();
         }
         else {
@@ -46,11 +46,11 @@ public class ForgetPasswordMenuController {
     }
 
     public void handleChangePasswordButton() {
-        User user = view.getUser();
+        Player player = view.getUser();
         String password = view.getPassword().getText();
         if (isPasswordValid(password)) {
             view.setPasswordConditionMessage("Password is changed successfully:)", Color.GREEN);
-            user.setPassword(password);
+            player.setPassword(password);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {

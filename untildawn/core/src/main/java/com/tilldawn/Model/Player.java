@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Random;
 
-public class User {
+public class Player {
     private String username;
     private String password;
     private String securityQuestion;
@@ -13,13 +13,14 @@ public class User {
     private int points = 0;
     private boolean isGuest = false;
     private int avatarIndex;
+    private TillDawnGame game = null;
 
-    public User(String username, String password, String securityQuestion, String answer) {
+    public Player(String username, String password, String securityQuestion, String answer) {
         this.username = username;
         this.password = password;
         this.securityQuestion = securityQuestion;
         this.answer = answer;
-        this.avatarIndex = (new Random()).nextInt(5);
+        this.avatarIndex = (new Random()).nextInt(7);
     }
 
     public String getUsername() {
@@ -80,5 +81,13 @@ public class User {
 
     public void drawAvatar(SpriteBatch batch, float x, float y) {
         batch.draw(getAvatar(), x, y);
+    }
+
+    public TillDawnGame getGame() {
+        return game;
+    }
+
+    public void setGame(TillDawnGame game) {
+        this.game = game;
     }
 }

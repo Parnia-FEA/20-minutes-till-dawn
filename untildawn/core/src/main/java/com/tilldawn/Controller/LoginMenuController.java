@@ -13,18 +13,18 @@ public class LoginMenuController {
         this.view = view;
     }
 
-    private User getUserIfInfoValid(String username, String password) {
-        User user = GameData.getInstance().findUserByUsername(username);
-        if (user == null) return null;
-        if (user.getPassword().equals(password)) return user;
+    private Player getUserIfInfoValid(String username, String password) {
+        Player player = GameData.getInstance().findUserByUsername(username);
+        if (player == null) return null;
+        if (player.getPassword().equals(password)) return player;
         return null;
     }
 
     public void handleLoginButton() {
-        User user = getUserIfInfoValid(view.getUsername().getText(), view.getPassword().getText());
-        if (user != null) {
+        Player player = getUserIfInfoValid(view.getUsername().getText(), view.getPassword().getText());
+        if (player != null) {
             view.setLoginConditionMessage("Logged in Successfully:)", Color.GREEN);
-            GameData.getInstance().setCurrentUser(user);
+            GameData.getInstance().setCurrentUser(player);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {

@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ForgetPasswordMenuController;
 import com.tilldawn.Main;
-import com.tilldawn.Model.User;
+import com.tilldawn.Model.Player;
 
 public class ForgetPasswordMenuView implements Screen {
     private Stage stage;
@@ -34,7 +34,7 @@ public class ForgetPasswordMenuView implements Screen {
     public Table table;
     private final ForgetPasswordMenuController controller;
 
-    private User user = null;
+    private Player player = null;
 
     public ForgetPasswordMenuView(ForgetPasswordMenuController controller, Skin skin) {
         this.controller = controller;
@@ -209,11 +209,11 @@ public class ForgetPasswordMenuView implements Screen {
         passwordConditionMessage.setColor(color);
     }
 
-    public User getUser() {
-        return user;
+    public Player getUser() {
+        return player;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Player player) {
+        this.player = player;
     }
 }

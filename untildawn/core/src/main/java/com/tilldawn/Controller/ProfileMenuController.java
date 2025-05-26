@@ -2,12 +2,10 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.User;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.ProfileMenuView;

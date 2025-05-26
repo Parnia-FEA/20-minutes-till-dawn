@@ -70,7 +70,6 @@ public class ProfileMenuView implements Screen {
             this.avatars.add(checkBox);
             this.avatarsGroup.add(checkBox);
             Image avatarImage = new Image(new TextureRegionDrawable(new TextureRegion(avatar)));
-            //avatarImage.setSize(64, 64);
             this.avatarImages.add(avatarImage);
         }
         this.avatarsGroup.setMaxCheckCount(1);

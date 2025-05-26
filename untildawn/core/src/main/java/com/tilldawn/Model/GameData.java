@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class GameData {
     private static GameData instance;
-    private final ArrayList<User> users;
-    private User currentUser;
+    private final ArrayList<Player> players;
+    private Player currentPlayer;
 
     public GameData() {
-        users = new ArrayList<>();
+        players = new ArrayList<>();
     }
 
     public static GameData getInstance() {
@@ -16,26 +16,26 @@ public class GameData {
         return instance;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public ArrayList<Player> getUsers() {
+        return players;
     }
 
-    public User findUserByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) return user;
+    public Player findUserByUsername(String username) {
+        for (Player player : players) {
+            if (player.getUsername().equals(username)) return player;
         }
         return null;
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public void addUser(Player player) {
+        players.add(player);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public Player getCurrentUser() {
+        return currentPlayer;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+    public void setCurrentUser(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

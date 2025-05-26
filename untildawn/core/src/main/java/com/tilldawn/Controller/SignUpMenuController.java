@@ -5,8 +5,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.User;
-import com.tilldawn.View.ForgetPasswordMenuView;
+import com.tilldawn.Model.Player;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.SignUpMenuView;
@@ -44,8 +43,8 @@ public class SignUpMenuController {
                 }
                 else {
                     view.setSignUpConditionMessage("Signed up Successfully:)", Color.GREEN);
-                    User user = new User(username, password, securityQuestion, answer);
-                    GameData.getInstance().addUser(user);
+                    Player player = new Player(username, password, securityQuestion, answer);
+                    GameData.getInstance().addUser(player);
                     Timer.schedule(new Timer.Task() {
                         @Override
                         public void run() {
@@ -65,7 +64,7 @@ public class SignUpMenuController {
     }
 
     public void handleGuestButton() {
-        User guest = new User("Guest", null, null, null);
+        Player guest = new Player("Guest", null, null, null);
         guest.setGuest(true);
         GameData.getInstance().setCurrentUser(guest);
         Main.getMain().getScreen().dispose();

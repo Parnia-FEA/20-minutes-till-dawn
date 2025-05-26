@@ -68,6 +68,8 @@ public class ForgetPasswordMenuView implements Screen {
         table.add(continueButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(usernameConditionMessage).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(backButton).colspan(2).center();
     }
 
     public void setupSecurityQuestionStage() {
@@ -81,6 +83,8 @@ public class ForgetPasswordMenuView implements Screen {
         table.add(submitAnswerButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(securityQuestionConditionMessage).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(backButton).colspan(2).center();
     }
 
     public void setupNewPasswordStage() {
@@ -94,6 +98,8 @@ public class ForgetPasswordMenuView implements Screen {
         table.add(changePasswordButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(passwordConditionMessage).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(backButton).colspan(2).center();
     }
 
     @Override

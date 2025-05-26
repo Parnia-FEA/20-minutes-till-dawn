@@ -2,6 +2,7 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
@@ -11,6 +12,7 @@ import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.ProfileMenuView;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class ProfileMenuController {
@@ -31,7 +33,11 @@ public class ProfileMenuController {
         if (GameData.getInstance().getCurrentUser().isGuest())
             view.setGuestConditionMessage("You are a guest", Color.RED);
         else
-         view.setupChangePasswordStage();
+            view.setupChangePasswordStage();
+    }
+
+    public void handleChangeAvatarButton() {
+        view.setupChangeAvatarStage();
     }
 
     public void handleDeleteAccountButton() {
@@ -110,6 +116,39 @@ public class ProfileMenuController {
             else if (text.equals("No")) {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getInstance().getSkin()));
+            }
+        }
+    }
+
+    public void handleSelectAvatarButton() {
+        CheckBox selectedCheckBox = view.getAvatarsGroup().getChecked();
+        if (selectedCheckBox != null) {
+            ArrayList<CheckBox> avatarButtons = view.getAvatars();
+
+            int selectedIndex = -1;
+            for (int i = 0; i < avatarButtons.size(); i++) {
+                if (avatarButtons.get(i) == selectedCheckBox) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+            if (selectedIndex != -1) {
+                GameData.getInstance().getCurrentUser().setAvatarIndex(selectedIndex);
+                view.setChangeAvatarConditionMessage("Avatar Changed Successfully:)", Color.GREEN);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        Main.getMain().getScreen().dispose();
+                        Main.getMain().setScreen(new ProfileMenuView(
+                            new ProfileMenuController(),
+                            GameAssetManager.getInstance().getSkin()
+                        ));
+                    }
+                }, 2);
+            }
+            else {
+                view.setChangeAvatarConditionMessage("Please select an avatar!", Color.RED);
             }
         }
     }

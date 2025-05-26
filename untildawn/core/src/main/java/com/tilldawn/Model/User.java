@@ -70,6 +70,10 @@ public class User {
         return GameAssetManager.getInstance().getAvatars().get(this.avatarIndex);
     }
 
+    public int getAvatarIndex() {
+        return avatarIndex;
+    }
+
     public void setAvatarIndex(int avatarIndex) {
         this.avatarIndex = avatarIndex;
     }

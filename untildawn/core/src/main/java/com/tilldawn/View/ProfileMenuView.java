@@ -3,14 +3,20 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ProfileMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
+
+import java.util.ArrayList;
 
 public class ProfileMenuView implements Screen {
     private Stage stage;
@@ -26,6 +32,12 @@ public class ProfileMenuView implements Screen {
     private final Label passwordLabel;
     private final TextField password;
     private final Label changePasswordConditionMessage;
+    private final TextButton changeAvatarButton;
+    private final ArrayList<CheckBox> avatars = new ArrayList<>();
+    private final ButtonGroup<CheckBox> avatarsGroup = new ButtonGroup<>();
+    private final ArrayList<Image> avatarImages = new ArrayList<>();
+    private final TextButton selectAvatarButton;
+    private final Label changeAvatarConditionMessage;
     private final TextButton deleteAccountButton;
     private final TextButton deleteButton;
     private final Label deleteAccountLabel;
@@ -51,6 +63,19 @@ public class ProfileMenuView implements Screen {
         this.password = new TextField("", skin);
         this.changeUsernameConditionMessage = new Label("", skin);
         this.changePasswordConditionMessage = new Label("", skin);
+        this.changeAvatarConditionMessage = new Label("", skin);
+        this.changeAvatarButton = new TextButton("Change Avatar", skin);
+        for (Texture avatar : GameAssetManager.getInstance().getAvatars()) {
+            CheckBox checkBox = new CheckBox("", skin);
+            this.avatars.add(checkBox);
+            this.avatarsGroup.add(checkBox);
+            Image avatarImage = new Image(new TextureRegionDrawable(new TextureRegion(avatar)));
+            //avatarImage.setSize(64, 64);
+            this.avatarImages.add(avatarImage);
+        }
+        this.avatarsGroup.setMaxCheckCount(1);
+        this.avatarsGroup.setMinCheckCount(1);
+        this.selectAvatarButton = new TextButton("Select", skin);
         this.deleteAccountButton = new TextButton("Delete Account", skin);
         this.deleteButton = new TextButton("OK", skin);
         this.deleteAccountLabel = new Label("Do you want to delete your account?", skin);
@@ -74,6 +99,8 @@ public class ProfileMenuView implements Screen {
         table.add(changeUsernameButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(changePasswordButton).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(changeAvatarButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(deleteAccountButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
@@ -102,6 +129,31 @@ public class ProfileMenuView implements Screen {
         table.add(setPasswordButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(backToProfileMenuButton).colspan(2).center();
+    }
+
+    public void setupChangeAvatarStage() {
+        table.clear();
+        table.row();
+
+        Table avatarTable = new Table();
+
+        for (int i = 0; i < this.avatars.size(); i++) {
+            avatarTable.add(this.avatars.get(i)).pad(5);
+            avatarTable.add(this.avatarImages.get(i)).pad(5);
+            avatarTable.row().pad(10, 0, 10, 0);
+        }
+        ScrollPane scrollPane = new ScrollPane(avatarTable);
+        scrollPane.setScrollingDisabled(true, false);
+        table.add(scrollPane).height(400).colspan(2).padBottom(20);
+        table.row().pad(10, 0, 10, 0);
+        table.row();
+        table.row().pad(10, 0, 10, 0);
+        table.add(selectAvatarButton).colspan(5).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(changeAvatarConditionMessage).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(backToProfileMenuButton).colspan(5).center();
+
     }
 
     public void setupDeleteAccountStage() {
@@ -141,6 +193,13 @@ public class ProfileMenuView implements Screen {
             }
         });
 
+        changeAvatarButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleChangeAvatarButton();
+            }
+        });
+
         deleteAccountButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -173,6 +232,13 @@ public class ProfileMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleSetPasswordButton();
+            }
+        });
+
+        selectAvatarButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleSelectAvatarButton();
             }
         });
 
@@ -241,6 +307,14 @@ public class ProfileMenuView implements Screen {
         return deleteAccount;
     }
 
+    public ArrayList<CheckBox> getAvatars() {
+        return avatars;
+    }
+
+    public ButtonGroup<CheckBox> getAvatarsGroup() {
+        return avatarsGroup;
+    }
+
     public void setChangeUsernameConditionMessage(String message, Color color) {
         changeUsernameConditionMessage.setText(message);
         changeUsernameConditionMessage.setColor(color);
@@ -254,5 +328,10 @@ public class ProfileMenuView implements Screen {
     public void setGuestConditionMessage(String message, Color color) {
         guestConditionMessage.setText(message);
         guestConditionMessage.setColor(color);
+    }
+
+    public void setChangeAvatarConditionMessage(String message, Color color) {
+        changeAvatarConditionMessage.setText(message);
+        changeAvatarConditionMessage.setColor(color);
     }
 }

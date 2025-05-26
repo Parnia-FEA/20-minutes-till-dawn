@@ -1,5 +1,10 @@
 package com.tilldawn.Model;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.Random;
+
 public class User {
     private String username;
     private String password;
@@ -7,12 +12,14 @@ public class User {
     private String answer;
     private int points = 0;
     private boolean isGuest = false;
+    private int avatarIndex;
 
     public User(String username, String password, String securityQuestion, String answer) {
         this.username = username;
         this.password = password;
         this.securityQuestion = securityQuestion;
         this.answer = answer;
+        this.avatarIndex = (new Random()).nextInt(5);
     }
 
     public String getUsername() {
@@ -57,5 +64,17 @@ public class User {
 
     public void setGuest(boolean guest) {
         isGuest = guest;
+    }
+
+    public Texture getAvatar() {
+        return GameAssetManager.getInstance().getAvatars().get(this.avatarIndex);
+    }
+
+    public void setAvatarIndex(int avatarIndex) {
+        this.avatarIndex = avatarIndex;
+    }
+
+    public void drawAvatar(SpriteBatch batch, float x, float y) {
+        batch.draw(getAvatar(), x, y);
     }
 }

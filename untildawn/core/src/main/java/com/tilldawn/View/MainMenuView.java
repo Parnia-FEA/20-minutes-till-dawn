@@ -2,6 +2,7 @@ package com.tilldawn.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -119,6 +120,7 @@ public class MainMenuView implements Screen {
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
+        GameData.getInstance().getCurrentUser().drawAvatar(Main.getBatch(), 100, 450);
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -146,6 +148,5 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }

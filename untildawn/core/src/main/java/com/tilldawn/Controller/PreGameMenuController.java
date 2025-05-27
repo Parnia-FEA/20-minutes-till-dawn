@@ -7,12 +7,12 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
+import com.tilldawn.Model.Weapon;
 import com.tilldawn.Model.enums.Hero;
-import com.tilldawn.Model.enums.Weapon;
+import com.tilldawn.Model.enums.WeaponEnum;
 import com.tilldawn.View.GameView;
 import com.tilldawn.View.PreGameMenuView;
 import com.tilldawn.View.MainMenuView;
-import com.tilldawn.View.ProfileMenuView;
 
 import java.util.ArrayList;
 
@@ -60,16 +60,16 @@ public class PreGameMenuController {
                             }
                             if (selectedTimeIndex != -1) {
                                 Hero hero = Hero.valueOf(selectedHero.getText().toString());
-                                Weapon weapon = Weapon.valueOf(selectedWeapon.getText().toString());
+                                WeaponEnum weapon = WeaponEnum.valueOf(selectedWeapon.getText().toString());
                                 int time = view.getTimeAmount().get(selectedTimeIndex);
-                                TillDawnGame game = new TillDawnGame(hero, weapon, time);
-                                GameData.getInstance().getCurrentUser().setGame(game);
+                                TillDawnGame game = new TillDawnGame(hero, new Weapon(weapon), time);
+                                GameData.getInstance().getCurrentPlayer().setGame(game);
                                 view.setConditionMessage("Loading...", Color.GREEN);
                                 Timer.schedule(new Timer.Task() {
                                     @Override
                                     public void run() {
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new GameView()); //TODO
+                                        Main.getMain().setScreen(new GameView(game, new GameController(), GameAssetManager.getInstance().getSkin()));
                                     }
                                 }, 2);
                             }

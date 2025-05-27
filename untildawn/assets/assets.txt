@@ -5,84 +5,102 @@ Avatars/avatar3.png
 Avatars/avatar4.png
 Avatars/avatar5.png
 Avatars/avatar6.png
-Heroes/Dasher/idle/Idle_0 #8325.png
-Heroes/Dasher/idle/Idle_1 #8355.png
-Heroes/Dasher/idle/Idle_2 #8814.png
-Heroes/Dasher/idle/Idle_3 #8452.png
-Heroes/Dasher/idle/Idle_4 #8313.png
-Heroes/Dasher/idle/Idle_5 #8302.png
+Heroes/Dasher/idle/Idle_0.png
+Heroes/Dasher/idle/Idle_1.png
+Heroes/Dasher/idle/Idle_2.png
+Heroes/Dasher/idle/Idle_3.png
+Heroes/Dasher/idle/Idle_4.png
+Heroes/Dasher/idle/Idle_5.png
 Heroes/Dasher/idle/Portrait.png
-Heroes/Dasher/run/Run_0 #8757.png
-Heroes/Dasher/run/Run_1 #8773.png
-Heroes/Dasher/run/Run_2 #8281.png
-Heroes/Dasher/run/Run_3 #8344.png
-Heroes/Diamond/idle/Idle_0 #8328.png
-Heroes/Diamond/idle/Idle_1 #8358.png
-Heroes/Diamond/idle/Idle_2 #8817.png
-Heroes/Diamond/idle/Idle_3 #8455.png
-Heroes/Diamond/idle/Idle_4 #8316.png
-Heroes/Diamond/idle/Idle_5 #8305.png
+Heroes/Dasher/run/Run_0.png
+Heroes/Dasher/run/Run_1.png
+Heroes/Dasher/run/Run_2.png
+Heroes/Dasher/run/Run_3.png
+Heroes/Diamond/idle/Idle_0.png
+Heroes/Diamond/idle/Idle_1.png
+Heroes/Diamond/idle/Idle_2.png
+Heroes/Diamond/idle/Idle_3.png
+Heroes/Diamond/idle/Idle_4.png
+Heroes/Diamond/idle/Idle_5.png
 Heroes/Diamond/idle/Portrait.png
-Heroes/Diamond/run/Run_0 #8760.png
-Heroes/Diamond/run/Run_1 #8776.png
-Heroes/Diamond/run/Run_2 #8284.png
-Heroes/Diamond/run/Run_3 #8347.png
-Heroes/Diamond/walk/Walk_0 #8277.png
-Heroes/Diamond/walk/Walk_1 #8631.png
-Heroes/Diamond/walk/Walk_2 #8710.png
-Heroes/Diamond/walk/Walk_3 #8768.png
-Heroes/Diamond/walk/Walk_4 #8464.png
-Heroes/Diamond/walk/Walk_5 #8687.png
-Heroes/Diamond/walk/Walk_6 #8441.png
-Heroes/Diamond/walk/Walk_7 #8213.png
-Heroes/Lilith/idle/Idle_0 #8333.png
-Heroes/Lilith/idle/Idle_1 #8363.png
-Heroes/Lilith/idle/Idle_2 #8822.png
-Heroes/Lilith/idle/Idle_3 #8460.png
-Heroes/Lilith/idle/Idle_4 #8321.png
-Heroes/Lilith/idle/Idle_5 #8310.png
+Heroes/Diamond/run/Run_0.png
+Heroes/Diamond/run/Run_1.png
+Heroes/Diamond/run/Run_2.png
+Heroes/Diamond/run/Run_3.png
+Heroes/Diamond/walk/Walk_0.png
+Heroes/Diamond/walk/Walk_1.png
+Heroes/Diamond/walk/Walk_2.png
+Heroes/Diamond/walk/Walk_3.png
+Heroes/Diamond/walk/Walk_4.png
+Heroes/Diamond/walk/Walk_5.png
+Heroes/Diamond/walk/Walk_6.png
+Heroes/Diamond/walk/Walk_7.png
+Heroes/Lilith/idle/Idle_0.png
+Heroes/Lilith/idle/Idle_1.png
+Heroes/Lilith/idle/Idle_2.png
+Heroes/Lilith/idle/Idle_3.png
+Heroes/Lilith/idle/Idle_4.png
+Heroes/Lilith/idle/Idle_5.png
 Heroes/Lilith/idle/Portrait.png
-Heroes/Lilith/run/Run_0 #8765.png
-Heroes/Lilith/run/Run_1 #8781.png
-Heroes/Lilith/run/Run_2 #8289.png
-Heroes/Lilith/run/Run_3 #8352.png
-Heroes/Lilith/walk/Walk_0 #8279.png
-Heroes/Lilith/walk/Walk_1 #8633.png
-Heroes/Lilith/walk/Walk_2 #8712.png
-Heroes/Lilith/walk/Walk_3 #8770.png
-Heroes/Lilith/walk/Walk_4 #8465.png
-Heroes/Lilith/walk/Walk_5 #8689.png
-Heroes/Lilith/walk/Walk_6 #8443.png
-Heroes/Lilith/walk/Walk_7 #8215.png
-Heroes/Scarlet/idle/Idle_0 #8327.png
-Heroes/Scarlet/idle/Idle_1 #8357.png
-Heroes/Scarlet/idle/Idle_2 #8816.png
-Heroes/Scarlet/idle/Idle_3 #8454.png
-Heroes/Scarlet/idle/Idle_4 #8315.png
-Heroes/Scarlet/idle/Idle_5 #8304.png
+Heroes/Lilith/run/Run_0.png
+Heroes/Lilith/run/Run_1.png
+Heroes/Lilith/run/Run_2.png
+Heroes/Lilith/run/Run_3.png
+Heroes/Lilith/walk/Walk_0.png
+Heroes/Lilith/walk/Walk_1.png
+Heroes/Lilith/walk/Walk_2.png
+Heroes/Lilith/walk/Walk_3.png
+Heroes/Lilith/walk/Walk_4.png
+Heroes/Lilith/walk/Walk_5.png
+Heroes/Lilith/walk/Walk_6.png
+Heroes/Lilith/walk/Walk_7.png
+Heroes/Scarlet/idle/Idle_0.png
+Heroes/Scarlet/idle/Idle_1.png
+Heroes/Scarlet/idle/Idle_2.png
+Heroes/Scarlet/idle/Idle_3.png
+Heroes/Scarlet/idle/Idle_4.png
+Heroes/Scarlet/idle/Idle_5.png
 Heroes/Scarlet/idle/Portrait.png
-Heroes/Scarlet/run/Run_0 #8759.png
-Heroes/Scarlet/run/Run_1 #8775.png
-Heroes/Scarlet/run/Run_2 #8283.png
-Heroes/Scarlet/run/Run_3 #8346.png
-Heroes/Shana/idle/Idle_0 #8330.png
-Heroes/Shana/idle/Idle_1 #8360.png
-Heroes/Shana/idle/Idle_2 #8819.png
-Heroes/Shana/idle/Idle_3 #8457.png
-Heroes/Shana/idle/Idle_4 #8318.png
-Heroes/Shana/idle/Idle_5 #8307.png
+Heroes/Scarlet/run/Run_0.png
+Heroes/Scarlet/run/Run_1.png
+Heroes/Scarlet/run/Run_2.png
+Heroes/Scarlet/run/Run_3.png
+Heroes/Shana/idle/Idle_0.png
+Heroes/Shana/idle/Idle_1.png
+Heroes/Shana/idle/Idle_2.png
+Heroes/Shana/idle/Idle_3.png
+Heroes/Shana/idle/Idle_4.png
+Heroes/Shana/idle/Idle_5.png
 Heroes/Shana/idle/Portrait.png
-Heroes/Shana/run/Run_0 #8762.png
-Heroes/Shana/run/Run_1 #8778.png
-Heroes/Shana/run/Run_2 #8286.png
-Heroes/Shana/run/Run_3 #8349.png
-Heroes/Shana/walk/Walk_0 #8278.png
-Heroes/Shana/walk/Walk_1 #8632.png
-Heroes/Shana/walk/Walk_2 #8711.png
-Heroes/Shana/walk/Walk_3 #8769.png
-Heroes/Shana/walk/Walk_5 #8688.png
-Heroes/Shana/walk/Walk_6 #8442.png
-Heroes/Shana/walk/Walk_7 #8214.png
+Heroes/Shana/run/Run_0.png
+Heroes/Shana/run/Run_1.png
+Heroes/Shana/run/Run_2.png
+Heroes/Shana/run/Run_3.png
+Heroes/Shana/walk/Walk_0.png
+Heroes/Shana/walk/Walk_1.png
+Heroes/Shana/walk/Walk_2.png
+Heroes/Shana/walk/Walk_3.png
+Heroes/Shana/walk/Walk_4.png
+Heroes/Shana/walk/Walk_5.png
+Heroes/Shana/walk/Walk_6.png
+Heroes/Shana/walk/Walk_7.png
+Weapons/Revolver/Reload_0.png
+Weapons/Revolver/Reload_1.png
+Weapons/Revolver/Reload_2.png
+Weapons/Revolver/Reload_3.png
+Weapons/Revolver/Still.png
+Weapons/SMG/Reload_0.png
+Weapons/SMG/Reload_1.png
+Weapons/SMG/Reload_2.png
+Weapons/SMG/Reload_3.png
+Weapons/SMG/Still.png
+Weapons/ShutGun/Reload_0.png
+Weapons/ShutGun/Reload_1.png
+Weapons/ShutGun/Reload_2png.png
+Weapons/ShutGun/Reload_3.png
+Weapons/ShutGun/Still.png
+background.png
+bullet.png
 libgdx.png
 skin/font-export.fnt
 skin/font-subtitle-export.fnt

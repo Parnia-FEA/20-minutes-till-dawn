@@ -2,7 +2,9 @@ package com.tilldawn.Model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tilldawn.Model.enums.InputKey;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class Player {
@@ -14,6 +16,7 @@ public class Player {
     private boolean isGuest = false;
     private int avatarIndex;
     private TillDawnGame game = null;
+    private final HashMap<InputKey, Integer> keys = new HashMap<>();
 
     public Player(String username, String password, String securityQuestion, String answer) {
         this.username = username;
@@ -21,6 +24,9 @@ public class Player {
         this.securityQuestion = securityQuestion;
         this.answer = answer;
         this.avatarIndex = (new Random()).nextInt(7);
+        for (InputKey value : InputKey.values()) {
+            keys.put(value,value.getMainKey());
+        }
     }
 
     public String getUsername() {
@@ -89,5 +95,9 @@ public class Player {
 
     public void setGame(TillDawnGame game) {
         this.game = game;
+    }
+
+    public HashMap<InputKey, Integer> getKeys() {
+        return keys;
     }
 }

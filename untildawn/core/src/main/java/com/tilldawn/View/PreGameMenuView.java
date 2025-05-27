@@ -3,7 +3,6 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,10 +14,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.PreGameMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
-import com.tilldawn.Model.enums.Weapon;
+import com.tilldawn.Model.enums.WeaponEnum;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreGameMenuView implements Screen {
     private Stage stage;
@@ -61,7 +59,7 @@ public class PreGameMenuView implements Screen {
         this.heroesGroup.setMinCheckCount(1);
 
         this.weaponLabel = new Label("Weapon", skin, "subtitle");
-        for (Weapon value : Weapon.values()) {
+        for (WeaponEnum value : WeaponEnum.values()) {
             CheckBox checkBox = new CheckBox(value.toString(), skin);
             this.weaponsCheckBox.add(checkBox);
             this.weaponsGroup.add(checkBox);

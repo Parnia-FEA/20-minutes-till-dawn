@@ -21,14 +21,14 @@ public class ProfileMenuController {
     }
 
     public void handleChangeUsernameButton() {
-        if (GameData.getInstance().getCurrentUser().isGuest())
+        if (GameData.getInstance().getCurrentPlayer().isGuest())
             view.setGuestConditionMessage("You are a guest", Color.RED);
         else
             view.setupChangeUsernameStage();
     }
 
     public void handleChangePasswordButton() {
-        if (GameData.getInstance().getCurrentUser().isGuest())
+        if (GameData.getInstance().getCurrentPlayer().isGuest())
             view.setGuestConditionMessage("You are a guest", Color.RED);
         else
             view.setupChangePasswordStage();
@@ -39,7 +39,7 @@ public class ProfileMenuController {
     }
 
     public void handleDeleteAccountButton() {
-        if (GameData.getInstance().getCurrentUser().isGuest())
+        if (GameData.getInstance().getCurrentPlayer().isGuest())
             view.setGuestConditionMessage("You are a guest", Color.RED);
         else
             view.setupDeleteAccountStage();
@@ -58,7 +58,7 @@ public class ProfileMenuController {
         String username = view.getUsername().getText();
         if (GameData.getInstance().findUserByUsername(username) == null) {
             view.setChangeUsernameConditionMessage("Username Changed Successfully:)", Color.GREEN);
-            GameData.getInstance().getCurrentUser().setUsername(username);
+            GameData.getInstance().getCurrentPlayer().setUsername(username);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -84,7 +84,7 @@ public class ProfileMenuController {
         String password = view.getPassword().getText();
         if (isPasswordValid(password)) {
             view.setChangePasswordConditionMessage("Password Changed Successfully:)", Color.GREEN);
-            GameData.getInstance().getCurrentUser().setPassword(password);
+            GameData.getInstance().getCurrentPlayer().setPassword(password);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -106,7 +106,7 @@ public class ProfileMenuController {
         if (selectedCheckBox != null) {
             String text = selectedCheckBox.getText().toString();
             if (text.equals("Yes")) {
-                GameData.getInstance().getUsers().remove(GameData.getInstance().getCurrentUser());
+                GameData.getInstance().getUsers().remove(GameData.getInstance().getCurrentPlayer());
                 GameData.getInstance().setCurrentUser(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
@@ -132,7 +132,7 @@ public class ProfileMenuController {
             }
 
             if (selectedIndex != -1) {
-                GameData.getInstance().getCurrentUser().setAvatarIndex(selectedIndex);
+                GameData.getInstance().getCurrentPlayer().setAvatarIndex(selectedIndex);
                 view.setChangeAvatarConditionMessage("Avatar Changed Successfully:)", Color.GREEN);
                 Timer.schedule(new Timer.Task() {
                     @Override

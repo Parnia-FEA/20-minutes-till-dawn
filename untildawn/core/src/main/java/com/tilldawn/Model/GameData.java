@@ -31,11 +31,15 @@ public class GameData {
         players.add(player);
     }
 
-    public Player getCurrentUser() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
     public void setCurrentUser(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public TillDawnGame getCurrentGame() {
+        return currentPlayer.getGame();
     }
 }

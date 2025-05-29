@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.Player;
@@ -22,14 +23,21 @@ public class PlayerController {
         if(game.isPlayerIdle()){
             idleAnimation();
         }
-        float move = game.getPlayerSpeed();
-        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Up))) game.changePlayerPosY(move);
-        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Down))) game.changePlayerPosY(-move);
+        Vector2 direction = new Vector2(0, 0);
+        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Up))) direction.y += 1;
+        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Down))) direction.y -= 1;
         if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Left))) {
-            game.changePlayerPosX(-move);
+            direction.x -= 1;
             game.getPlayerSprite().flip(true, false);
         }
-        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Right))) game.changePlayerPosX(move);
+        if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Right))) direction.x += 1;
+        if (!direction.isZero()) {
+            direction.nor();
+            float speed = game.getPlayerSpeed();
+            game.changePlayerPosX(direction.x * speed);
+            game.changePlayerPosY(direction.y * speed);
+        }
+
     }
 
     public void draw() {

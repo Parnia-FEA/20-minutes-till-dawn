@@ -12,6 +12,7 @@ import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.Player;
 import com.tilldawn.Model.TillDawnGame;
+import com.tilldawn.Model.enums.InputKey;
 
 public class GameView implements Screen, InputProcessor {
     private final TillDawnGame game;
@@ -82,7 +83,10 @@ public class GameView implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == game.getKeys().get(InputKey.ShootProjectile)) {
+            controller.getWeaponController().handleWeaponShoot(screenX, screenY);
+        }
         return false;
     }
 
@@ -102,7 +106,8 @@ public class GameView implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(int screenX, int screenY) {
+        controller.getWeaponController().handleWeaponRotation(screenX, screenY);
         return false;
     }
 

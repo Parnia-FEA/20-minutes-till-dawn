@@ -10,6 +10,7 @@ public class Weapon {
     private Texture texture;
     private Sprite sprite;
     private int ammo;
+    private boolean isReloading = false;
 
     public Weapon(WeaponEnum type) {
         this.type = type;
@@ -19,14 +20,6 @@ public class Weapon {
         sprite.setY((float) Gdx.graphics.getHeight() / 2);
         sprite.setSize(50,50);
         this.ammo = type.getMaxAmmo();
-    }
-
-    public WeaponEnum getType() {
-        return type;
-    }
-
-    public void setType(WeaponEnum type) {
-        this.type = type;
     }
 
     public Texture getTexture() {
@@ -51,5 +44,13 @@ public class Weapon {
 
     public void setAmmo(int ammo) {
         this.ammo = ammo;
+    }
+
+    public boolean isReloading() {
+        return isReloading;
+    }
+
+    public void setReloading(boolean reloading) {
+        isReloading = reloading;
     }
 }

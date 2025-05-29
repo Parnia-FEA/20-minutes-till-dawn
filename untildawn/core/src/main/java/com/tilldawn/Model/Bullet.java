@@ -11,14 +11,14 @@ public class Bullet {
     private int x;
     private int y;
 
-    public Bullet(int x, int y){
+    public Bullet(int x, int y, float startX, float startY){
         this.texture = GameAssetManager.getInstance().getBulletTexture();
         this.sprite = new Sprite(texture);
         sprite.setSize(20 , 20);
         this.x = x;
         this.y = y;
-        sprite.setX((float) Gdx.graphics.getWidth() / 2);
-        sprite.setY((float) Gdx.graphics.getHeight() / 2);
+        sprite.setX(startX);
+        sprite.setY(startY);
     }
 
     public Texture getTexture() {

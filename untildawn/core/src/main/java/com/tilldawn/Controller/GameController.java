@@ -19,7 +19,7 @@ public class GameController {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         playerController = new PlayerController(view.getGame());
         worldController = new WorldController(playerController);
-        weaponController = new WeaponController(view.getGame().getWeapon());
+        weaponController = new WeaponController(view.getGame(), view.getGame().getWeapon());
     }
 
     public void updateGame() {
@@ -29,7 +29,7 @@ public class GameController {
             camera.update();
             Main.getBatch().setProjectionMatrix(camera.combined);
             worldController.update(camera);
-            weaponController.update();
+            weaponController.update(camera);
         }
     }
 
@@ -37,6 +37,19 @@ public class GameController {
         if (view != null) {
             worldController.draw();
             playerController.draw();
+            weaponController.draw();
         }
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
+    }
+
+    public WorldController getWorldController() {
+        return worldController;
+    }
+
+    public WeaponController getWeaponController() {
+        return weaponController;
     }
 }

@@ -6,7 +6,9 @@ public enum InputKey {
     Down(Input.Keys.S),
     Up(Input.Keys.W),
     Left(Input.Keys.A),
-    Right(Input.Keys.D)
+    Right(Input.Keys.D),
+    ShootProjectile(Input.Buttons.LEFT),
+    ReloadAmmon(Input.Keys.R)
     ;
 
     private final int mainKey;

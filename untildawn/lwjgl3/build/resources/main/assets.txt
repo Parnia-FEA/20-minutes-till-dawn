@@ -8,6 +8,7 @@ Avatars/avatar6.png
 Heart/HeartAnimation_0.png
 Heart/HeartAnimation_1.png
 Heart/HeartAnimation_2.png
+Heart/HeartAnimation_3.png
 Heroes/Dasher/idle/Idle_0.png
 Heroes/Dasher/idle/Idle_1.png
 Heroes/Dasher/idle/Idle_2.png

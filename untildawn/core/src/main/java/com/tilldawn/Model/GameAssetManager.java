@@ -37,6 +37,9 @@ public class GameAssetManager {
     private final ArrayList<String> heartImageFile = new ArrayList<>();
     private final ArrayList<Texture> heartTexture = new ArrayList<>();
     private final Animation<Texture> heartAnimation;
+    private final String emptyHeartImageFile;
+    private final Texture emptyHeartTexture;
+    private final Animation<Texture> emptyHeartAnimation;
 
     public GameAssetManager() {
         for (int i = 0 ; i < 7; i++) {
@@ -55,6 +58,9 @@ public class GameAssetManager {
         ammoIconTexture = new Texture(ammoIconImageFile);
         buildHeart();
         heartAnimation = new Animation<>(0.1f, heartTexture.toArray(new Texture[0]));
+        emptyHeartImageFile = "Heart/HeartAnimation_3.png";
+        emptyHeartTexture = new Texture(emptyHeartImageFile);
+        emptyHeartAnimation = new Animation<>(0.1f, emptyHeartTexture);
     }
 
     private void buildHeart() {
@@ -224,5 +230,17 @@ public class GameAssetManager {
 
     public Animation<Texture> getHeartAnimation() {
         return heartAnimation;
+    }
+
+    public String getEmptyHeartImageFile() {
+        return emptyHeartImageFile;
+    }
+
+    public Texture getEmptyHeartTexture() {
+        return emptyHeartTexture;
+    }
+
+    public Animation<Texture> getEmptyHeartAnimation() {
+        return emptyHeartAnimation;
     }
 }

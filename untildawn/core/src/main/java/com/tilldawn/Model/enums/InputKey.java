@@ -8,7 +8,7 @@ public enum InputKey {
     Left(Input.Keys.A),
     Right(Input.Keys.D),
     ShootProjectile(Input.Buttons.LEFT),
-    ReloadAmmon(Input.Keys.R)
+    ReloadAmmo(Input.Keys.R)
     ;
 
     private final int mainKey;

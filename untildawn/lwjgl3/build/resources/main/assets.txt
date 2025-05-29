@@ -96,7 +96,7 @@ Weapons/SMG/Reload_3.png
 Weapons/SMG/Still.png
 Weapons/ShutGun/Reload_0.png
 Weapons/ShutGun/Reload_1.png
-Weapons/ShutGun/Reload_2png.png
+Weapons/ShutGun/Reload_2.png
 Weapons/ShutGun/Reload_3.png
 Weapons/ShutGun/Still.png
 background.png

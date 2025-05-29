@@ -17,6 +17,7 @@ public class Player {
     private int avatarIndex;
     private TillDawnGame game = null;
     private final HashMap<InputKey, Integer> keys = new HashMap<>();
+    private boolean autoReload = false;
 
     public Player(String username, String password, String securityQuestion, String answer) {
         this.username = username;
@@ -99,5 +100,13 @@ public class Player {
 
     public HashMap<InputKey, Integer> getKeys() {
         return keys;
+    }
+
+    public boolean isAutoReload() {
+        return autoReload;
+    }
+
+    public void setAutoReload(boolean autoReload) {
+        this.autoReload = autoReload;
     }
 }

@@ -27,6 +27,9 @@ public class GameAssetManager {
     private final HashMap<String, Animation<Texture>> walkAnimation = new HashMap<>();
     private final HashMap<String, String> weaponImageFile = new HashMap<>();
     private final HashMap<String, Texture> weaponTexture = new HashMap<>();
+    private final HashMap<String, ArrayList<String>> weaponReloadImageFile = new HashMap<>();
+    private final HashMap<String, ArrayList<Texture>> weaponReloadTexture = new HashMap<>();
+    private final HashMap<String, Animation<Texture>> weaponReloadAnimation = new HashMap<>();
     private final String bulletImageFile;
     private final Texture bulletTexture;
 
@@ -50,6 +53,15 @@ public class GameAssetManager {
             String file = "Weapons/" + weapon.toString() + "/Still.png";
             weaponImageFile.put(weapon.toString(), file);
             weaponTexture.put(weapon.toString(), new Texture(file));
+            ArrayList<String> imageFiles = new ArrayList<>();
+            ArrayList<Texture> textures = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                imageFiles.add("Weapons/" + weapon.toString() + "/Reload_" + i + ".png");
+                textures.add(new Texture(imageFiles.get(i)));
+            }
+            weaponReloadImageFile.put(weapon.toString(), imageFiles);
+            weaponReloadTexture.put(weapon.toString(), textures);
+            weaponReloadAnimation.put(weapon.toString(), new Animation<>(0.1f, textures.toArray(new Texture[0])));
         }
     }
 
@@ -164,5 +176,17 @@ public class GameAssetManager {
 
     public Texture getBulletTexture() {
         return bulletTexture;
+    }
+
+    public HashMap<String, ArrayList<String>> getWeaponReloadImageFile() {
+        return weaponReloadImageFile;
+    }
+
+    public HashMap<String, ArrayList<Texture>> getWeaponReloadTexture() {
+        return weaponReloadTexture;
+    }
+
+    public HashMap<String, Animation<Texture>> getWeaponReloadAnimation() {
+        return weaponReloadAnimation;
     }
 }

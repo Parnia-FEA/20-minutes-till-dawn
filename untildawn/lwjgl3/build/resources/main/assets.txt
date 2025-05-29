@@ -1,3 +1,8 @@
+Ability/Amocrease.png
+Ability/Damager.png
+Ability/Procrease.png
+Ability/Speedy.png
+Ability/Vitality.png
 Avatars/avatar0.png
 Avatars/avatar1.png
 Avatars/avatar2.png

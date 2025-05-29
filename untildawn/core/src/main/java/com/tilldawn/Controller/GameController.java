@@ -1,13 +1,17 @@
 package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.InitialPositions;
+import com.tilldawn.Model.enums.InputKey;
 import com.tilldawn.View.GameView;
 
 import java.util.ArrayList;
@@ -36,6 +40,10 @@ public class GameController {
 
     public void updateGame() {
         if (view != null) {
+            if (view.getGame().isChoosingRandomAbility()) {
+                handleChooseAbilityMenuInputs();
+                return;
+            }
             playerController.update();
             camera.position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
             camera.update();
@@ -52,6 +60,31 @@ public class GameController {
             Main.getBatch().setProjectionMatrix(camera.combined);
             worldController.update(camera);
             weaponController.update(camera);
+        }
+    }
+
+    private void handleChooseAbilityMenuInputs() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            int index = view.getAbilitiesGroup().getCheckedIndex();
+            //if (index != -1) {
+                CheckBox checkedBox = view.getAbilitiesCheckBox().get(index);
+                Ability ability = Ability.valueOf(checkedBox.getText().toString());
+                //TODO ability
+                view.getAbilitySelectTable().setVisible(false);
+                view.getGame().setChoosingRandomAbility(false);
+            //}
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            int index = view.getAbilitiesGroup().getCheckedIndex();
+            if (index > 0) {
+                view.getAbilitiesCheckBox().get(index - 1).setChecked(true);
+            }
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            int index = view.getAbilitiesGroup().getCheckedIndex();
+            if (index < 2) {
+                view.getAbilitiesCheckBox().get(index + 1).setChecked(true);
+            }
         }
     }
 

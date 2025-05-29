@@ -3,20 +3,25 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.TillDawnGame;
+import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.InitialPositions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class GameView implements Screen, InputProcessor {
     private final TillDawnGame game;
@@ -27,6 +32,17 @@ public class GameView implements Screen, InputProcessor {
     private final Texture emptyHeartTexture;
     private final ArrayList<Sprite> hearts = new ArrayList<>();
     private final ArrayList<Sprite> emptyHearts = new ArrayList<>();
+
+    private final Label chooseAbilityLabel;
+    private final ArrayList<CheckBox> abilitiesCheckBox = new ArrayList<>();
+    private final ButtonGroup<CheckBox> abilitiesGroup = new ButtonGroup<>();
+    private final ArrayList<Image> abilities = new ArrayList<>();
+    private final ArrayList<Label> abilitiesDescription = new ArrayList<>();
+    private final TextButton chooseAbilityButton;
+    private Table abilitySelectTable;
+
+    private final Label message;
+
     private GameController controller;
 
     public GameView(TillDawnGame game, GameController controller, Skin skin) {
@@ -38,6 +54,32 @@ public class GameView implements Screen, InputProcessor {
         this.firstHeartTexture = GameAssetManager.getInstance().getHeartTexture().get(0);
         this.emptyHeartTexture = GameAssetManager.getInstance().getEmptyHeartTexture();
         buildHeartsArray();
+        this.abilitySelectTable = new Table();
+        abilitySelectTable.setSize((float) Gdx.graphics.getWidth() * 4 / 5, (float) Gdx.graphics.getHeight() * 4 / 5);
+        abilitySelectTable.setPosition(
+            (Gdx.graphics.getWidth() - abilitySelectTable.getWidth()) / 2,
+            (Gdx.graphics.getHeight() - abilitySelectTable.getHeight()) / 2
+        );
+        abilitySelectTable.setBackground(skin.getDrawable("shadow"));
+
+        this.chooseAbilityLabel = new Label("Choose an Ability", skin, "subtitle");
+        this.chooseAbilityLabel.setColor(Color.MAROON);
+        for (int i = 0 ; i < 3; i++) {
+            CheckBox checkBox = new CheckBox("", skin);
+            this.abilitiesCheckBox.add(checkBox);
+            this.abilitiesGroup.add(checkBox);
+            Image image = new Image();
+            this.abilities.add(image);
+            Label label = new Label("", skin);
+            label.setColor(Color.CORAL);
+            this.abilitiesDescription.add(label);
+        }
+        this.abilitiesGroup.setMinCheckCount(1);
+        this.abilitiesGroup.setMaxCheckCount(1);
+        this.chooseAbilityButton = new TextButton("Choose", skin);
+
+        this.message = new Label("bbb", skin);
+        this.message.setColor(Color.GOLD);
         controller.setView(this);
     }
 
@@ -58,7 +100,23 @@ public class GameView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         ammo.setPosition(InitialPositions.Ammo.getX(), InitialPositions.AmmoIcon.getY());
+        message.setPosition(InitialPositions.Message.getX(), InitialPositions.Message.getY());
         stage.addActor(ammo);
+        stage.addActor(message);
+        abilitySelectTable.setVisible(false);
+        abilitySelectTable.add(chooseAbilityLabel).colspan(7).center();
+        abilitySelectTable.add().height(150).colspan(2);
+        abilitySelectTable.row();
+        abilitySelectTable.row().pad(10, 0, 10, 0);
+        for (int i = 0; i < 3; i++) {
+            abilitySelectTable.add(this.abilitiesCheckBox.get(i)).pad(5);
+            abilitySelectTable.add(this.abilities.get(i)).pad(5);
+            abilitySelectTable.add(this.abilitiesDescription.get(i)).pad(5);
+            abilitySelectTable.row().pad(10, 0, 10, 0);
+        }
+        abilitySelectTable.row().pad(10, 0, 10, 0);
+        abilitySelectTable.add(chooseAbilityButton).colspan(7).center();
+        stage.addActor(abilitySelectTable);
     }
 
     @Override
@@ -69,6 +127,15 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().begin();
         controller.draw();
         Main.getBatch().end();
+        if (game.isChoosingRandomAbility()) {
+            abilitySelectTable.setVisible(true);
+            for (int i = 0; i < 3; i++) {
+                Ability ability = game.getRandomAbilities().get(i);
+                abilities.get(i).setDrawable(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
+                abilitiesDescription.get(i).setText(ability.getDescription());
+                abilitiesCheckBox.get(i).setText(ability.toString());
+            }
+        }
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -171,5 +238,21 @@ public class GameView implements Screen, InputProcessor {
 
     public ArrayList<Sprite> getEmptyHearts() {
         return emptyHearts;
+    }
+
+    public ArrayList<CheckBox> getAbilitiesCheckBox() {
+        return abilitiesCheckBox;
+    }
+
+    public ButtonGroup<CheckBox> getAbilitiesGroup() {
+        return abilitiesGroup;
+    }
+
+    public Label getMessage() {
+        return message;
+    }
+
+    public Table getAbilitySelectTable() {
+        return abilitySelectTable;
     }
 }

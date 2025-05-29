@@ -3,11 +3,14 @@ package com.tilldawn.Model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
 import com.tilldawn.Model.enums.InputKey;
-import com.tilldawn.Model.enums.WeaponEnum;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class TillDawnGame {
     private Hero hero;
@@ -26,6 +29,10 @@ public class TillDawnGame {
     private float playerTime = 0f;
     private int maxHP;
     private int HP;
+    private int level = 1;
+    private int XP = 0;
+    private boolean isChoosingRandomAbility = false;
+    private final ArrayList<Ability> randomAbilities = new ArrayList<>();
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -184,5 +191,48 @@ public class TillDawnGame {
 
     public void setHP(int HP) {
         this.HP = HP;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getXP() {
+        return XP;
+    }
+
+    public void setXP(int xp) {
+        this.XP = xp;
+    }
+
+    public void increaseXP(int amount) {
+        XP += amount;
+        if (XP >= (level * (level + 1)) * 10) {
+            level++;
+            isChoosingRandomAbility = true;
+            randomAbilities.clear();
+            ArrayList<Ability> abilities = new ArrayList<>(Arrays.asList(Ability.values()));
+            for (int i = 0; i < 3; i++) {
+                int random = (new Random()).nextInt(abilities.size());
+                randomAbilities.add(abilities.get(random));
+                abilities.remove(random);
+            }
+        }
+    }
+
+    public boolean isChoosingRandomAbility() {
+        return isChoosingRandomAbility;
+    }
+
+    public void setChoosingRandomAbility(boolean choosingRandomAbility) {
+        isChoosingRandomAbility = choosingRandomAbility;
+    }
+
+    public ArrayList<Ability> getRandomAbilities() {
+        return randomAbilities;
     }
 }

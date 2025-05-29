@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
 import com.tilldawn.Model.enums.WeaponEnum;
 import org.w3c.dom.Text;
@@ -40,6 +41,8 @@ public class GameAssetManager {
     private final String emptyHeartImageFile;
     private final Texture emptyHeartTexture;
     private final Animation<Texture> emptyHeartAnimation;
+    private final HashMap<String, String> abilityImageFile = new HashMap<>();
+    private final HashMap<String, Texture> abilityTexture = new HashMap<>();
 
     public GameAssetManager() {
         for (int i = 0 ; i < 7; i++) {
@@ -61,6 +64,15 @@ public class GameAssetManager {
         emptyHeartImageFile = "Heart/HeartAnimation_3.png";
         emptyHeartTexture = new Texture(emptyHeartImageFile);
         emptyHeartAnimation = new Animation<>(0.1f, emptyHeartTexture);
+        buildAbilities();
+    }
+
+    private void buildAbilities() {
+        for (Ability ability : Ability.values()) {
+            String file = "Ability/" + ability.toString() + ".png";
+            abilityImageFile.put(ability.toString(), file);
+            abilityTexture.put(ability.toString(), new Texture(file));
+        }
     }
 
     private void buildHeart() {
@@ -242,5 +254,13 @@ public class GameAssetManager {
 
     public Animation<Texture> getEmptyHeartAnimation() {
         return emptyHeartAnimation;
+    }
+
+    public HashMap<String, String> getAbilityImageFile() {
+        return abilityImageFile;
+    }
+
+    public HashMap<String, Texture> getAbilityTexture() {
+        return abilityTexture;
     }
 }

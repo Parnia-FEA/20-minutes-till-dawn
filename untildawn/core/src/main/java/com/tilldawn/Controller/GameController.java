@@ -27,6 +27,7 @@ public class GameController {
             playerController.update();
             camera.position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
             camera.update();
+            view.getAmmoIcon().setPosition(camera.position.x - camera.viewportWidth / 2 + 5, camera.position.y - camera.viewportHeight / 2 + (float) Gdx.graphics.getHeight() - 70);
             Main.getBatch().setProjectionMatrix(camera.combined);
             worldController.update(camera);
             weaponController.update(camera);

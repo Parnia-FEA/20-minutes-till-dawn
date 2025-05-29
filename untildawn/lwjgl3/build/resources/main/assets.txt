@@ -5,6 +5,9 @@ Avatars/avatar3.png
 Avatars/avatar4.png
 Avatars/avatar5.png
 Avatars/avatar6.png
+Heart/HeartAnimation_0.png
+Heart/HeartAnimation_1.png
+Heart/HeartAnimation_2.png
 Heroes/Dasher/idle/Idle_0.png
 Heroes/Dasher/idle/Idle_1.png
 Heroes/Dasher/idle/Idle_2.png
@@ -99,6 +102,7 @@ Weapons/ShutGun/Reload_1.png
 Weapons/ShutGun/Reload_2.png
 Weapons/ShutGun/Reload_3.png
 Weapons/ShutGun/Still.png
+ammoIcon.png
 background.png
 bullet.png
 libgdx.png

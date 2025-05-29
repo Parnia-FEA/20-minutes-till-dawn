@@ -32,6 +32,11 @@ public class GameAssetManager {
     private final HashMap<String, Animation<Texture>> weaponReloadAnimation = new HashMap<>();
     private final String bulletImageFile;
     private final Texture bulletTexture;
+    private final String ammoIconImageFile;
+    private final Texture ammoIconTexture;
+    private final ArrayList<String> heartImageFile = new ArrayList<>();
+    private final ArrayList<Texture> heartTexture = new ArrayList<>();
+    private final Animation<Texture> heartAnimation;
 
     public GameAssetManager() {
         for (int i = 0 ; i < 7; i++) {
@@ -46,6 +51,17 @@ public class GameAssetManager {
         buildWeapons();
         bulletImageFile = "bullet.png";
         bulletTexture = new Texture(bulletImageFile);
+        ammoIconImageFile = "ammoIcon.png";
+        ammoIconTexture = new Texture(ammoIconImageFile);
+        buildHeart();
+        heartAnimation = new Animation<>(0.1f, heartTexture.toArray(new Texture[0]));
+    }
+
+    private void buildHeart() {
+        for (int i = 0; i < 3; i++) {
+            heartImageFile.add("Heart/HeartAnimation_" + i + ".png");
+            heartTexture.add(new Texture(heartImageFile.get(i)));
+        }
     }
 
     private void buildWeapons() {
@@ -188,5 +204,25 @@ public class GameAssetManager {
 
     public HashMap<String, Animation<Texture>> getWeaponReloadAnimation() {
         return weaponReloadAnimation;
+    }
+
+    public String getAmmoIconImageFile() {
+        return ammoIconImageFile;
+    }
+
+    public Texture getAmmoIconTexture() {
+        return ammoIconTexture;
+    }
+
+    public ArrayList<String> getHeartImageFile() {
+        return heartImageFile;
+    }
+
+    public ArrayList<Texture> getHeartTexture() {
+        return heartTexture;
+    }
+
+    public Animation<Texture> getHeartAnimation() {
+        return heartAnimation;
     }
 }

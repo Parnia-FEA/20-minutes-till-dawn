@@ -84,15 +84,17 @@ public class WeaponController {
         weapon.getSprite().setRotation((float) (3.14 - angle * MathUtils.radiansToDegrees));
     }
 
-    public void handleWeaponShoot(int x, int y) {
-        if (weapon.getAmmo() > 0 && !weapon.isReloading()) {
-            bullets.add(new Bullet(x, y, weapon.getSprite().getX(), weapon.getSprite().getY()));
-            weapon.setAmmo(weapon.getAmmo() - 1);
-            if (weapon.getAmmo() == 0 && game.getPlayer().isAutoReload()) {
-                setReloadingTrue();
+    public void handleWeaponShoot(int x, int y, int button) {
+        if (button == game.getKeys().get(InputKey.ShootProjectile)) {
+            if (weapon.getAmmo() > 0 && !weapon.isReloading()) {
+                bullets.add(new Bullet(x, y, weapon.getSprite().getX(), weapon.getSprite().getY()));
+                weapon.setAmmo(weapon.getAmmo() - 1);
+                if (weapon.getAmmo() == 0 && game.getPlayer().isAutoReload()) {
+                    setReloadingTrue();
+                }
             }
+            //TODO maybe printing something
         }
-        //TODO maybe printing something
     }
 
     private void updateBullets(OrthographicCamera camera) {

@@ -24,6 +24,8 @@ public class TillDawnGame {
     private boolean isPlayerRunning = false;
     private boolean isPlayerWalking = false;
     private float playerTime = 0f;
+    private int maxHP;
+    private int HP;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -36,6 +38,8 @@ public class TillDawnGame {
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
         playerRect = new CollisionRect((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight(), playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
+        this.maxHP = hero.getSpeed();
+        this.HP = this.maxHP;
     }
 
     public Hero getHero() {
@@ -164,5 +168,21 @@ public class TillDawnGame {
 
     public void changePlayerPosY(float amount) {
         this.playerPosY += amount;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
     }
 }

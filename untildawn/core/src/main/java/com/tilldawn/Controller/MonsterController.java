@@ -62,4 +62,17 @@ public class MonsterController {
             monster.getSprite().draw(Main.getBatch());
         }
     }
+
+    public void handleCollisionOfPlayerWithMonster() {
+        if (!game.isPlayerInvincible()) {
+            for (Monster monster : monsters) {
+                if (monster.getSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
+                    game.decrementHP();
+                    game.setPlayerInvincible(true);
+                    game.setInvincibleTime(0);
+                    return;
+                }
+            }
+        }
+    }
 }

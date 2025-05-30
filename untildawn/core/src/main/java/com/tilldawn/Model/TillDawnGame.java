@@ -7,7 +7,6 @@ import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
 import com.tilldawn.Model.enums.InputKey;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,6 +32,8 @@ public class TillDawnGame {
     private int XP = 0;
     private boolean isChoosingRandomAbility = false;
     private final ArrayList<Ability> randomAbilities = new ArrayList<>();
+    private boolean isPlayerInvincible = false;
+    private float invincibleTime = 0f;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -184,6 +185,10 @@ public class TillDawnGame {
         this.HP = HP;
     }
 
+    public void decrementHP() {
+        this.HP--;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -225,5 +230,21 @@ public class TillDawnGame {
 
     public ArrayList<Ability> getRandomAbilities() {
         return randomAbilities;
+    }
+
+    public boolean isPlayerInvincible() {
+        return isPlayerInvincible;
+    }
+
+    public void setPlayerInvincible(boolean playerInvincible) {
+        isPlayerInvincible = playerInvincible;
+    }
+
+    public float getInvincibleTime() {
+        return invincibleTime;
+    }
+
+    public void setInvincibleTime(float invincibleTime) {
+        this.invincibleTime = invincibleTime;
     }
 }

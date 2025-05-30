@@ -63,9 +63,20 @@ public class GameController {
         view.getTimer().setText(getTimeRemainingFormatted());
     }
 
+    private void handleInvincibleTimer(float delta) {
+        if (view.getGame().isPlayerInvincible()) {
+            view.getGame().setInvincibleTime(view.getGame().getInvincibleTime() + delta);
+            if (view.getGame().getInvincibleTime() >= 1) {
+                view.getGame().setPlayerInvincible(false);
+                view.getGame().setInvincibleTime(0);
+            }
+        }
+    }
+
     public void updateGame(float delta) {
         if (view != null) {
             handleTimer(delta);
+            handleInvincibleTimer(delta);
             if (view.getGame().isChoosingRandomAbility()) {
                 handleChooseAbilityMenuInputs();
                 return;
@@ -87,8 +98,14 @@ public class GameController {
             worldController.update(camera);
             weaponController.update(camera);
             monsterController.update(camera);
+            handleCollisions();
         }
     }
+
+    private void handleCollisions() {
+        monsterController.handleCollisionOfPlayerWithMonster();
+    }
+
 
     private void handleChooseAbilityMenuInputs() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {

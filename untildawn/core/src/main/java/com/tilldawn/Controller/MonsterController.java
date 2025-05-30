@@ -17,9 +17,10 @@ import java.util.Random;
 public class MonsterController {
     private final TillDawnGame game;
     private final ArrayList<Monster> monsters = new ArrayList<>();
-    private int numOfSpawnedTentacles = 0;
     private float tentacleSpawnTimer = 0f;
     private final float tentacleSpawnInterval = 3f;
+    private float eyebatSpawnTimer = 0f;
+    private final float eyebatSpawnInterval = 10f;
 
     public MonsterController(TillDawnGame game) {
         this.game = game;
@@ -42,10 +43,17 @@ public class MonsterController {
 
     public void update(OrthographicCamera camera, float delta) {
         tentacleSpawnTimer += delta;
+        eyebatSpawnTimer += delta;
         if (tentacleSpawnTimer >= tentacleSpawnInterval) {
             tentacleSpawnTimer = 0;
-            for (int i = 0; i <  ((game.getTime() - game.getGameTimer()) / 30); i++) {
-                spawnTentacle(camera);
+            for (int i = 0; i < (int) ((game.getTime() - game.getGameTimer()) / 30); i++) {
+                spawnMonster(camera, MonsterType.Tentacle);
+            }
+        }
+        if (eyebatSpawnTimer >= eyebatSpawnInterval) {
+            eyebatSpawnTimer = 0;
+            for (int i = 0; i < (int) ((4 * (game.getTime() - game.getGameTimer()) - game.getTime() + 30) / 30); i++) {
+                spawnMonster(camera, MonsterType.Eyebat);
             }
         }
         moveMonsters();
@@ -57,16 +65,16 @@ public class MonsterController {
             Monster monster = monsters.get(i);
             Vector2 direction = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
             monster.getSprite().translate(
-                direction.x * 0.5f,
-                direction.y * 0.5f
+                direction.x * 0.4f,
+                direction.y * 0.4f
             );
             float angle = direction.angleDeg();
             monster.getSprite().setRotation(angle - 90);
         }
     }
 
-    private void spawnTentacle(OrthographicCamera camera) {
-        Monster monster = new Monster(MonsterType.Tentacle);
+    private void spawnMonster(OrthographicCamera camera, MonsterType type) {
+        Monster monster = new Monster(type);
         Random random = new Random();
         float screenWidth = camera.viewportWidth;
         float screenHeight = camera.viewportHeight;
@@ -93,18 +101,11 @@ public class MonsterController {
         }
         monster.getSprite().setPosition(spawnX, spawnY);
         monsters.add(monster);
-
     }
 
     private void monsterAnimation() {
         for (Monster monster : monsters) {
-            Animation<Texture> animation = null;
-            if (monster.getType().equals(MonsterType.Tree)) {
-                animation = GameAssetManager.getInstance().getTreeAnimation();
-            }
-            else if (monster.getType().equals(MonsterType.Tentacle)) {
-                animation = GameAssetManager.getInstance().getTentacleAnimation();
-            }
+            Animation<Texture> animation = getTextureAnimation(monster);
             monster.getSprite().setRegion(animation.getKeyFrame(monster.getAnimationTime()));
             if (!animation.isAnimationFinished(monster.getAnimationTime())) {
                 monster.setAnimationTime(monster.getAnimationTime() + Gdx.graphics.getDeltaTime());
@@ -112,9 +113,22 @@ public class MonsterController {
             else {
                 monster.setAnimationTime(0);
             }
-
             animation.setPlayMode(Animation.PlayMode.LOOP);
         }
+    }
+
+    private static Animation<Texture> getTextureAnimation(Monster monster) {
+        Animation<Texture> animation = null;
+        if (monster.getType().equals(MonsterType.Tree)) {
+            animation = GameAssetManager.getInstance().getTreeAnimation();
+        }
+        else if (monster.getType().equals(MonsterType.Tentacle)) {
+            animation = GameAssetManager.getInstance().getTentacleAnimation();
+        }
+        else if (monster.getType().equals(MonsterType.Eyebat)) {
+            animation = GameAssetManager.getInstance().getEyebatAnimation();
+        }
+        return animation;
     }
 
     public void draw() {

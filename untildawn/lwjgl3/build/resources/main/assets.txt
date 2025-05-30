@@ -98,6 +98,7 @@ Monsters/Eyebat/T0.png
 Monsters/Eyebat/T1.png
 Monsters/Eyebat/T2.png
 Monsters/Eyebat/T3.png
+Monsters/Eyebat/bullet.png
 Monsters/Tentacle/TentacleAttack/TentacleAttack.png
 Monsters/Tentacle/TentacleIdle/T0.png
 Monsters/Tentacle/TentacleIdle/T1.png

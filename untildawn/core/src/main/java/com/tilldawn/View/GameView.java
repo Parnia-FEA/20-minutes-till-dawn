@@ -186,7 +186,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        controller.getWeaponController().handleWeaponShoot(screenX, screenY, button);
+        controller.getWeaponController().handleWeaponShoot(screenX, screenY, button, controller.getCamera());
         return false;
     }
 

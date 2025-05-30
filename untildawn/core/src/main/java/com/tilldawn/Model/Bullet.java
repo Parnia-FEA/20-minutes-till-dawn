@@ -3,22 +3,27 @@ package com.tilldawn.Model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+
+import java.util.Vector;
 
 public class Bullet {
     private Texture texture;
     private Sprite sprite;
     private int damage = 5;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
+    private Vector2 direction;
 
-    public Bullet(int x, int y, float startX, float startY){
+    public Bullet(float x, float y, Vector2 direction){
         this.texture = GameAssetManager.getInstance().getBulletTexture();
         this.sprite = new Sprite(texture);
         sprite.setSize(20 , 20);
         this.x = x;
         this.y = y;
-        sprite.setX(startX);
-        sprite.setY(startY);
+        sprite.setX(x);
+        sprite.setY(y);
+        this.direction = direction;
     }
 
     public Texture getTexture() {
@@ -33,11 +38,15 @@ public class Bullet {
         return damage;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
+    }
+
+    public Vector2 getDirection() {
+        return direction;
     }
 }

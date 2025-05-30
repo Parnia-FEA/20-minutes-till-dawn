@@ -133,4 +133,8 @@ public class GameController {
     public WeaponController getWeaponController() {
         return weaponController;
     }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
 }

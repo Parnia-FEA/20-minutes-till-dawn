@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.TillDawnGame;
@@ -84,10 +85,15 @@ public class WeaponController {
         weapon.getSprite().setRotation((float) (3.14 - angle * MathUtils.radiansToDegrees));
     }
 
-    public void handleWeaponShoot(int x, int y, int button) {
+    public void handleWeaponShoot(int x, int y, int button, OrthographicCamera camera) {
         if (button == game.getKeys().get(InputKey.ShootProjectile)) {
             if (weapon.getAmmo() > 0 && !weapon.isReloading()) {
-                bullets.add(new Bullet(x, y, weapon.getSprite().getX(), weapon.getSprite().getY()));
+                Vector3 mouse = new Vector3(x, y, 0);
+                camera.unproject(mouse);
+                //bullets.add(new Bullet(mousePos.x, mousePos.y, weapon.getSprite().getX(), weapon.getSprite().getY()));
+                Vector2 direction = new Vector2(mouse.x - game.getPlayerPosX(), mouse.y - game.getPlayerPosY()).nor();
+                Bullet bullet = new Bullet(game.getPlayerPosX(), game.getPlayerPosY(), direction);
+                bullets.add(bullet);
                 weapon.setAmmo(weapon.getAmmo() - 1);
                 if (weapon.getAmmo() == 0 && game.getPlayer().isAutoReload()) {
                     setReloadingTrue();
@@ -99,13 +105,10 @@ public class WeaponController {
 
     private void updateBullets(OrthographicCamera camera) {
         for(Bullet bullet : bullets) {
-            Vector2 direction = new Vector2(
-                camera.position.x - bullet.getX(),
-                camera.position.y - bullet.getY()
-            ).nor();
-
-            bullet.getSprite().setX(bullet.getSprite().getX() - direction.x * 5);
-            bullet.getSprite().setY(bullet.getSprite().getY() + direction.y * 5);
+            bullet.getSprite().translate(
+                bullet.getDirection().x * 5f,
+                bullet.getDirection().y * 5f
+            );
         }
     }
 }

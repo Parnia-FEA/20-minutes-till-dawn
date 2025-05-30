@@ -17,6 +17,7 @@ public class Weapon {
     private float reloadTime = 0f;
     private Texture reloadTexture;
     private Sprite reloadSprite = null;
+    private int projectile;
 
     public Weapon(WeaponEnum type) {
         this.type = type;
@@ -28,6 +29,7 @@ public class Weapon {
         sprite.setSize(50,50);
         this.ammo = type.getMaxAmmo();
         this.weaponReloadTime = type.getReloadTime();
+        this.projectile = type.getProjectile();
         this.reloadTexture = GameAssetManager.getInstance().getWeaponReloadTexture().get(type.toString()).get(0);
     }
 
@@ -113,5 +115,13 @@ public class Weapon {
 
     public void setMaxAmmo(int maxAmmo) {
         this.maxAmmo = maxAmmo;
+    }
+
+    public int getProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(int projectile) {
+        this.projectile = projectile;
     }
 }

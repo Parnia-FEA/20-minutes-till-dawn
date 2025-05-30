@@ -32,7 +32,7 @@ public class WeaponController {
             setReloadingTrue();
         }
         weapon.getSprite().setPosition(camera.position.x, camera.position.y - 8);
-        updateBullets(camera);
+        updateBullets();
         if (weapon.isReloading()) {
             updateWeaponReloading();
             weapon.getReloadSprite().setPosition(camera.position.x, camera.position.y - 8);
@@ -88,12 +88,33 @@ public class WeaponController {
     public void handleWeaponShoot(int x, int y, int button, OrthographicCamera camera) {
         if (button == game.getKeys().get(InputKey.ShootProjectile)) {
             if (weapon.getAmmo() > 0 && !weapon.isReloading()) {
+                /*
                 Vector3 mouse = new Vector3(x, y, 0);
                 camera.unproject(mouse);
                 //bullets.add(new Bullet(mousePos.x, mousePos.y, weapon.getSprite().getX(), weapon.getSprite().getY()));
                 Vector2 direction = new Vector2(mouse.x - game.getPlayerPosX(), mouse.y - game.getPlayerPosY()).nor();
-                Bullet bullet = new Bullet(game.getPlayerPosX(), game.getPlayerPosY(), direction);
-                bullets.add(bullet);
+                for (int i = 0; i < weapon.getProjectile(); i++) {
+                    Bullet bullet = new Bullet(game.getPlayerPosX(), game.getPlayerPosY(), direction);
+                    bullets.add(bullet);
+                }
+
+                 */
+                Vector3 mouse = new Vector3(x, y, 0);
+                camera.unproject(mouse);
+
+                Vector2 baseDirection = new Vector2(mouse.x - game.getPlayerPosX(), mouse.y - game.getPlayerPosY()).nor();
+
+                int projectileCount = weapon.getProjectile();
+                float spreadAngle = 10f;
+                float offsetDistance = 10f;
+
+                for (int i = 0; i < projectileCount; i++) {
+                    float angleOffset = ((i - (projectileCount - 1) / 2f) * spreadAngle);
+                    Vector2 rotatedDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
+                    float lateralOffset = (i - (projectileCount - 1) / 2f) * offsetDistance;
+                    Vector2 perpendicular = new Vector2(-baseDirection.y, baseDirection.x).nor().scl(lateralOffset);
+                    bullets.add(new Bullet(game.getPlayerPosX() + perpendicular.x, game.getPlayerPosY() + perpendicular.y, rotatedDirection));
+                }
                 weapon.setAmmo(weapon.getAmmo() - 1);
                 if (weapon.getAmmo() == 0 && game.getPlayer().isAutoReload()) {
                     setReloadingTrue();
@@ -103,7 +124,7 @@ public class WeaponController {
         }
     }
 
-    private void updateBullets(OrthographicCamera camera) {
+    private void updateBullets() {
         for(Bullet bullet : bullets) {
             bullet.getSprite().translate(
                 bullet.getDirection().x * 5f,

@@ -15,9 +15,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.Monster;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.InitialPositions;
+import com.tilldawn.Model.enums.MonsterType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +79,6 @@ public class GameView implements Screen, InputProcessor {
         this.abilitiesGroup.setMinCheckCount(1);
         this.abilitiesGroup.setMaxCheckCount(1);
         this.chooseAbilityButton = new TextButton("Choose", skin);
-
         this.timer = new Label("", skin);
         controller.setView(this);
     }

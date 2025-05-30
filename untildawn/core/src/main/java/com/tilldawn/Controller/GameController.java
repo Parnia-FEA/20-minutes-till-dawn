@@ -23,6 +23,7 @@ public class GameController {
     private PlayerController playerController;
     private WorldController worldController;
     private WeaponController weaponController;
+    private MonsterController monsterController;
     private ArrayList<Animation<Texture>> hearts = new ArrayList<>();
     private ArrayList<Float> heartTime = new ArrayList<>();
 
@@ -33,6 +34,7 @@ public class GameController {
         playerController = new PlayerController(view.getGame());
         worldController = new WorldController(playerController);
         weaponController = new WeaponController(view.getGame(), view.getGame().getWeapon());
+        monsterController = new MonsterController(view.getGame());
         for (Sprite heart : this.view.getHearts()) {
             this.hearts.add(GameAssetManager.getInstance().getHeartAnimation());
             this.heartTime.add(0f);
@@ -84,6 +86,7 @@ public class GameController {
             Main.getBatch().setProjectionMatrix(camera.combined);
             worldController.update(camera);
             weaponController.update(camera);
+            monsterController.update(camera);
         }
     }
 
@@ -133,6 +136,7 @@ public class GameController {
             worldController.draw();
             playerController.draw();
             weaponController.draw();
+            monsterController.draw();
             view.getAmmoIcon().draw(Main.getBatch());
             for (int i = 0; i < view.getHearts().size(); i++) {
                 if (view.getGame().getHP() <= i) {

@@ -92,7 +92,7 @@ public class GameAssetManager {
             treeImageFile.add(image);
             treeTexture.add(new Texture(image));
         }
-        treeAnimation = new Animation<>(0.1f, treeTexture.toArray(new Texture[0]));
+        treeAnimation = new Animation<>(0.5f, treeTexture.toArray(new Texture[0]));
 
         for (int i = 0; i < 4; i++) {
             String image = "Monsters/Tentacle/TentacleIdle/T" + i + ".png";

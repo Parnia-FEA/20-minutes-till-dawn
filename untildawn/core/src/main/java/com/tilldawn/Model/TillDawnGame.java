@@ -7,6 +7,7 @@ import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
 import com.tilldawn.Model.enums.InputKey;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +22,6 @@ public class TillDawnGame {
     private float playerPosX = (float) Gdx.graphics.getWidth() / 2;
     private float playerPosY = (float) Gdx.graphics.getHeight() / 2;
     private float playerHealth = 100;
-    private CollisionRect playerRect ;
     private float playerSpeed;
     private boolean isPlayerIdle = true;
     private boolean isPlayerRunning = false;
@@ -44,7 +44,6 @@ public class TillDawnGame {
         this.playerSprite = new Sprite(playerTexture);
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
-        playerRect = new CollisionRect((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight(), playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
         this.maxHP = hero.getSpeed();
         this.HP = this.maxHP;
     }
@@ -115,14 +114,6 @@ public class TillDawnGame {
 
     public void setPlayerHealth(float playerHealth) {
         this.playerHealth = playerHealth;
-    }
-
-    public CollisionRect getPlayerRect() {
-        return playerRect;
-    }
-
-    public void setPlayerRect(CollisionRect playerRect) {
-        this.playerRect = playerRect;
     }
 
     public float getPlayerSpeed() {

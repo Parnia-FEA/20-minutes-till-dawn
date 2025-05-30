@@ -54,6 +54,8 @@ public class GameAssetManager {
     private final ArrayList<String> tentacleImageFile = new ArrayList<>();
     private final ArrayList<Texture> tentacleTexture = new ArrayList<>();
     private final Animation<Texture> tentacleAnimation;
+    private final String eyebatBulletImageFile;
+    private final Texture eyebatBulletTexture;
 
 
     public GameAssetManager() {
@@ -86,6 +88,8 @@ public class GameAssetManager {
             eyebatTexture.add(new Texture(image));
         }
         eyebatAnimation = new Animation<>(0.1f, eyebatTexture.toArray(new Texture[0]));
+        this.eyebatBulletImageFile = "Monsters/Eyebat/bullet.png";
+        this.eyebatBulletTexture = new Texture(this.eyebatBulletImageFile);
 
         for (int i = 0; i < 3; i++) {
             String image = "Monsters/Tree/T" + i + ".png";
@@ -341,5 +345,13 @@ public class GameAssetManager {
 
     public Animation<Texture> getTentacleAnimation() {
         return tentacleAnimation;
+    }
+
+    public String getEyebatBulletImageFile() {
+        return eyebatBulletImageFile;
+    }
+
+    public Texture getEyebatBulletTexture() {
+        return eyebatBulletTexture;
     }
 }

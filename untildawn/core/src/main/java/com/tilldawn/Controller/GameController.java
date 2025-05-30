@@ -116,7 +116,7 @@ public class GameController {
             Main.getBatch().setProjectionMatrix(camera.combined);
             worldController.update(camera);
             weaponController.update(camera);
-            monsterController.update(camera);
+            monsterController.update(camera, delta);
             handleCollisions();
         }
     }

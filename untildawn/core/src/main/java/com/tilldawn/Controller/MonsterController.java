@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.Monster;
@@ -16,6 +17,9 @@ import java.util.Random;
 public class MonsterController {
     private final TillDawnGame game;
     private final ArrayList<Monster> monsters = new ArrayList<>();
+    private int numOfSpawnedTentacles = 0;
+    private float tentacleSpawnTimer = 0f;
+    private final float tentacleSpawnInterval = 3f;
 
     public MonsterController(TillDawnGame game) {
         this.game = game;
@@ -36,24 +40,80 @@ public class MonsterController {
         }
     }
 
-    public void update(OrthographicCamera camera) {
+    public void update(OrthographicCamera camera, float delta) {
+        tentacleSpawnTimer += delta;
+        if (tentacleSpawnTimer >= tentacleSpawnInterval) {
+            tentacleSpawnTimer = 0;
+            for (int i = 0; i <  ((game.getTime() - game.getGameTimer()) / 30); i++) {
+                spawnTentacle(camera);
+            }
+        }
+        moveMonsters();
         monsterAnimation();
+    }
+
+    private void moveMonsters() {
+        for (int i = 2500; i < monsters.size(); i++) {
+            Monster monster = monsters.get(i);
+            Vector2 direction = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
+            monster.getSprite().translate(
+                direction.x * 0.5f,
+                direction.y * 0.5f
+            );
+            float angle = direction.angleDeg();
+            monster.getSprite().setRotation(angle - 90);
+        }
+    }
+
+    private void spawnTentacle(OrthographicCamera camera) {
+        Monster monster = new Monster(MonsterType.Tentacle);
+        Random random = new Random();
+        float screenWidth = camera.viewportWidth;
+        float screenHeight = camera.viewportHeight;
+        Vector2 cameraCenter = new Vector2(camera.position.x, camera.position.y);
+        int side = random.nextInt(4);
+        float spawnX = 0, spawnY = 0;
+        switch (side) {
+            case 0:
+                spawnX = cameraCenter.x - screenWidth / 2 + random.nextFloat() * screenWidth;
+                spawnY = cameraCenter.y + screenHeight / 2 + 100;
+                break;
+            case 1:
+                spawnX = cameraCenter.x - screenWidth / 2 + random.nextFloat() * screenWidth;
+                spawnY = cameraCenter.y - screenHeight / 2 - 100;
+                break;
+            case 2:
+                spawnX = cameraCenter.x - screenWidth / 2 - 100;
+                spawnY = cameraCenter.y - screenHeight / 2 + random.nextFloat() * screenHeight;
+                break;
+            case 3:
+                spawnX = cameraCenter.x + screenWidth / 2 + 100;
+                spawnY = cameraCenter.y - screenHeight / 2 + random.nextFloat() * screenHeight;
+                break;
+        }
+        monster.getSprite().setPosition(spawnX, spawnY);
+        monsters.add(monster);
+
     }
 
     private void monsterAnimation() {
         for (Monster monster : monsters) {
+            Animation<Texture> animation = null;
             if (monster.getType().equals(MonsterType.Tree)) {
-                Animation<Texture> animation = GameAssetManager.getInstance().getTreeAnimation();
-                monster.getSprite().setRegion(animation.getKeyFrame(monster.getAnimationTime()));
-                if (!animation.isAnimationFinished(monster.getAnimationTime())) {
-                    monster.setAnimationTime(monster.getAnimationTime() + Gdx.graphics.getDeltaTime());
-                }
-                else {
-                    monster.setAnimationTime(0);
-                }
-
-                animation.setPlayMode(Animation.PlayMode.LOOP);
+                animation = GameAssetManager.getInstance().getTreeAnimation();
             }
+            else if (monster.getType().equals(MonsterType.Tentacle)) {
+                animation = GameAssetManager.getInstance().getTentacleAnimation();
+            }
+            monster.getSprite().setRegion(animation.getKeyFrame(monster.getAnimationTime()));
+            if (!animation.isAnimationFinished(monster.getAnimationTime())) {
+                monster.setAnimationTime(monster.getAnimationTime() + Gdx.graphics.getDeltaTime());
+            }
+            else {
+                monster.setAnimationTime(0);
+            }
+
+            animation.setPlayMode(Animation.PlayMode.LOOP);
         }
     }
 

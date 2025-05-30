@@ -107,7 +107,6 @@ public class WeaponController {
                 int projectileCount = weapon.getProjectile();
                 float spreadAngle = 10f;
                 float offsetDistance = 10f;
-
                 for (int i = 0; i < projectileCount; i++) {
                     float angleOffset = ((i - (projectileCount - 1) / 2f) * spreadAngle);
                     Vector2 rotatedDirection = new Vector2(baseDirection).rotateDeg(angleOffset);

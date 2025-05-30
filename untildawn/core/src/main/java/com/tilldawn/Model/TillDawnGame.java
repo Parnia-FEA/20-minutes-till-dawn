@@ -15,6 +15,7 @@ import java.util.Random;
 public class TillDawnGame {
     private Hero hero;
     private Weapon weapon;
+    private final float time;
     private float gameTimer;
     private Texture playerTexture;
     private Sprite playerSprite;
@@ -43,6 +44,7 @@ public class TillDawnGame {
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
         this.hero = hero;
         this.weapon = weapon;
+        this.time = time * 60;
         this.gameTimer = time * 60;
         this.playerSpeed = hero.getSpeed();
         this.playerTexture = GameAssetManager.getInstance().getIdleTexture().get(hero.toString()).get(0);
@@ -67,6 +69,10 @@ public class TillDawnGame {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public float getTime() {
+        return time;
     }
 
     public float getGameTimer() {

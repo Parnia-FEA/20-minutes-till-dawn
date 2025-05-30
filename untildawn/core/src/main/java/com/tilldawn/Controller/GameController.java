@@ -2,6 +2,7 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -37,9 +38,32 @@ public class GameController {
             this.heartTime.add(0f);
         }
     }
+    private void endGame() {
 
-    public void updateGame() {
+    }
+
+    public String getTimeRemainingFormatted() {
+        float remaining = view.getGame().getGameTimer();
+        int minutes = (int)(remaining / 60);
+        int seconds = (int)(remaining % 60);
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void handleTimer(float delta) {
+        view.getGame().setGameTimer(view.getGame().getGameTimer() - delta);
+
+        if (view.getGame().getGameTimer() <= 0) {
+            endGame();
+        }
+        if (view.getGame().getGameTimer() < 60) {
+            view.getTimer().setColor(Color.RED);
+        }
+        view.getTimer().setText(getTimeRemainingFormatted());
+    }
+
+    public void updateGame(float delta) {
         if (view != null) {
+            handleTimer(delta);
             if (view.getGame().isChoosingRandomAbility()) {
                 handleChooseAbilityMenuInputs();
                 return;

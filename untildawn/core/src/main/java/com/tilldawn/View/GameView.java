@@ -41,7 +41,7 @@ public class GameView implements Screen, InputProcessor {
     private final TextButton chooseAbilityButton;
     private Table abilitySelectTable;
 
-    private final Label message;
+    private final Label timer;
 
     private GameController controller;
 
@@ -78,8 +78,7 @@ public class GameView implements Screen, InputProcessor {
         this.abilitiesGroup.setMaxCheckCount(1);
         this.chooseAbilityButton = new TextButton("Choose", skin);
 
-        this.message = new Label("bbb", skin);
-        this.message.setColor(Color.GOLD);
+        this.timer = new Label("", skin);
         controller.setView(this);
     }
 
@@ -100,9 +99,11 @@ public class GameView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         ammo.setPosition(InitialPositions.Ammo.getX(), InitialPositions.AmmoIcon.getY());
-        message.setPosition(InitialPositions.Message.getX(), InitialPositions.Message.getY());
+        timer.setPosition(InitialPositions.Timer.getX(), InitialPositions.Timer.getY());
+        timer.setText(controller.getTimeRemainingFormatted());
+        timer.setColor(Color.GREEN);
         stage.addActor(ammo);
-        stage.addActor(message);
+        stage.addActor(timer);
         abilitySelectTable.setVisible(false);
         abilitySelectTable.add(chooseAbilityLabel).colspan(7).center();
         abilitySelectTable.add().height(150).colspan(2);
@@ -121,7 +122,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        controller.updateGame();
+        controller.updateGame(delta);
         updateActors();
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
@@ -136,6 +137,7 @@ public class GameView implements Screen, InputProcessor {
                 abilitiesCheckBox.get(i).setText(ability.toString());
             }
         }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -248,11 +250,11 @@ public class GameView implements Screen, InputProcessor {
         return abilitiesGroup;
     }
 
-    public Label getMessage() {
-        return message;
-    }
-
     public Table getAbilitySelectTable() {
         return abilitySelectTable;
+    }
+
+    public Label getTimer() {
+        return timer;
     }
 }

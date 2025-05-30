@@ -43,6 +43,18 @@ public class GameAssetManager {
     private final Animation<Texture> emptyHeartAnimation;
     private final HashMap<String, String> abilityImageFile = new HashMap<>();
     private final HashMap<String, Texture> abilityTexture = new HashMap<>();
+    private final String elderImageFile;
+    private final Texture elderTexture;
+    private final ArrayList<String> eyebatImageFile = new ArrayList<>();
+    private final ArrayList<Texture> eyebatTexture = new ArrayList<>();
+    private final Animation<Texture> eyebatAnimation;
+    private final ArrayList<String> treeImageFile = new ArrayList<>();
+    private final ArrayList<Texture> treeTexture = new ArrayList<>();
+    private final Animation<Texture> treeAnimation;
+    private final ArrayList<String> tentacleImageFile = new ArrayList<>();
+    private final ArrayList<Texture> tentacleTexture = new ArrayList<>();
+    private final Animation<Texture> tentacleAnimation;
+
 
     public GameAssetManager() {
         for (int i = 0 ; i < 7; i++) {
@@ -65,6 +77,29 @@ public class GameAssetManager {
         emptyHeartTexture = new Texture(emptyHeartImageFile);
         emptyHeartAnimation = new Animation<>(0.1f, emptyHeartTexture);
         buildAbilities();
+        elderImageFile = "Monsters/Elder/ElderBrain.png";
+        elderTexture = new Texture(elderImageFile);
+
+        for (int i = 0; i < 4; i++) {
+            String image = "Monsters/Eyebat/T" + i + ".png";
+            eyebatImageFile.add(image);
+            eyebatTexture.add(new Texture(image));
+        }
+        eyebatAnimation = new Animation<>(0.1f, eyebatTexture.toArray(new Texture[0]));
+
+        for (int i = 0; i < 3; i++) {
+            String image = "Monsters/Tree/T" + i + ".png";
+            treeImageFile.add(image);
+            treeTexture.add(new Texture(image));
+        }
+        treeAnimation = new Animation<>(0.1f, treeTexture.toArray(new Texture[0]));
+
+        for (int i = 0; i < 4; i++) {
+            String image = "Monsters/Tentacle/TentacleIdle/T" + i + ".png";
+            tentacleImageFile.add(image);
+            tentacleTexture.add(new Texture(image));
+        }
+        tentacleAnimation = new Animation<>(0.1f, tentacleTexture.toArray(new Texture[0]));
     }
 
     private void buildAbilities() {
@@ -262,5 +297,49 @@ public class GameAssetManager {
 
     public HashMap<String, Texture> getAbilityTexture() {
         return abilityTexture;
+    }
+
+    public String getElderImageFile() {
+        return elderImageFile;
+    }
+
+    public Texture getElderTexture() {
+        return elderTexture;
+    }
+
+    public ArrayList<String> getEyebatImageFile() {
+        return eyebatImageFile;
+    }
+
+    public ArrayList<Texture> getEyebatTexture() {
+        return eyebatTexture;
+    }
+
+    public Animation<Texture> getEyebatAnimation() {
+        return eyebatAnimation;
+    }
+
+    public ArrayList<String> getTreeImageFile() {
+        return treeImageFile;
+    }
+
+    public ArrayList<Texture> getTreeTexture() {
+        return treeTexture;
+    }
+
+    public Animation<Texture> getTreeAnimation() {
+        return treeAnimation;
+    }
+
+    public ArrayList<String> getTentacleImageFile() {
+        return tentacleImageFile;
+    }
+
+    public ArrayList<Texture> getTentacleTexture() {
+        return tentacleTexture;
+    }
+
+    public Animation<Texture> getTentacleAnimation() {
+        return tentacleAnimation;
     }
 }

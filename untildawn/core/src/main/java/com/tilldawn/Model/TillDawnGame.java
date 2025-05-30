@@ -34,6 +34,10 @@ public class TillDawnGame {
     private final ArrayList<Ability> randomAbilities = new ArrayList<>();
     private boolean isPlayerInvincible = false;
     private float invincibleTime = 0f;
+    private boolean isSpeedyAbilityOn = false;
+    private float speedyAbilityTimer = 0f;
+    private boolean isDamagerAbilityOn = false;
+    private float DamagerAbilityTimer = 0f;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -118,6 +122,7 @@ public class TillDawnGame {
     }
 
     public float getPlayerSpeed() {
+        if (isSpeedyAbilityOn) return playerSpeed * 2;
         return playerSpeed;
     }
 
@@ -246,5 +251,42 @@ public class TillDawnGame {
 
     public void setInvincibleTime(float invincibleTime) {
         this.invincibleTime = invincibleTime;
+    }
+
+    public boolean isSpeedyAbilityOn() {
+        return isSpeedyAbilityOn;
+    }
+
+    public void setSpeedyAbilityOn(boolean speedyAbilityOn) {
+        isSpeedyAbilityOn = speedyAbilityOn;
+    }
+
+    public float getSpeedyAbilityTimer() {
+        return speedyAbilityTimer;
+    }
+
+    public void setSpeedyAbilityTimer(float speedyAbilityTimer) {
+        this.speedyAbilityTimer = speedyAbilityTimer;
+    }
+
+    public boolean isDamagerAbilityOn() {
+        return isDamagerAbilityOn;
+    }
+
+    public void setDamagerAbilityOn(boolean damagerAbilityOn) {
+        isDamagerAbilityOn = damagerAbilityOn;
+    }
+
+    public float getDamagerAbilityTimer() {
+        return DamagerAbilityTimer;
+    }
+
+    public void setDamagerAbilityTimer(float damagerAbilityTimer) {
+        DamagerAbilityTimer = damagerAbilityTimer;
+    }
+
+    public int getWeaponDamage() {
+        if (isDamagerAbilityOn) return weapon.getType().getDamage() * 125 / 100;
+        return weapon.getType().getDamage();
     }
 }

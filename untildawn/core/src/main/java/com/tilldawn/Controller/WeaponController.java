@@ -22,9 +22,9 @@ public class WeaponController {
     private Weapon weapon;
     private ArrayList<Bullet> bullets = new ArrayList<>();
 
-    public WeaponController(TillDawnGame game, Weapon weapon) {
+    public WeaponController(TillDawnGame game) {
         this.game = game;
-        this.weapon = weapon;
+        this.weapon = game.getWeapon();
     }
 
     public void update(OrthographicCamera camera) {

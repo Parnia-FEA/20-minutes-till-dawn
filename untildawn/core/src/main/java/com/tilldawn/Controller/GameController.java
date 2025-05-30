@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.InitialPositions;
-import com.tilldawn.Model.enums.InputKey;
 import com.tilldawn.View.GameView;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class GameController {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         playerController = new PlayerController(view.getGame());
         worldController = new WorldController(playerController);
-        weaponController = new WeaponController(view.getGame(), view.getGame().getWeapon());
+        weaponController = new WeaponController(view.getGame());
         monsterController = new MonsterController(view.getGame());
         for (Sprite heart : this.view.getHearts()) {
             this.hearts.add(GameAssetManager.getInstance().getHeartAnimation());
@@ -73,10 +73,29 @@ public class GameController {
         }
     }
 
+    private void handleAbilityTimers(float delta) {
+        TillDawnGame game = view.getGame();
+        if (game.isSpeedyAbilityOn()) {
+            game.setSpeedyAbilityTimer(game.getSpeedyAbilityTimer() + delta);
+            if (game.getSpeedyAbilityTimer() >= 10) {
+                game.setSpeedyAbilityTimer(0);
+                game.setSpeedyAbilityOn(false);
+            }
+        }
+        if (game.isDamagerAbilityOn()) {
+            game.setDamagerAbilityTimer(game.getDamagerAbilityTimer() + delta);
+            if (game.getDamagerAbilityTimer() >= 10) {
+                game.setDamagerAbilityTimer(0);
+                game.setDamagerAbilityOn(false);
+            }
+        }
+    }
+
     public void updateGame(float delta) {
         if (view != null) {
             handleTimer(delta);
             handleInvincibleTimer(delta);
+            handleAbilityTimers(delta);
             if (view.getGame().isChoosingRandomAbility()) {
                 handleChooseAbilityMenuInputs();
                 return;
@@ -107,16 +126,45 @@ public class GameController {
     }
 
 
+    private void handleAbility(Ability ability) {
+        TillDawnGame game = view.getGame();
+        if (ability.equals(Ability.Vitality)) {
+            game.setMaxHP(game.getMaxHP() + 1);
+            Sprite sprite = new Sprite(view.getFirstHeartTexture());
+            sprite.setPosition(InitialPositions.Hearts.getX() + 30 * (view.getHearts().size()), InitialPositions.Hearts.getY());
+            view.getHearts().add(sprite);
+            sprite = new Sprite(view.getEmptyHeartTexture());
+            sprite.setPosition(InitialPositions.Hearts.getX() + 30 * (view.getEmptyHearts().size()), InitialPositions.Hearts.getY());
+            view.getEmptyHearts().add(sprite);
+            this.hearts.add(GameAssetManager.getInstance().getHeartAnimation());
+            this.heartTime.add(0f);
+        }
+        else if (ability.equals(Ability.Damager)) {
+            game.setDamagerAbilityOn(true);
+            game.setDamagerAbilityTimer(0);
+        }
+        else if (ability.equals(Ability.Procrease)) {
+            game.getWeapon().setProjectile(game.getWeapon().getProjectile() + 1);
+        }
+        else if (ability.equals(Ability.Amocrease)) {
+            game.getWeapon().setMaxAmmo(game.getWeapon().getMaxAmmo() + 5);
+        }
+        else if (ability.equals(Ability.Speedy)){
+            game.setSpeedyAbilityOn(true);
+            game.setSpeedyAbilityTimer(0);
+        }
+    }
+
     private void handleChooseAbilityMenuInputs() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             int index = view.getAbilitiesGroup().getCheckedIndex();
-            //if (index != -1) {
+            if (index != -1) {
                 CheckBox checkedBox = view.getAbilitiesCheckBox().get(index);
                 Ability ability = Ability.valueOf(checkedBox.getText().toString());
-                //TODO ability
+                handleAbility(ability);
                 view.getAbilitySelectTable().setVisible(false);
                 view.getGame().setChoosingRandomAbility(false);
-            //}
+            }
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             int index = view.getAbilitiesGroup().getCheckedIndex();

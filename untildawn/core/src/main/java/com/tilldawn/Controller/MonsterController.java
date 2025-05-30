@@ -149,4 +149,8 @@ public class MonsterController {
             }
         }
     }
+
+    public void killEyebats() {
+        //TODO
+    }
 }

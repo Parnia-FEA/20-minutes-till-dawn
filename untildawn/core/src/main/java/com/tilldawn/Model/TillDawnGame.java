@@ -39,6 +39,7 @@ public class TillDawnGame {
     private float speedyAbilityTimer = 0f;
     private boolean isDamagerAbilityOn = false;
     private float DamagerAbilityTimer = 0f;
+    private boolean isEyebatCheatCodeUsed = false;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -204,30 +205,26 @@ public class TillDawnGame {
         return level;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void increaseLevel() {
+        level++;
+        isChoosingRandomAbility = true;
+        randomAbilities.clear();
+        ArrayList<Ability> abilities = new ArrayList<>(Arrays.asList(Ability.values()));
+        for (int i = 0; i < 3; i++) {
+            int random = (new Random()).nextInt(abilities.size());
+            randomAbilities.add(abilities.get(random));
+            abilities.remove(random);
+        }
     }
 
     public int getXP() {
         return XP;
     }
 
-    public void setXP(int xp) {
-        this.XP = xp;
-    }
-
     public void increaseXP(int amount) {
         XP += amount;
         if (XP >= (level * (level + 1)) * 10) {
-            level++;
-            isChoosingRandomAbility = true;
-            randomAbilities.clear();
-            ArrayList<Ability> abilities = new ArrayList<>(Arrays.asList(Ability.values()));
-            for (int i = 0; i < 3; i++) {
-                int random = (new Random()).nextInt(abilities.size());
-                randomAbilities.add(abilities.get(random));
-                abilities.remove(random);
-            }
+            increaseLevel();
         }
     }
 
@@ -294,5 +291,13 @@ public class TillDawnGame {
     public int getWeaponDamage() {
         if (isDamagerAbilityOn) return weapon.getType().getDamage() * 125 / 100;
         return weapon.getType().getDamage();
+    }
+
+    public boolean isEyebatCheatCodeUsed() {
+        return isEyebatCheatCodeUsed;
+    }
+
+    public void setEyebatCheatCodeUsed(boolean eyebatCheatCodeUsed) {
+        isEyebatCheatCodeUsed = eyebatCheatCodeUsed;
     }
 }

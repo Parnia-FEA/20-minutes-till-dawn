@@ -12,6 +12,7 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
+import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InitialPositions;
 import com.tilldawn.View.GameView;
 
@@ -91,6 +92,31 @@ public class GameController {
         }
     }
 
+    private void handleCheatCodes() {
+        if (Gdx.input.isKeyJustPressed(CheatCode.DecrementTime.getMainKey())) {
+            if (view.getGame().getGameTimer() > 60)
+                view.getGame().setGameTimer(view.getGame().getGameTimer() - 60);
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(CheatCode.IncrementLevel.getMainKey())) {
+            view.getGame().increaseLevel();
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(CheatCode.IncrementHealth.getMainKey())) {
+            if (view.getGame().getHP() <= 1) {
+                view.getGame().setHP(view.getGame().getHP() + 1);
+            }
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(CheatCode.KillAllEyebats.getMainKey())) {
+            if (!view.getGame().isEyebatCheatCodeUsed()) {
+                monsterController.killEyebats();
+                view.getGame().setEyebatCheatCodeUsed(true);
+            }
+        }
+
+    }
+
     public void updateGame(float delta) {
         if (view != null) {
             handleTimer(delta);
@@ -100,6 +126,7 @@ public class GameController {
                 handleChooseAbilityMenuInputs();
                 return;
             }
+            handleCheatCodes();
             playerController.update();
             camera.position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
             camera.update();

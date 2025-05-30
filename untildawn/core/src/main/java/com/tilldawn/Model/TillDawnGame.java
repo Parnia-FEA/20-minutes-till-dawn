@@ -40,6 +40,7 @@ public class TillDawnGame {
     private boolean isDamagerAbilityOn = false;
     private float DamagerAbilityTimer = 0f;
     private boolean isEyebatCheatCodeUsed = false;
+    private int kill = 0;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -52,7 +53,7 @@ public class TillDawnGame {
         this.playerSprite = new Sprite(playerTexture);
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
-        this.maxHP = hero.getSpeed();
+        this.maxHP = hero.getHP();
         this.HP = this.maxHP;
     }
 
@@ -299,5 +300,13 @@ public class TillDawnGame {
 
     public void setEyebatCheatCodeUsed(boolean eyebatCheatCodeUsed) {
         isEyebatCheatCodeUsed = eyebatCheatCodeUsed;
+    }
+
+    public int getKill() {
+        return kill;
+    }
+
+    public void setKill(int kill) {
+        this.kill = kill;
     }
 }

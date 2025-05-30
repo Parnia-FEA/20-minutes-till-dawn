@@ -150,6 +150,7 @@ public class GameController {
 
     private void handleCollisions() {
         monsterController.handleCollisionOfPlayerWithMonster();
+        monsterController.handleCollisionOfBulletsAndMonsters(weaponController.getBullets());
     }
 
 

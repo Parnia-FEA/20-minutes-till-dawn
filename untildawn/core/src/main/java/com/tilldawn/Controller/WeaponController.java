@@ -131,4 +131,8 @@ public class WeaponController {
             );
         }
     }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
 }

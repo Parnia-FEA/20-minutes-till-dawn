@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
+import com.tilldawn.Model.Bullet;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.Monster;
 import com.tilldawn.Model.TillDawnGame;
@@ -65,8 +66,8 @@ public class MonsterController {
             Monster monster = monsters.get(i);
             Vector2 direction = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
             monster.getSprite().translate(
-                direction.x * 0.4f,
-                direction.y * 0.4f
+                direction.x * 0.2f,
+                direction.y * 0.2f
             );
             float angle = direction.angleDeg();
             monster.getSprite().setRotation(angle - 90);
@@ -151,6 +152,38 @@ public class MonsterController {
     }
 
     public void killEyebats() {
-        //TODO
+        ArrayList<Monster> killed = new ArrayList<>();
+        for (int i = 2500; i < monsters.size(); i++) {
+            Monster monster = monsters.get(i);
+            if (monster.getType().equals(MonsterType.Eyebat)) {
+                killed.add(monster);
+            }
+        }
+        game.setKill(game.getKill() + killed.size());
+        for (Monster monster : killed) {
+            monsters.remove(monster);
+        }
+    }
+
+    public void handleCollisionOfBulletsAndMonsters(ArrayList<Bullet> bullets) {
+        int damage = game.getWeaponDamage();
+        ArrayList<Monster> killed = new ArrayList<>();
+        for (int i = 2500; i < monsters.size(); i++) {
+            Monster monster = monsters.get(i);
+            Bullet collidedBullet = null;
+            for (Bullet bullet : bullets) {
+                if (monster.getSprite().getBoundingRectangle().overlaps(bullet.getSprite().getBoundingRectangle())) {
+                    monster.setHP(monster.getHP() - damage);
+                    collidedBullet = bullet;
+                    break;
+                }
+            }
+            if (monster.getHP() <= 0) killed.add(monster);
+            if (collidedBullet != null) bullets.remove(collidedBullet);
+        }
+        game.setKill(game.getKill() + killed.size());
+        for (Monster monster : killed) {
+            monsters.remove(monster);
+        }
     }
 }

@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
-import com.tilldawn.Model.Bullet;
-import com.tilldawn.Model.GameAssetManager;
-import com.tilldawn.Model.Monster;
-import com.tilldawn.Model.TillDawnGame;
+import com.tilldawn.Model.*;
 import com.tilldawn.Model.enums.MonsterType;
 
 import java.util.ArrayList;
@@ -20,6 +17,7 @@ public class MonsterController {
     private final TillDawnGame game;
     private final ArrayList<Monster> monsters = new ArrayList<>();
     private final ArrayList<Monster> explodedMonsters = new ArrayList<>();
+    private final ArrayList<Drop> drops = new ArrayList<>();
     private float tentacleSpawnTimer = 0f;
     private final float tentacleSpawnInterval = 3f;
     private float eyebatSpawnTimer = 0f;
@@ -76,6 +74,10 @@ public class MonsterController {
         }
         for (Monster monster : toBeDeleted) {
             explodedMonsters.remove(monster);
+            Drop drop = new Drop();
+            drop.getSprite().setPosition(monster.getSprite().getX(), monster.getSprite().getY());
+            drop.getSprite().setSize(drop.getSprite().getWidth() * 0.1f, drop.getSprite().getHeight() * 0.1f);
+            drops.add(drop);
         }
     }
 
@@ -151,6 +153,9 @@ public class MonsterController {
     }
 
     public void draw() {
+        for (Drop drop : drops) {
+            drop.getSprite().draw(Main.getBatch());
+        }
         for (Monster monster : monsters) {
             monster.getSprite().draw(Main.getBatch());
         }
@@ -214,5 +219,19 @@ public class MonsterController {
         Monster explodedMonster = new Monster(MonsterType.Exploded);
         explodedMonster.getSprite().setPosition(monster.getSprite().getX(), monster.getSprite().getY());
         explodedMonsters.add(explodedMonster);
+    }
+
+    public void handleCollisionOfPlayerAndDrops() {
+        Sprite player = game.getPlayerSprite();
+        ArrayList<Drop> toBeDeleted = new ArrayList<>();
+        for (Drop drop : drops) {
+            if (drop.getSprite().getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
+                toBeDeleted.add(drop);
+                game.increaseXP(3);
+            }
+        }
+        for (Drop drop : toBeDeleted) {
+            drops.remove(drop);
+        }
     }
 }

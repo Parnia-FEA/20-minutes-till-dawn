@@ -199,7 +199,7 @@ public class TillDawnGame {
     }
 
     public void decrementHP() {
-        this.HP--;
+        if (this.HP > 0) this.HP--;
     }
 
     public int getLevel() {

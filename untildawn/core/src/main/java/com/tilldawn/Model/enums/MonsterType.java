@@ -7,7 +7,8 @@ public enum MonsterType {
     Tree(null, GameAssetManager.getInstance().getTreeTexture().get(0)),
     Tentacle(25, GameAssetManager.getInstance().getTentacleTexture().get(0)),
     Eyebat(50, GameAssetManager.getInstance().getEyebatTexture().get(0)),
-    Elder(400, GameAssetManager.getInstance().getElderTexture());
+    Elder(400, GameAssetManager.getInstance().getElderTexture()),
+    Exploded(0, GameAssetManager.getInstance().getExplosionTexture().get(0));
 
     private final Integer HP;
     private final Texture texture;

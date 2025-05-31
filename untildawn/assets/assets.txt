@@ -94,6 +94,12 @@ Heroes/Shana/walk/Walk_5.png
 Heroes/Shana/walk/Walk_6.png
 Heroes/Shana/walk/Walk_7.png
 Monsters/Elder/ElderBrain.png
+Monsters/ExplosionFX/ExplosionFX_0.png
+Monsters/ExplosionFX/ExplosionFX_1.png
+Monsters/ExplosionFX/ExplosionFX_2.png
+Monsters/ExplosionFX/ExplosionFX_3.png
+Monsters/ExplosionFX/ExplosionFX_4.png
+Monsters/ExplosionFX/ExplosionFX_5.png
 Monsters/Eyebat/T0.png
 Monsters/Eyebat/T1.png
 Monsters/Eyebat/T2.png
@@ -128,6 +134,7 @@ Weapons/ShutGun/Still.png
 ammoIcon.png
 background.png
 bullet.png
+crystal.png
 libgdx.png
 skin/font-export.fnt
 skin/font-subtitle-export.fnt

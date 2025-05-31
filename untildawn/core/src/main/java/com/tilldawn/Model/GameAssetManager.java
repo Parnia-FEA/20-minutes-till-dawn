@@ -56,6 +56,11 @@ public class GameAssetManager {
     private final Animation<Texture> tentacleAnimation;
     private final String eyebatBulletImageFile;
     private final Texture eyebatBulletTexture;
+    private final ArrayList<String> explosionImageFile = new ArrayList<>();
+    private final ArrayList<Texture> explosionTexture = new ArrayList<>();
+    private final Animation<Texture> explosionAnimation;
+    private final String crystalImageFile;
+    private final Texture crystalTexture;
 
 
     public GameAssetManager() {
@@ -104,6 +109,16 @@ public class GameAssetManager {
             tentacleTexture.add(new Texture(image));
         }
         tentacleAnimation = new Animation<>(0.1f, tentacleTexture.toArray(new Texture[0]));
+
+        for (int i = 0; i < 6; i++) {
+            String image = "Monsters/ExplosionFX/ExplosionFX_" + i + ".png";
+            explosionImageFile.add(image);
+            explosionTexture.add(new Texture(image));
+        }
+        explosionAnimation = new Animation<>(0.1f, explosionTexture.toArray(new Texture[0]));
+
+        crystalImageFile = "crystal.png";
+        crystalTexture = new Texture(crystalImageFile);
     }
 
     private void buildAbilities() {
@@ -353,5 +368,25 @@ public class GameAssetManager {
 
     public Texture getEyebatBulletTexture() {
         return eyebatBulletTexture;
+    }
+
+    public ArrayList<String> getExplosionImageFile() {
+        return explosionImageFile;
+    }
+
+    public ArrayList<Texture> getExplosionTexture() {
+        return explosionTexture;
+    }
+
+    public Animation<Texture> getExplosionAnimation() {
+        return explosionAnimation;
+    }
+
+    public String getCrystalImageFile() {
+        return crystalImageFile;
+    }
+
+    public Texture getCrystalTexture() {
+        return crystalTexture;
     }
 }

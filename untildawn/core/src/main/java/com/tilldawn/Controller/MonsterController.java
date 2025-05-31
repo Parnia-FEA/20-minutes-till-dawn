@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.tilldawn.Main;
 import com.tilldawn.Model.Bullet;
@@ -18,6 +19,7 @@ import java.util.Random;
 public class MonsterController {
     private final TillDawnGame game;
     private final ArrayList<Monster> monsters = new ArrayList<>();
+    private final ArrayList<Monster> explodedMonsters = new ArrayList<>();
     private float tentacleSpawnTimer = 0f;
     private final float tentacleSpawnInterval = 3f;
     private float eyebatSpawnTimer = 0f;
@@ -59,6 +61,22 @@ public class MonsterController {
         }
         moveMonsters();
         monsterAnimation();
+        explodedMonsterAnimation();
+    }
+
+    private void explodedMonsterAnimation() {
+        ArrayList<Monster> toBeDeleted = new ArrayList<>();
+        for (Monster explodedMonster : explodedMonsters) {
+            Animation<Texture> animation = GameAssetManager.getInstance().getExplosionAnimation();
+            explodedMonster.setAnimationTime(explodedMonster.getAnimationTime() + Gdx.graphics.getDeltaTime());
+            explodedMonster.getSprite().setRegion(animation.getKeyFrame(explodedMonster.getAnimationTime()));
+            if (animation.isAnimationFinished(explodedMonster.getAnimationTime())) {
+                toBeDeleted.add(explodedMonster);
+            }
+        }
+        for (Monster monster : toBeDeleted) {
+            explodedMonsters.remove(monster);
+        }
     }
 
     private void moveMonsters() {
@@ -136,6 +154,9 @@ public class MonsterController {
         for (Monster monster : monsters) {
             monster.getSprite().draw(Main.getBatch());
         }
+        for (Monster monster : explodedMonsters) {
+            monster.getSprite().draw(Main.getBatch());
+        }
     }
 
     public void handleCollisionOfPlayerWithMonster() {
@@ -162,6 +183,7 @@ public class MonsterController {
         game.setKill(game.getKill() + killed.size());
         for (Monster monster : killed) {
             monsters.remove(monster);
+            monsterExploded(monster);
         }
     }
 
@@ -184,6 +206,13 @@ public class MonsterController {
         game.setKill(game.getKill() + killed.size());
         for (Monster monster : killed) {
             monsters.remove(monster);
+            monsterExploded(monster);
         }
+    }
+
+    private void monsterExploded(Monster monster) {
+        Monster explodedMonster = new Monster(MonsterType.Exploded);
+        explodedMonster.getSprite().setPosition(monster.getSprite().getX(), monster.getSprite().getY());
+        explodedMonsters.add(explodedMonster);
     }
 }

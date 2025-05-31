@@ -63,7 +63,6 @@ public class PreGameMenuController {
                                 WeaponEnum weapon = WeaponEnum.valueOf(selectedWeapon.getText().toString());
                                 int time = view.getTimeAmount().get(selectedTimeIndex);
                                 TillDawnGame game = new TillDawnGame(hero, new Weapon(weapon), time);
-                                GameData.getInstance().getCurrentPlayer().setGame(game);
                                 view.setConditionMessage("Loading...", Color.GREEN);
                                 Timer.schedule(new Timer.Task() {
                                     @Override

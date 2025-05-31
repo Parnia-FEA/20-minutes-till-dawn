@@ -41,7 +41,8 @@ public class TillDawnGame {
     private float DamagerAbilityTimer = 0f;
     private boolean isEyebatCheatCodeUsed = false;
     private int kill = 0;
-    private final ArrayList<Ability> abilities = new ArrayList<>();
+    private final HashMap<Ability, Integer> abilities = new HashMap<>();
+    private boolean isGamePaused = false;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -56,6 +57,9 @@ public class TillDawnGame {
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
         this.maxHP = hero.getHP();
         this.HP = this.maxHP;
+        for (Ability value : Ability.values()) {
+            abilities.put(value, 0);
+        }
     }
 
     public Hero getHero() {
@@ -311,11 +315,15 @@ public class TillDawnGame {
         this.kill = kill;
     }
 
-    public ArrayList<Ability> getAbilities() {
+    public HashMap<Ability, Integer> getAbilities() {
         return abilities;
     }
 
-    public void addAbility(Ability ability) {
-        abilities.add(ability);
+    public boolean isGamePaused() {
+        return isGamePaused;
+    }
+
+    public void setGamePaused(boolean gamePaused) {
+        isGamePaused = gamePaused;
     }
 }

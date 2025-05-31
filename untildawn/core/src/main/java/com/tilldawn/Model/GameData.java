@@ -1,5 +1,7 @@
 package com.tilldawn.Model;
 
+import com.tilldawn.View.GameView;
+
 import java.util.ArrayList;
 
 public class GameData {
@@ -39,7 +41,4 @@ public class GameData {
         this.currentPlayer = currentPlayer;
     }
 
-    public TillDawnGame getCurrentGame() {
-        return currentPlayer.getGame();
-    }
 }

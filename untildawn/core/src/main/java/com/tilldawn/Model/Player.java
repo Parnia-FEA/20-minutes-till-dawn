@@ -3,6 +3,7 @@ package com.tilldawn.Model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.View.GameView;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -15,7 +16,7 @@ public class Player {
     private int points = 0;
     private boolean isGuest = false;
     private int avatarIndex;
-    private TillDawnGame game = null;
+    private GameView game = null;
     private final HashMap<InputKey, Integer> keys = new HashMap<>();
     private boolean autoReload = false;
 
@@ -90,11 +91,11 @@ public class Player {
         batch.draw(getAvatar(), x, y);
     }
 
-    public TillDawnGame getGame() {
+    public GameView getGame() {
         return game;
     }
 
-    public void setGame(TillDawnGame game) {
+    public void setGame(GameView game) {
         this.game = game;
     }
 

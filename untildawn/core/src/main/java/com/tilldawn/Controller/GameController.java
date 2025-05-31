@@ -2,19 +2,27 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InitialPositions;
+import com.tilldawn.Model.enums.InputKey;
 import com.tilldawn.View.GameView;
+import com.tilldawn.View.MainMenuView;
 
 import java.util.ArrayList;
 
@@ -119,6 +127,7 @@ public class GameController {
 
     public void updateGame(float delta) {
         if (view != null) {
+            if (view.getGame().isGamePaused()) return;
             handleTimer(delta);
             handleInvincibleTimer(delta);
             handleAbilityTimers(delta);
@@ -127,6 +136,9 @@ public class GameController {
                 return;
             }
             handleCheatCodes();
+            if (Gdx.input.isKeyJustPressed(view.getGame().getKeys().get(InputKey.Pause))) {
+                view.getGame().setGamePaused(true);
+            }
             playerController.update();
             camera.position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
             camera.update();
@@ -145,6 +157,31 @@ public class GameController {
             weaponController.update(camera);
             monsterController.update(camera, delta);
             handleCollisions();
+            updateActors();
+        }
+    }
+
+    private void updateActors() {
+        view.getAmmo().setText(String.format(String.format("%02d", view.getGame().getWeapon().getAmmo()) + " / " + String.format("%02d", view.getGame().getWeapon().getMaxAmmo())));
+    }
+
+    public void handleOtherTables() {
+        if (view.getGame().isChoosingRandomAbility()) {
+            view.getAbilitySelectTable().setVisible(true);
+            for (int i = 0; i < 3; i++) {
+                Ability ability = view.getGame().getRandomAbilities().get(i);
+                view.getAbilities().get(i).setDrawable(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
+                view.getAbilitiesDescription().get(i).setText(ability.getDescription());
+                view.getAbilitiesCheckBox().get(i).setText(ability.toString());
+            }
+        }
+
+        if (view.getGame().isGamePaused()) {
+            view.getPauseTable().setVisible(true);
+            Gdx.input.setInputProcessor(view.getStage());
+            for (int i = 0; i < view.getGainedAbilities().size(); i++) {
+                view.getNumOfAbility().get(i).setText(view.getGame().getAbilities().get(Ability.valueOf(view.getGainedAbilities().get(i).getText().toString())).toString());
+            }
         }
     }
 
@@ -157,7 +194,7 @@ public class GameController {
 
     private void handleAbility(Ability ability) {
         TillDawnGame game = view.getGame();
-        game.addAbility(ability);
+        game.getAbilities().put(ability, game.getAbilities().get(ability) + 1);
         if (ability.equals(Ability.Vitality)) {
             game.setMaxHP(game.getMaxHP() + 1);
             Sprite sprite = new Sprite(view.getFirstHeartTexture());
@@ -259,5 +296,16 @@ public class GameController {
 
     public OrthographicCamera getCamera() {
         return camera;
+    }
+
+    public void handleResumeButton() {
+        view.getGame().setGamePaused(false);
+        view.getPauseTable().setVisible(false);
+        Gdx.input.setInputProcessor(view);
+    }
+
+    public void handleGiveUpButton() {
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

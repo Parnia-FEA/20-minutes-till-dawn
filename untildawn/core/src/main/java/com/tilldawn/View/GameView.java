@@ -1,23 +1,28 @@
 package com.tilldawn.View;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.Monster;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
+import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InitialPositions;
 import com.tilldawn.Model.enums.MonsterType;
 
@@ -43,11 +48,26 @@ public class GameView implements Screen, InputProcessor {
     private final TextButton chooseAbilityButton;
     private Table abilitySelectTable;
 
+    private final TextButton resumeButton;
+    private final TextButton giveUpButton;
+
+    private final Label cheatCodesInformationLabel;
+    private final ArrayList<Label> cheatCodesDescription = new ArrayList<>();
+    private final ArrayList<Label> cheatCodes = new ArrayList<>();
+
+    private final Label abilitiesInformationLabel;
+    private final ArrayList<Label> gainedAbilities = new ArrayList<>();
+    private final ArrayList<Label> numOfAbility = new ArrayList<>();
+    private final ArrayList<Image> gainedAbilitiesImages = new ArrayList<>();
+
+    private Table pauseTable;
+
     private final Label timer;
 
     private GameController controller;
 
     public GameView(TillDawnGame game, GameController controller, Skin skin) {
+        GameData.getInstance().getCurrentPlayer().setGame(this);
         this.game = game;
         this.ammoIcon = new Sprite(GameAssetManager.getInstance().getAmmoIconTexture());
         this.ammoIcon.setPosition(InitialPositions.AmmoIcon.getX(), InitialPositions.AmmoIcon.getY());
@@ -80,6 +100,39 @@ public class GameView implements Screen, InputProcessor {
         this.abilitiesGroup.setMaxCheckCount(1);
         this.chooseAbilityButton = new TextButton("Choose", skin);
         this.timer = new Label("", skin);
+
+        this.pauseTable = new Table();
+        pauseTable.setSize((float) Gdx.graphics.getWidth() * 9 / 10, (float) Gdx.graphics.getHeight() * 9 / 10);
+        pauseTable.setPosition(
+            (Gdx.graphics.getWidth() - pauseTable.getWidth()) / 2,
+            (Gdx.graphics.getHeight() - pauseTable.getHeight()) / 2
+        );
+        pauseTable.setBackground(skin.getDrawable("shadow"));
+
+        this.resumeButton = new TextButton("Resume", skin);
+        this.giveUpButton = new TextButton("Give Up!", skin);
+
+        this.cheatCodesInformationLabel = new Label("Cheat Codes", skin, "subtitle");
+        for (CheatCode cheatCode : CheatCode.values()) {
+            Label label = new Label(cheatCode.getDescription(), skin);
+            label.setColor(Color.CYAN);
+            this.cheatCodesDescription.add(label);
+            label = new Label (Input.Keys.toString(cheatCode.getMainKey()), skin);
+            this.cheatCodes.add(label);
+        }
+
+        this.abilitiesInformationLabel = new Label("Gained Abilities", skin, "subtitle");
+        for (Ability ability : Ability.values()) {
+            Image image = new Image(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
+            this.gainedAbilitiesImages.add(image);
+            Label label = new Label(ability.toString(), skin);
+            this.gainedAbilities.add(label);
+            label = new Label (game.getAbilities().get(ability).toString(), skin);
+            label.setColor(Color.CYAN);
+            this.numOfAbility.add(label);
+        }
+
+
         controller.setView(this);
     }
 
@@ -105,6 +158,7 @@ public class GameView implements Screen, InputProcessor {
         timer.setColor(Color.GREEN);
         stage.addActor(ammo);
         stage.addActor(timer);
+
         abilitySelectTable.setVisible(false);
         abilitySelectTable.add(chooseAbilityLabel).colspan(7).center();
         abilitySelectTable.add().height(150).colspan(2);
@@ -118,33 +172,62 @@ public class GameView implements Screen, InputProcessor {
         }
         abilitySelectTable.row().pad(10, 0, 10, 0);
         abilitySelectTable.add(chooseAbilityButton).colspan(7).center();
+
+        pauseTable.setVisible(false);
+
+        Table cheatCodeTable = new Table();
+        cheatCodeTable.add(cheatCodesInformationLabel).colspan(7).center();
+        cheatCodeTable.row().pad(10, 0, 10, 0);
+        for (int i = 0; i < cheatCodesDescription.size(); i++) {
+            cheatCodeTable.add(cheatCodesDescription.get(i)).colspan(5).center();
+            cheatCodeTable.add(cheatCodes.get(i)).colspan(5).center();
+            cheatCodeTable.row().pad(10, 0, 10, 0);
+        }
+
+        Table abilityTable = new Table();
+        abilityTable.add(abilitiesInformationLabel).colspan(9).center();
+        abilityTable.row().pad(10, 0, 10, 0);
+        for (int i = 0; i < gainedAbilities.size(); i++) {
+            abilityTable.add(gainedAbilities.get(i)).colspan(3).center();
+            abilityTable.add(gainedAbilitiesImages.get(i)).colspan(3).center();
+            abilityTable.add(numOfAbility.get(i)).colspan(3).center();
+            abilityTable.row().pad(10, 0, 10, 0);
+        }
+
+        pauseTable.add(cheatCodeTable).colspan(15).left();
+        pauseTable.add(abilityTable).colspan(15).right();
+        pauseTable.row().pad(10, 0, 10, 0);
+        pauseTable.add(resumeButton).colspan(5).left();
+        pauseTable.add(giveUpButton).colspan(5).right();
         stage.addActor(abilitySelectTable);
+        stage.addActor(pauseTable);
+
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleResumeButton();
+            }
+        });
+
+        giveUpButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleGiveUpButton();
+            }
+        });
     }
 
     @Override
     public void render(float delta) {
         controller.updateGame(delta);
-        updateActors();
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         controller.draw();
         Main.getBatch().end();
-        if (game.isChoosingRandomAbility()) {
-            abilitySelectTable.setVisible(true);
-            for (int i = 0; i < 3; i++) {
-                Ability ability = game.getRandomAbilities().get(i);
-                abilities.get(i).setDrawable(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
-                abilitiesDescription.get(i).setText(ability.getDescription());
-                abilitiesCheckBox.get(i).setText(ability.toString());
-            }
-        }
+        controller.handleOtherTables();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-    }
-
-    private void updateActors() {
-        ammo.setText(String.format(String.format("%02d", game.getWeapon().getAmmo()) + " / " + String.format("%02d", game.getWeapon().getMaxAmmo())));
     }
 
     @Override
@@ -257,5 +340,33 @@ public class GameView implements Screen, InputProcessor {
 
     public Label getTimer() {
         return timer;
+    }
+
+    public ArrayList<Image> getAbilities() {
+        return abilities;
+    }
+
+    public ArrayList<Label> getAbilitiesDescription() {
+        return abilitiesDescription;
+    }
+
+    public Table getPauseTable() {
+        return pauseTable;
+    }
+
+    public ArrayList<Label> getGainedAbilities() {
+        return gainedAbilities;
+    }
+
+    public ArrayList<Label> getNumOfAbility() {
+        return numOfAbility;
+    }
+
+    public Label getAmmo() {
+        return ammo;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

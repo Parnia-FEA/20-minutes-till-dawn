@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
@@ -128,6 +130,7 @@ public class GameController {
     public void updateGame(float delta) {
         if (view != null) {
             if (view.getGame().isGamePaused()) return;
+            if (view.getGame().getHP() <= 0) endGame();
             handleTimer(delta);
             handleInvincibleTimer(delta);
             handleAbilityTimers(delta);
@@ -305,7 +308,19 @@ public class GameController {
     }
 
     public void handleGiveUpButton() {
+        endGame();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
+    }
+
+    public void handleSaveButton() {
+        view.getPauseConditionMessage().setText("Game Saved Successfully");
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
+            }
+        }, 2);
     }
 }

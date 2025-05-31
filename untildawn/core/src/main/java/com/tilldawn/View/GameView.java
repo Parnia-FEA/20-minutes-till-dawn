@@ -50,6 +50,7 @@ public class GameView implements Screen, InputProcessor {
 
     private final TextButton resumeButton;
     private final TextButton giveUpButton;
+    private final TextButton saveButton;
 
     private final Label cheatCodesInformationLabel;
     private final ArrayList<Label> cheatCodesDescription = new ArrayList<>();
@@ -59,6 +60,7 @@ public class GameView implements Screen, InputProcessor {
     private final ArrayList<Label> gainedAbilities = new ArrayList<>();
     private final ArrayList<Label> numOfAbility = new ArrayList<>();
     private final ArrayList<Image> gainedAbilitiesImages = new ArrayList<>();
+    private final Label pauseConditionMessage;
 
     private Table pauseTable;
 
@@ -111,6 +113,9 @@ public class GameView implements Screen, InputProcessor {
 
         this.resumeButton = new TextButton("Resume", skin);
         this.giveUpButton = new TextButton("Give Up!", skin);
+        this.saveButton = new TextButton("Save and Exit", skin);
+        this.pauseConditionMessage = new Label("", skin);
+        this.pauseConditionMessage.setColor(Color.GREEN);
 
         this.cheatCodesInformationLabel = new Label("Cheat Codes", skin, "subtitle");
         for (CheatCode cheatCode : CheatCode.values()) {
@@ -176,11 +181,11 @@ public class GameView implements Screen, InputProcessor {
         pauseTable.setVisible(false);
 
         Table cheatCodeTable = new Table();
-        cheatCodeTable.add(cheatCodesInformationLabel).colspan(7).center();
+        cheatCodeTable.add(cheatCodesInformationLabel).colspan(6).center();
         cheatCodeTable.row().pad(10, 0, 10, 0);
         for (int i = 0; i < cheatCodesDescription.size(); i++) {
-            cheatCodeTable.add(cheatCodesDescription.get(i)).colspan(5).center();
-            cheatCodeTable.add(cheatCodes.get(i)).colspan(5).center();
+            cheatCodeTable.add(cheatCodesDescription.get(i)).colspan(1).center();
+            cheatCodeTable.add(cheatCodes.get(i)).colspan(1).center();
             cheatCodeTable.row().pad(10, 0, 10, 0);
         }
 
@@ -194,11 +199,14 @@ public class GameView implements Screen, InputProcessor {
             abilityTable.row().pad(10, 0, 10, 0);
         }
 
-        pauseTable.add(cheatCodeTable).colspan(15).left();
+        pauseTable.add(cheatCodeTable).colspan(10).left();
         pauseTable.add(abilityTable).colspan(15).right();
         pauseTable.row().pad(10, 0, 10, 0);
-        pauseTable.add(resumeButton).colspan(5).left();
-        pauseTable.add(giveUpButton).colspan(5).right();
+        pauseTable.add(resumeButton).colspan(5);
+        pauseTable.add(giveUpButton).colspan(5);
+        pauseTable.add(saveButton).colspan(5);
+        pauseTable.row().pad(10, 0, 10, 0);
+        pauseTable.add(pauseConditionMessage).colspan(15);
         stage.addActor(abilitySelectTable);
         stage.addActor(pauseTable);
 
@@ -213,6 +221,13 @@ public class GameView implements Screen, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleGiveUpButton();
+            }
+        });
+
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleSaveButton();
             }
         });
     }
@@ -368,5 +383,9 @@ public class GameView implements Screen, InputProcessor {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Label getPauseConditionMessage() {
+        return pauseConditionMessage;
     }
 }

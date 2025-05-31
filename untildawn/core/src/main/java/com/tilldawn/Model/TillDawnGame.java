@@ -41,6 +41,7 @@ public class TillDawnGame {
     private float DamagerAbilityTimer = 0f;
     private boolean isEyebatCheatCodeUsed = false;
     private int kill = 0;
+    private final ArrayList<Ability> abilities = new ArrayList<>();
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -308,5 +309,13 @@ public class TillDawnGame {
 
     public void setKill(int kill) {
         this.kill = kill;
+    }
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities;
+    }
+
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
     }
 }

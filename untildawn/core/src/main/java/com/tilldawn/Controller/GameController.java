@@ -157,6 +157,7 @@ public class GameController {
 
     private void handleAbility(Ability ability) {
         TillDawnGame game = view.getGame();
+        game.addAbility(ability);
         if (ability.equals(Ability.Vitality)) {
             game.setMaxHP(game.getMaxHP() + 1);
             Sprite sprite = new Sprite(view.getFirstHeartTexture());

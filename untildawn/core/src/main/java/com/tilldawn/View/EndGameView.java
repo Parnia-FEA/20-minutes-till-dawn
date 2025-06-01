@@ -2,6 +2,8 @@ package com.tilldawn.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -36,6 +38,8 @@ public class EndGameView implements Screen {
         this.result = new Label(condition, skin, "title");
         this.quitButton = new TextButton("Quit to Menu", skin);
         this.table = new Table();
+        Gdx.input.setCursorCatched(true);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
     }
     @Override
     public void show() {
@@ -71,10 +75,17 @@ public class EndGameView implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        Main.getBatch().setProjectionMatrix(stage.getCamera().combined);
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        stage.getCamera().unproject(mouse);
+        Main.getBatch().begin();
+        Main.getCursor().setPosition(mouse.x, mouse.y);
+        Main.getCursor().draw(Main.getBatch());
+        Main.getBatch().end();
     }
 
     @Override

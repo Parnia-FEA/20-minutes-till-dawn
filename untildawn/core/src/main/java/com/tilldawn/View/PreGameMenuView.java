@@ -3,7 +3,9 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -85,6 +87,8 @@ public class PreGameMenuView implements Screen {
         this.startGameButton = new TextButton("Start Game", skin);
         this.backButton = new TextButton("Back", skin);
         this.table = new Table();
+        Gdx.input.setCursorCatched(true);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
         controller.setView(this);
     }
 
@@ -160,6 +164,12 @@ public class PreGameMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        stage.getCamera().unproject(mouse);
+        Main.getBatch().begin();
+        Main.getCursor().setPosition(mouse.x, mouse.y);
+        Main.getCursor().draw(Main.getBatch());
+        Main.getBatch().end();
     }
 
     @Override

@@ -10,6 +10,7 @@ Avatars/avatar3.png
 Avatars/avatar4.png
 Avatars/avatar5.png
 Avatars/avatar6.png
+Cursor.png
 Heart/HeartAnimation_0.png
 Heart/HeartAnimation_1.png
 Heart/HeartAnimation_2.png

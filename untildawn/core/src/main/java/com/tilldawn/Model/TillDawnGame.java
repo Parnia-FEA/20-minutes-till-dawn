@@ -46,7 +46,6 @@ public class TillDawnGame {
     private final HashMap<Ability, Integer> abilities = new HashMap<>();
     private boolean isGamePaused = false;
 
-    private final OrthographicCamera camera = new OrthographicCamera();
     private float backgroundX = 0;
     private float backgroundY = 0;
     private final ArrayList<Bullet> bullets = new ArrayList<>();
@@ -84,8 +83,6 @@ public class TillDawnGame {
             abilities.put(value, 0);
         }
         this.playerHealth = this.HP * 5;
-
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         for (int i = 0; i < 50; i++) {
             for (int j = 0; j < 50 ; j++) {
@@ -374,10 +371,6 @@ public class TillDawnGame {
 
     public void setGamePaused(boolean gamePaused) {
         isGamePaused = gamePaused;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
     }
 
     public float getBackgroundX() {

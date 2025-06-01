@@ -80,6 +80,8 @@ public class GameAssetManager {
     private final ArrayList<Texture> hitImpactTexture = new ArrayList<>();
     private final Animation<Texture> hitImpactAnimation;
 
+    private final Texture cursor;
+
 
 
     public GameAssetManager() {
@@ -165,6 +167,8 @@ public class GameAssetManager {
             hitImpactTexture.add(new Texture(image));
         }
         hitImpactAnimation = new Animation<>(0.1f, hitImpactTexture.toArray(new Texture[0]));
+
+        cursor = new Texture("Cursor.png");
     }
 
     private void buildAbilities() {
@@ -486,5 +490,9 @@ public class GameAssetManager {
 
     public Animation<Texture> getHitImpactAnimation() {
         return hitImpactAnimation;
+    }
+
+    public Texture getCursor() {
+        return cursor;
     }
 }

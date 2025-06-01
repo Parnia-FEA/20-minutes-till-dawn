@@ -1,6 +1,9 @@
 package com.tilldawn;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Controller.LoginMenuController;
 import com.tilldawn.Model.GameAssetManager;
@@ -11,11 +14,18 @@ import com.tilldawn.View.LoginMenuView;
 public class Main extends Game {
     private static Main main;
     private static SpriteBatch batch;
+    private final static OrthographicCamera camera = new OrthographicCamera();
+    private static Sprite cursor;
 
     @Override
     public void create() {
         main = this;
         batch = new SpriteBatch();
+        cursor = new Sprite(GameAssetManager.getInstance().getCursor());
+        cursor.setSize(32, 32);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2, 0);
+        camera.update();
         main.setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 
@@ -47,5 +57,12 @@ public class Main extends Game {
 
     public static void setBatch(SpriteBatch batch) {
         Main.batch = batch;
+    }
+
+    public static Sprite getCursor() {
+        return cursor;
+    }
+    public static OrthographicCamera getCamera() {
+        return camera;
     }
 }

@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -138,7 +141,8 @@ public class GameView implements Screen, InputProcessor {
             label.setColor(Color.CYAN);
             this.numOfAbility.add(label);
         }
-
+        Gdx.input.setCursorCatched(true);
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         controller.setView(this);
     }
@@ -160,7 +164,7 @@ public class GameView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
-        shapeRenderer.setProjectionMatrix(game.getCamera().combined);
+        shapeRenderer.setProjectionMatrix(Main.getCamera().combined);
         ammo.setPosition(InitialPositions.Ammo.getX(), InitialPositions.AmmoIcon.getY());
         timer.setPosition(InitialPositions.Timer.getX(), InitialPositions.Timer.getY());
         timer.setText(controller.getTimeRemainingFormatted());
@@ -263,6 +267,12 @@ public class GameView implements Screen, InputProcessor {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Main.getCamera().unproject(mouse);
+        Main.getBatch().begin();
+        Main.getCursor().setPosition(mouse.x, mouse.y);
+        Main.getCursor().draw(Main.getBatch());
+        Main.getBatch().end();
     }
 
     @Override
@@ -307,7 +317,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        controller.getWeaponController().handleWeaponShoot(screenX, screenY, button, controller.getCamera());
+        controller.getWeaponController().handleWeaponShoot(screenX, screenY, button, Main.getCamera());
         return false;
     }
 
@@ -416,5 +426,4 @@ public class GameView implements Screen, InputProcessor {
     public Label getLevel() {
         return level;
     }
-
 }

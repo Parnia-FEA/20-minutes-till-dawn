@@ -61,6 +61,8 @@ public class GameController {
         int survivalTime = minutes * 60 + seconds;
         player.setMaxSurvivalTime(Math.max(survivalTime, player.getMaxSurvivalTime()));
         player.setScore(player.getScore() + survivalTime * view.getGame().getKill());
+        Main.getCamera().position.set((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2, 0);
+        Main.getCamera().update();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new EndGameView(new EndGameController(), GameAssetManager.getInstance().getSkin(), view.getGame(), result));
     }
@@ -163,10 +165,10 @@ public class GameController {
                 view.getGame().setGamePaused(true);
             }
             playerController.update();
-            view.getGame().getCamera().position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
-            view.getGame().getCamera().update();
-            float cameraXOffset = view.getGame().getCamera().position.x - view.getGame().getCamera().viewportWidth / 2;
-            float cameraYOffset = view.getGame().getCamera().position.y - view.getGame().getCamera().viewportHeight / 2;
+            Main.getCamera().position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
+            Main.getCamera().update();
+            float cameraXOffset = Main.getCamera().position.x - Main.getCamera().viewportWidth / 2;
+            float cameraYOffset = Main.getCamera().position.y - Main.getCamera().viewportHeight / 2;
             view.getAmmoIcon().setPosition(cameraXOffset + InitialPositions.AmmoIcon.getX(), cameraYOffset + InitialPositions.AmmoIcon.getY());
             heartsAnimation(view.getHearts());
             for (int i = 0; i < view.getHearts().size(); i++) {
@@ -175,10 +177,10 @@ public class GameController {
             for (int i = 0; i < view.getEmptyHearts().size(); i++) {
                 view.getEmptyHearts().get(i).setPosition(cameraXOffset + InitialPositions.Hearts.getX() + 30 * i, cameraYOffset + InitialPositions.Hearts.getY());
             }
-            Main.getBatch().setProjectionMatrix(view.getGame().getCamera().combined);
-            worldController.update(view.getGame().getCamera());
-            weaponController.update(view.getGame().getCamera());
-            monsterController.update(view.getGame().getCamera(), delta);
+            Main.getBatch().setProjectionMatrix(Main.getCamera().combined);
+            worldController.update(Main.getCamera());
+            weaponController.update(Main.getCamera());
+            monsterController.update(Main.getCamera(), delta);
             handleCollisions();
             updateActors();
         }
@@ -326,10 +328,6 @@ public class GameController {
 
     public WeaponController getWeaponController() {
         return weaponController;
-    }
-
-    public OrthographicCamera getCamera() {
-        return view.getGame().getCamera();
     }
 
     public void handleResumeButton() {

@@ -1,7 +1,5 @@
 package com.tilldawn.Model;
 
-import com.tilldawn.View.GameView;
-
 import java.util.ArrayList;
 
 public class GameData {
@@ -18,11 +16,11 @@ public class GameData {
         return instance;
     }
 
-    public ArrayList<Player> getUsers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public Player findUserByUsername(String username) {
+    public Player findPlayerByUsername(String username) {
         for (Player player : players) {
             if (player.getUsername().equals(username)) return player;
         }

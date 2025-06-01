@@ -14,7 +14,7 @@ public class LoginMenuController {
     }
 
     private Player getUserIfInfoValid(String username, String password) {
-        Player player = GameData.getInstance().findUserByUsername(username);
+        Player player = GameData.getInstance().findPlayerByUsername(username);
         if (player == null) return null;
         if (player.getPassword().equals(password)) return player;
         return null;

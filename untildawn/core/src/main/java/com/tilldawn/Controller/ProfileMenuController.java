@@ -56,7 +56,7 @@ public class ProfileMenuController {
 
     public void handleSetUsernameButton() {
         String username = view.getUsername().getText();
-        if (GameData.getInstance().findUserByUsername(username) == null) {
+        if (GameData.getInstance().findPlayerByUsername(username) == null) {
             view.setChangeUsernameConditionMessage("Username Changed Successfully:)", Color.GREEN);
             GameData.getInstance().getCurrentPlayer().setUsername(username);
             Timer.schedule(new Timer.Task() {
@@ -106,7 +106,7 @@ public class ProfileMenuController {
         if (selectedCheckBox != null) {
             String text = selectedCheckBox.getText().toString();
             if (text.equals("Yes")) {
-                GameData.getInstance().getUsers().remove(GameData.getInstance().getCurrentPlayer());
+                GameData.getInstance().getPlayers().remove(GameData.getInstance().getCurrentPlayer());
                 GameData.getInstance().setCurrentUser(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));

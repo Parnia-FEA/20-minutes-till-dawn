@@ -20,7 +20,7 @@ public class SignUpMenuController {
     }
 
     private boolean isUsernameTaken(String username) {
-        return GameData.getInstance().findUserByUsername(username) != null;
+        return GameData.getInstance().findPlayerByUsername(username) != null;
     }
 
     private boolean isPasswordValid(String password) {

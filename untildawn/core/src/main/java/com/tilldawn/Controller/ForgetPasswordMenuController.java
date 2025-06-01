@@ -19,7 +19,7 @@ public class ForgetPasswordMenuController {
     }
 
     public void handleContinueButton() {
-        Player player = GameData.getInstance().findUserByUsername(view.getUsername().getText());
+        Player player = GameData.getInstance().findPlayerByUsername(view.getUsername().getText());
         if (player == null) {
             view.setUsernameConditionMessage("Invalid Username", Color.RED);
         }

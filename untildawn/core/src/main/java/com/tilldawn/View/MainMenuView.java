@@ -54,6 +54,7 @@ public class MainMenuView implements Screen {
 
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(false);
@@ -172,6 +173,7 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public Label getConditionMessage() {

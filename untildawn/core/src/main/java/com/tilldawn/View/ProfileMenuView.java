@@ -171,6 +171,7 @@ public class ProfileMenuView implements Screen {
 
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(true);
@@ -283,7 +284,7 @@ public class ProfileMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public TextField getUsername() {

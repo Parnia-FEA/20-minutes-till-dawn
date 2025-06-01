@@ -116,6 +116,12 @@ Monsters/Tentacle/TentacleSpawn/TentacleSpawn2.png
 Monsters/Tree/T0.png
 Monsters/Tree/T1.png
 Monsters/Tree/T2.png
+Music/Chase.mp3
+Music/DragonCastle.mp3
+Music/DragonSlayer.mp3
+Music/Heroism.mp3
+Music/SneakySnitch.mp3
+Music/Warfare.mp3
 Weapons/Revolver/Reload_0.png
 Weapons/Revolver/Reload_1.png
 Weapons/Revolver/Reload_2.png

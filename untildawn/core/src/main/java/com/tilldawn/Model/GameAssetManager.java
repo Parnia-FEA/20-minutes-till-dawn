@@ -1,11 +1,13 @@
 package com.tilldawn.Model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
+import com.tilldawn.Model.enums.MusicEnum;
 import com.tilldawn.Model.enums.WeaponEnum;
 import org.w3c.dom.Text;
 
@@ -61,6 +63,9 @@ public class GameAssetManager {
     private final Animation<Texture> explosionAnimation;
     private final String crystalImageFile;
     private final Texture crystalTexture;
+    private final HashMap<MusicEnum, String> backGroundMusicFiles = new HashMap<>();
+    private final HashMap<MusicEnum, Music> backGroundMusics = new HashMap<>();
+    private final Music menuMusic;
 
 
     public GameAssetManager() {
@@ -119,6 +124,18 @@ public class GameAssetManager {
 
         crystalImageFile = "crystal.png";
         crystalTexture = new Texture(crystalImageFile);
+
+        for (MusicEnum value : MusicEnum.values()) {
+            String music = "Music/" + value.toString() + ".mp3";
+            backGroundMusicFiles.put(value, music);
+            backGroundMusics.put(value, Gdx.audio.newMusic(Gdx.files.internal(music)));
+            backGroundMusics.get(value).setLooping(true);
+            backGroundMusics.get(value).setVolume(0.5f);
+        }
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/SneakySnitch.mp3"));
+        menuMusic.setLooping(true);
+        menuMusic.setVolume(0.5f);
     }
 
     private void buildAbilities() {
@@ -388,5 +405,17 @@ public class GameAssetManager {
 
     public Texture getCrystalTexture() {
         return crystalTexture;
+    }
+
+    public HashMap<MusicEnum, String> getBackGroundMusicFiles() {
+        return backGroundMusicFiles;
+    }
+
+    public HashMap<MusicEnum, Music> getBackGroundMusics() {
+        return backGroundMusics;
+    }
+
+    public Music getMenuMusic() {
+        return menuMusic;
     }
 }

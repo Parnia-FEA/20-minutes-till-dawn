@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.SignUpMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
 
 public class SignUpMenuView implements Screen {
     private Stage stage;
@@ -64,6 +65,7 @@ public class SignUpMenuView implements Screen {
     }
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(true);
@@ -150,7 +152,7 @@ public class SignUpMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public TextField getUsername() {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.LoginMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
 
 public class LoginMenuView implements Screen {
     private Stage stage;
@@ -46,6 +47,7 @@ public class LoginMenuView implements Screen {
 
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(true);
@@ -127,7 +129,7 @@ public class LoginMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public TextField getUsername() {

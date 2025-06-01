@@ -3,6 +3,7 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.tilldawn.Controller.SettingsMenuController;
+import com.tilldawn.Model.GameAssetManager;
 
 public class SettingsMenuView implements Screen {
     private final SettingsMenuController controller;
@@ -14,7 +15,7 @@ public class SettingsMenuView implements Screen {
     }
     @Override
     public void show() {
-
+        GameAssetManager.getInstance().getMenuMusic().play();
     }
 
     @Override
@@ -44,6 +45,6 @@ public class SettingsMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 }

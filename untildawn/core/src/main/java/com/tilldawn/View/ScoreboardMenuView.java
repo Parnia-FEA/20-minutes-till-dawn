@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ScoreboardMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
 import sun.tools.jconsole.Tab;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class ScoreboardMenuView implements Screen {
     }
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(false);
@@ -192,7 +194,7 @@ public class ScoreboardMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public ArrayList<Label> getUsernames() {

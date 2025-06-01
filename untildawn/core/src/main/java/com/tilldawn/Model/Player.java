@@ -25,6 +25,7 @@ public class Player {
     private int kill = 0;
     private int score = 0;
     private int maxSurvivalTime = 0;
+    private float musicVolume = 0.5f;
 
 
     public Player(String username, String password, String securityQuestion, String answer) {
@@ -126,5 +127,13 @@ public class Player {
 
     public void setMaxSurvivalTime(int maxSurvivalTime) {
         this.maxSurvivalTime = maxSurvivalTime;
+    }
+
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
     }
 }

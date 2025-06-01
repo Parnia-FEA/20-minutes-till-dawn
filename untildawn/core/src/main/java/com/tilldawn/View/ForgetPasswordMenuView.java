@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ForgetPasswordMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.Player;
 
 public class ForgetPasswordMenuView implements Screen {
@@ -104,6 +105,7 @@ public class ForgetPasswordMenuView implements Screen {
 
     @Override
     public void show() {
+        GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         table.setFillParent(true);
@@ -175,7 +177,7 @@ public class ForgetPasswordMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getMenuMusic().pause();
     }
 
     public TextField getUsername() {

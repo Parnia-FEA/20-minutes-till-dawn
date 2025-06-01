@@ -194,7 +194,8 @@ public class MonsterController {
     }
 
     private void monsterExploded(Monster monster) {
-        GameAssetManager.getInstance().getExplosionSound().play();
+        if (GameData.getInstance().getCurrentPlayer().isSfx())
+            GameAssetManager.getInstance().getExplosionSound().play();
         Monster explodedMonster = new Monster(MonsterType.Exploded);
         explodedMonster.getSprite().setPosition(monster.getSprite().getX(), monster.getSprite().getY());
         game.getExplodedMonsters().add(explodedMonster);
@@ -205,9 +206,12 @@ public class MonsterController {
         ArrayList<Drop> toBeDeleted = new ArrayList<>();
         for (Drop drop : game.getDrops()) {
             if (drop.getSprite().getBoundingRectangle().overlaps(player.getBoundingRectangle())) {
-                GameAssetManager.getInstance().getCrystalRewardSound().play();
+                if (GameData.getInstance().getCurrentPlayer().isSfx())
+                    GameAssetManager.getInstance().getCrystalRewardSound().play();
                 toBeDeleted.add(drop);
-                game.increaseXP(3);
+                boolean flag = game.increaseXP(3);
+                if (flag && GameData.getInstance().getCurrentPlayer().isSfx())
+                    GameAssetManager.getInstance().getLevelUpSound().play();
             }
         }
         for (Drop drop : toBeDeleted) {

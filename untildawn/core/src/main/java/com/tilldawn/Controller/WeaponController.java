@@ -9,10 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.tilldawn.Main;
-import com.tilldawn.Model.GameAssetManager;
-import com.tilldawn.Model.TillDawnGame;
-import com.tilldawn.Model.Weapon;
-import com.tilldawn.Model.Bullet;
+import com.tilldawn.Model.*;
 import com.tilldawn.Model.enums.InputKey;
 
 import java.util.ArrayList;
@@ -38,7 +35,8 @@ public class WeaponController {
 
     private void setReloadingTrue() {
         game.getWeapon().setReloading(true);
-        GameAssetManager.getInstance().getReloadWeaponSound().play();
+        if (GameData.getInstance().getCurrentPlayer().isSfx())
+            GameAssetManager.getInstance().getReloadWeaponSound().play();
         game.getWeapon().setReloadSprite(new Sprite(game.getWeapon().getReloadTexture()));
         game.getWeapon().setReloadAnimationTime(0);
         game.getWeapon().setReloadTime(0);
@@ -106,7 +104,8 @@ public class WeaponController {
                 float spreadAngle = 10f;
                 float offsetDistance = 10f;
                 for (int i = 0; i < projectileCount; i++) {
-                    GameAssetManager.getInstance().getShotSound().play();
+                    if (GameData.getInstance().getCurrentPlayer().isSfx())
+                        GameAssetManager.getInstance().getShotSound().play();
                     float angleOffset = ((i - (projectileCount - 1) / 2f) * spreadAngle);
                     Vector2 rotatedDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
                     float lateralOffset = (i - (projectileCount - 1) / 2f) * offsetDistance;

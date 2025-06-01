@@ -246,7 +246,6 @@ public class TillDawnGame {
 
     public void increaseLevel() {
         level++;
-        GameAssetManager.getInstance().getLevelUpSound().play();
         isChoosingRandomAbility = true;
         randomAbilities.clear();
         ArrayList<Ability> abilities = new ArrayList<>(Arrays.asList(Ability.values()));
@@ -261,11 +260,13 @@ public class TillDawnGame {
         return XP;
     }
 
-    public void increaseXP(int amount) {
+    public boolean increaseXP(int amount) {
         XP += amount;
         if (XP >= (level * (level + 1)) * 10) {
             increaseLevel();
+            return true;
         }
+        return false;
     }
 
     public boolean isChoosingRandomAbility() {

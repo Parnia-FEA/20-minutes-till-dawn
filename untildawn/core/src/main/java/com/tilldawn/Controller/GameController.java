@@ -77,7 +77,8 @@ public class GameController {
 
         if (view.getGame().getGameTimer() <= 0) {
             endGame("YOU SURVIVED:)");
-            GameAssetManager.getInstance().getWinSound().play();
+            if (GameData.getInstance().getCurrentPlayer().isSfx())
+                GameAssetManager.getInstance().getWinSound().play();
         }
         if (view.getGame().getGameTimer() < 60) {
             view.getTimer().setColor(Color.RED);
@@ -120,7 +121,9 @@ public class GameController {
             return;
         }
         if (Gdx.input.isKeyJustPressed(CheatCode.IncrementLevel.getMainKey())) {
-            view.getGame().increaseXP(view.getGame().getLevel() * (view.getGame().getLevel() + 1) * 10 - view.getGame().getXP());
+            boolean flag = view.getGame().increaseXP(view.getGame().getLevel() * (view.getGame().getLevel() + 1) * 10 - view.getGame().getXP());
+            if (flag && GameData.getInstance().getCurrentPlayer().isSfx())
+                GameAssetManager.getInstance().getLevelUpSound().play();
             return;
         }
         if (Gdx.input.isKeyJustPressed(CheatCode.IncrementHealth.getMainKey())) {
@@ -142,7 +145,8 @@ public class GameController {
         if (view != null) {
             if (view.getGame().isGamePaused()) return;
             if (view.getGame().getHP() <= 0) {
-                GameAssetManager.getInstance().getLoseSound().play();
+                if (GameData.getInstance().getCurrentPlayer().isSfx())
+                    GameAssetManager.getInstance().getLoseSound().play();
                 endGame("GAME OVER!");
             }
             handleTimer(delta);
@@ -334,7 +338,8 @@ public class GameController {
 
     public void handleGiveUpButton() {
         endGame("GAME OVER!");
-        GameAssetManager.getInstance().getLoseSound().play();
+        if (GameData.getInstance().getCurrentPlayer().isSfx())
+            GameAssetManager.getInstance().getLoseSound().play();
     }
 
     public void handleSaveButton() {

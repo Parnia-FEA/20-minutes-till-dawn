@@ -28,6 +28,7 @@ public class Player {
     private int maxSurvivalTime = 0;
     private float musicVolume = 0.5f;
     private MusicEnum music = MusicEnum.Chase;
+    private boolean sfx = true;
 
 
     public Player(String username, String password, String securityQuestion, String answer) {
@@ -145,5 +146,13 @@ public class Player {
 
     public void setMusic(MusicEnum music) {
         this.music = music;
+    }
+
+    public boolean isSfx() {
+        return sfx;
+    }
+
+    public void setSfx(boolean sfx) {
+        this.sfx = sfx;
     }
 }

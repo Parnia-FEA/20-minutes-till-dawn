@@ -2,6 +2,7 @@ package com.tilldawn.Model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -66,6 +67,15 @@ public class GameAssetManager {
     private final HashMap<MusicEnum, String> backGroundMusicFiles = new HashMap<>();
     private final HashMap<MusicEnum, Music> backGroundMusics = new HashMap<>();
     private final Music menuMusic;
+
+    private final Sound crystalRewardSound;
+    private final Sound explosionSound;
+    private final Sound levelUpSound;
+    private final Sound loseSound;
+    private final Sound winSound;
+    private final Sound shotSound;
+    private final Sound reloadWeaponSound;
+
 
 
     public GameAssetManager() {
@@ -136,6 +146,14 @@ public class GameAssetManager {
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/SneakySnitch.mp3"));
         menuMusic.setLooping(true);
         menuMusic.setVolume(0.5f);
+
+        crystalRewardSound = Gdx.audio.newSound(Gdx.files.internal("Sound/CrystalReward.wav"));
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Explosion.wav"));
+        levelUpSound = Gdx.audio.newSound(Gdx.files.internal("Sound/LevelUp.wav"));
+        loseSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Lose.wav"));
+        winSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Win.wav"));
+        reloadWeaponSound = Gdx.audio.newSound(Gdx.files.internal("Sound/ReloadWeapon.wav"));
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shot.wav"));
     }
 
     private void buildAbilities() {
@@ -417,5 +435,33 @@ public class GameAssetManager {
 
     public Music getMenuMusic() {
         return menuMusic;
+    }
+
+    public Sound getCrystalRewardSound() {
+        return crystalRewardSound;
+    }
+
+    public Sound getExplosionSound() {
+        return explosionSound;
+    }
+
+    public Sound getLevelUpSound() {
+        return levelUpSound;
+    }
+
+    public Sound getLoseSound() {
+        return loseSound;
+    }
+
+    public Sound getWinSound() {
+        return winSound;
+    }
+
+    public Sound getShotSound() {
+        return shotSound;
+    }
+
+    public Sound getReloadWeaponSound() {
+        return reloadWeaponSound;
     }
 }

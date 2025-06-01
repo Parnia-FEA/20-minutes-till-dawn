@@ -122,6 +122,13 @@ Music/DragonSlayer.mp3
 Music/Heroism.mp3
 Music/SneakySnitch.mp3
 Music/Warfare.mp3
+Sound/CrystalReward.wav
+Sound/Explosion.wav
+Sound/LevelUp.wav
+Sound/Lose.wav
+Sound/ReloadWeapon.wav
+Sound/Shot.wav
+Sound/Win.wav
 Weapons/Revolver/Reload_0.png
 Weapons/Revolver/Reload_1.png
 Weapons/Revolver/Reload_2.png

@@ -38,6 +38,7 @@ public class WeaponController {
 
     private void setReloadingTrue() {
         game.getWeapon().setReloading(true);
+        GameAssetManager.getInstance().getReloadWeaponSound().play();
         game.getWeapon().setReloadSprite(new Sprite(game.getWeapon().getReloadTexture()));
         game.getWeapon().setReloadAnimationTime(0);
         game.getWeapon().setReloadTime(0);
@@ -105,6 +106,7 @@ public class WeaponController {
                 float spreadAngle = 10f;
                 float offsetDistance = 10f;
                 for (int i = 0; i < projectileCount; i++) {
+                    GameAssetManager.getInstance().getShotSound().play();
                     float angleOffset = ((i - (projectileCount - 1) / 2f) * spreadAngle);
                     Vector2 rotatedDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
                     float lateralOffset = (i - (projectileCount - 1) / 2f) * offsetDistance;

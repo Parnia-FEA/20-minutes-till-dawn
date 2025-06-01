@@ -246,6 +246,7 @@ public class TillDawnGame {
 
     public void increaseLevel() {
         level++;
+        GameAssetManager.getInstance().getLevelUpSound().play();
         isChoosingRandomAbility = true;
         randomAbilities.clear();
         ArrayList<Ability> abilities = new ArrayList<>(Arrays.asList(Ability.values()));

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -58,6 +59,8 @@ public class GameView implements Screen, InputProcessor {
     private final Label pauseConditionMessage;
     private final Label kill;
     private final Label level;
+
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     private Table pauseTable;
 
@@ -155,6 +158,7 @@ public class GameView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
+        shapeRenderer.setProjectionMatrix(game.getCamera().combined);
         ammo.setPosition(InitialPositions.Ammo.getX(), InitialPositions.AmmoIcon.getY());
         timer.setPosition(InitialPositions.Timer.getX(), InitialPositions.Timer.getY());
         timer.setText(controller.getTimeRemainingFormatted());
@@ -244,6 +248,15 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().begin();
         controller.draw();
         Main.getBatch().end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(Color.DARK_GRAY);
+        shapeRenderer.rect(5, Gdx.graphics.getHeight() - 30, (Gdx.graphics.getWidth() - 10), 30);
+
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.rect(5, Gdx.graphics.getHeight() - 30, (Gdx.graphics.getWidth() - 10) * controller.getXPPercent(), 30);
+
+        shapeRenderer.end();
         controller.handleOtherTables();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -401,4 +414,5 @@ public class GameView implements Screen, InputProcessor {
     public Label getLevel() {
         return level;
     }
+
 }

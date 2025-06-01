@@ -106,7 +106,7 @@ public class GameController {
             return;
         }
         if (Gdx.input.isKeyJustPressed(CheatCode.IncrementLevel.getMainKey())) {
-            view.getGame().increaseLevel();
+            view.getGame().increaseXP(view.getGame().getLevel() * (view.getGame().getLevel() + 1) * 10 - view.getGame().getXP());
             return;
         }
         if (Gdx.input.isKeyJustPressed(CheatCode.IncrementHealth.getMainKey())) {
@@ -160,6 +160,11 @@ public class GameController {
             handleCollisions();
             updateActors();
         }
+    }
+
+    public float getXPPercent() {
+        int XPInThisLevel = view.getGame().getXP() - (view.getGame().getLevel() * (view.getGame().getLevel() - 1) * 10);
+        return (float) XPInThisLevel / (20 * view.getGame().getLevel());
     }
 
     private void updateStage() {

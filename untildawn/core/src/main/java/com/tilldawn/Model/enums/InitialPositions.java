@@ -9,7 +9,7 @@ public enum InitialPositions {
     Message(5, (float) Gdx.graphics.getHeight() - 35),
     Timer((float) Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 68),
     Kill((float) Gdx.graphics.getWidth() - 100, (float) Gdx.graphics.getHeight() - 106),
-    Level((float) Gdx.graphics.getWidth() - 120, (float) Gdx.graphics.getHeight() - 144);
+    Level((float) Gdx.graphics.getWidth() / 2 - 30, (float) Gdx.graphics.getHeight() - 15);
 
     private final float x;
     private final float y;

@@ -15,8 +15,8 @@ public class Bullet {
     private float y;
     private Vector2 direction;
 
-    public Bullet(float x, float y, Vector2 direction){
-        this.texture = GameAssetManager.getInstance().getBulletTexture();
+    public Bullet(float x, float y, Vector2 direction, Texture texture){
+        this.texture = texture;
         this.sprite = new Sprite(texture);
         sprite.setSize(20 , 20);
         this.x = x;

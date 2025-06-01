@@ -129,6 +129,7 @@ public class GameController {
         if (Gdx.input.isKeyJustPressed(CheatCode.IncrementHealth.getMainKey())) {
             if (view.getGame().getHP() <= 1) {
                 view.getGame().setHP(view.getGame().getHP() + 1);
+                view.getGame().setPlayerHealth(view.getGame().getPlayerHealth() + view.getGame().getHealthToHP());
             }
             return;
         }
@@ -221,6 +222,7 @@ public class GameController {
         monsterController.handleCollisionOfPlayerWithMonster();
         monsterController.handleCollisionOfBulletsAndMonsters(weaponController.getBullets());
         monsterController.handleCollisionOfPlayerAndDrops();
+        monsterController.handleCollisionOfBulletsAndPlayer();
     }
 
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.tilldawn.Main;
 import com.tilldawn.Model.*;
 import com.tilldawn.Model.enums.MonsterType;
@@ -23,6 +24,7 @@ public class MonsterController {
     public void update(OrthographicCamera camera, float delta) {
         game.setTentacleSpawnTimer(game.getTentacleSpawnTimer() + delta);
         game.setEyebatSpawnTimer(game.getEyebatSpawnTimer() + delta);
+        updateEyebatBullets();
         if (game.getTentacleSpawnTimer() >= game.getTentacleSpawnInterval()) {
             game.setTentacleSpawnTimer(0);
             for (int i = 0; i < (int) ((game.getTime() - game.getGameTimer()) / 30); i++) {
@@ -35,9 +37,34 @@ public class MonsterController {
                 spawnMonster(camera, MonsterType.Eyebat);
             }
         }
+        eyebatShot(delta);
         moveMonsters();
         monsterAnimation();
         explodedMonsterAnimation();
+    }
+
+    private void updateEyebatBullets() {
+        for(Bullet bullet : game.getEyebatBullets()) {
+            bullet.getSprite().translate(
+                bullet.getDirection().x * 5f,
+                bullet.getDirection().y * 5f
+            );
+        }
+    }
+
+    private void eyebatShot(float delta) {
+        for (int i = 2500; i < game.getMonsters().size(); i++) {
+            Monster monster = game.getMonsters().get(i);
+            if (monster.getType().equals(MonsterType.Eyebat)) {
+                monster.setShotTime(monster.getShotTime() + delta);
+                if (monster.getShotTime() >= monster.getShotInterval()) {
+                    monster.setShotTime(0);
+                    Vector2 baseDirection = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
+                    Vector2 perpendicular = new Vector2(-baseDirection.y, baseDirection.x).nor().scl(0);
+                    game.getEyebatBullets().add(new Bullet(monster.getSprite().getX() + perpendicular.x, monster.getSprite().getY() + perpendicular.y, baseDirection, GameAssetManager.getInstance().getEyebatBulletTexture()));
+                }
+            }
+        }
     }
 
     private void explodedMonsterAnimation() {
@@ -140,13 +167,16 @@ public class MonsterController {
         for (Monster monster : game.getExplodedMonsters()) {
             monster.getSprite().draw(Main.getBatch());
         }
+        for (Bullet bullet : game.getEyebatBullets()) {
+            bullet.getSprite().draw(Main.getBatch());
+        }
     }
 
     public void handleCollisionOfPlayerWithMonster() {
         if (!game.isPlayerInvincible()) {
             for (Monster monster : game.getMonsters()) {
                 if (monster.getSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
-                    game.decrementHP();
+                    game.setPlayerHealth(game.getPlayerHealth() - game.getHealthToHP());
                     game.setPlayerInvincible(true);
                     game.setInvincibleTime(0);
                     return;
@@ -216,6 +246,19 @@ public class MonsterController {
         }
         for (Drop drop : toBeDeleted) {
             game.getDrops().remove(drop);
+        }
+    }
+
+    public void handleCollisionOfBulletsAndPlayer() {
+        ArrayList<Bullet> toBeDeleted = new ArrayList<>();
+        for (Bullet bullet : game.getEyebatBullets()) {
+            if (bullet.getSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
+                toBeDeleted.add(bullet);
+                game.setPlayerHealth(game.getPlayerHealth() - 1);
+            }
+        }
+        for (Bullet bullet : toBeDeleted) {
+            game.getEyebatBullets().remove(bullet);
         }
     }
 }

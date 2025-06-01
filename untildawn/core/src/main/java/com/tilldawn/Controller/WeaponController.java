@@ -110,7 +110,7 @@ public class WeaponController {
                     Vector2 rotatedDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
                     float lateralOffset = (i - (projectileCount - 1) / 2f) * offsetDistance;
                     Vector2 perpendicular = new Vector2(-baseDirection.y, baseDirection.x).nor().scl(lateralOffset);
-                    game.getBullets().add(new Bullet(game.getPlayerPosX() + perpendicular.x, game.getPlayerPosY() + perpendicular.y, rotatedDirection));
+                    game.getBullets().add(new Bullet(game.getPlayerPosX() + perpendicular.x, game.getPlayerPosY() + perpendicular.y, rotatedDirection, GameAssetManager.getInstance().getBulletTexture()));
                 }
                 game.getWeapon().setAmmo(game.getWeapon().getAmmo() - 1);
                 if (game.getWeapon().getAmmo() == 0 && game.getPlayer().isAutoReload()) {

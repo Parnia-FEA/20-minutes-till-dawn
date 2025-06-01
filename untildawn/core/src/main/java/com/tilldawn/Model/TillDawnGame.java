@@ -23,7 +23,7 @@ public class TillDawnGame {
     private Sprite playerSprite;
     private float playerPosX = (float) Gdx.graphics.getWidth() / 2;
     private float playerPosY = (float) Gdx.graphics.getHeight() / 2;
-    private float playerHealth = 100;
+    private float playerHealth;
     private float playerSpeed;
     private boolean isPlayerIdle = true;
     private boolean isPlayerRunning = false;
@@ -58,6 +58,9 @@ public class TillDawnGame {
     private final float tentacleSpawnInterval = 3f;
     private float eyebatSpawnTimer = 0f;
     private final float eyebatSpawnInterval = 10f;
+    private final ArrayList<Bullet> eyebatBullets = new ArrayList<>();
+
+    private final int healthToHP = 5;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -75,6 +78,7 @@ public class TillDawnGame {
         for (Ability value : Ability.values()) {
             abilities.put(value, 0);
         }
+        this.playerHealth = this.HP * 5;
 
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -165,6 +169,7 @@ public class TillDawnGame {
 
     public void setPlayerHealth(float playerHealth) {
         this.playerHealth = playerHealth;
+        if (this.playerHealth <= (this.HP - 1) * this.healthToHP) decrementHP();
     }
 
     public float getPlayerSpeed() {
@@ -420,5 +425,13 @@ public class TillDawnGame {
 
     public float getEyebatSpawnInterval() {
         return eyebatSpawnInterval;
+    }
+
+    public ArrayList<Bullet> getEyebatBullets() {
+        return eyebatBullets;
+    }
+
+    public int getHealthToHP() {
+        return healthToHP;
     }
 }

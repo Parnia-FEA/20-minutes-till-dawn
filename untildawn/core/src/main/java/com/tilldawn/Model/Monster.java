@@ -10,6 +10,8 @@ public class Monster {
     private final Texture texture;
     private final Sprite sprite;
     private float animationTime = 0f;
+    private float shotTime = 0f;
+    private final float shotInterval = 3f;
 
     public Monster(MonsterType type) {
         this.type = type;
@@ -40,5 +42,17 @@ public class Monster {
 
     public void setAnimationTime(float animationTime) {
         this.animationTime = animationTime;
+    }
+
+    public float getShotTime() {
+        return shotTime;
+    }
+
+    public void setShotTime(float shotTime) {
+        this.shotTime = shotTime;
+    }
+
+    public float getShotInterval() {
+        return shotInterval;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -23,6 +24,7 @@ import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InitialPositions;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.View.EndGameView;
 import com.tilldawn.View.GameView;
 import com.tilldawn.View.MainMenuView;
 
@@ -48,8 +50,10 @@ public class GameController {
             this.heartTime.add(0f);
         }
     }
-    private void endGame() {
-
+    private void endGame(String result) {
+        GameData.getInstance().getCurrentPlayer().setGame(null);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new EndGameView(new EndGameController(), GameAssetManager.getInstance().getSkin(), view.getGame(), result));
     }
 
     public String getTimeRemainingFormatted() {
@@ -63,7 +67,7 @@ public class GameController {
         view.getGame().setGameTimer(view.getGame().getGameTimer() - delta);
 
         if (view.getGame().getGameTimer() <= 0) {
-            endGame();
+            endGame("YOU SURVIVED:)");
         }
         if (view.getGame().getGameTimer() < 60) {
             view.getTimer().setColor(Color.RED);
@@ -127,7 +131,7 @@ public class GameController {
     public void updateGame(float delta) {
         if (view != null) {
             if (view.getGame().isGamePaused()) return;
-            if (view.getGame().getHP() <= 0) endGame();
+            if (view.getGame().getHP() <= 0) endGame("GAME OVER!");
             handleTimer(delta);
             handleInvincibleTimer(delta);
             handleAbilityTimers(delta);
@@ -316,9 +320,7 @@ public class GameController {
     }
 
     public void handleGiveUpButton() {
-        endGame();
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
+        endGame("GAME OVER!");
     }
 
     public void handleSaveButton() {

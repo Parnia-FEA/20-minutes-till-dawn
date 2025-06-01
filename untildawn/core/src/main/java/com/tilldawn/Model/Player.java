@@ -2,7 +2,9 @@ package com.tilldawn.Model;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tilldawn.Main;
 import com.tilldawn.Model.enums.InputKey;
 import com.tilldawn.View.GameView;
 
@@ -77,10 +79,6 @@ public class Player {
         isGuest = guest;
     }
 
-    public Texture getAvatar() {
-        return GameAssetManager.getInstance().getAvatars().get(this.avatarIndex);
-    }
-
     public int getAvatarIndex() {
         return avatarIndex;
     }
@@ -89,8 +87,10 @@ public class Player {
         this.avatarIndex = avatarIndex;
     }
 
-    public void drawAvatar(SpriteBatch batch, float x, float y) {
-        batch.draw(getAvatar(), x, y);
+    public void drawAvatar(float x, float y) {
+        Sprite sprite = new Sprite(GameAssetManager.getInstance().getAvatars().get(this.avatarIndex));
+        sprite.setPosition(x, y);
+        sprite.draw(Main.getBatch());
     }
 
     public TillDawnGame getGame() {

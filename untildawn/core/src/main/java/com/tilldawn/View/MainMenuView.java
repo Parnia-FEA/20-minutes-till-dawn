@@ -3,14 +3,17 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.MainMenuController;
 import com.tilldawn.Main;
+import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 
 public class MainMenuView implements Screen {
@@ -25,6 +28,7 @@ public class MainMenuView implements Screen {
     private final TextButton talentMenuButton;
     private final TextButton logoutButton;
     private final Label conditionMessage;
+    private final Image avatarImage;
     public Table table;
     public ScrollPane scrollPane;
     private final MainMenuController controller;
@@ -42,6 +46,7 @@ public class MainMenuView implements Screen {
         this.logoutButton = new TextButton("Logout", skin);
         this.conditionMessage = new Label("", skin);
         this.conditionMessage.setColor(Color.RED);
+        this.avatarImage = new Image(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAvatars().get(GameData.getInstance().getCurrentPlayer().getAvatarIndex()))));
 
         this.table = new Table();
         controller.setView(this);
@@ -51,7 +56,9 @@ public class MainMenuView implements Screen {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        table.setFillParent(true);
+        table.setFillParent(false);
+        table.top();
+        table.padBottom(100);
 
         table.center();
         table.add(welcomeTitle).colspan(2).center();
@@ -75,7 +82,8 @@ public class MainMenuView implements Screen {
         table.add(talentMenuButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(logoutButton).colspan(2).center();
-
+        table.row().pad(10, 0, 10, 0);
+        avatarImage.setPosition(100, 400);
 
         settingsMenuButton.addListener(new ClickListener() {
             @Override
@@ -129,6 +137,7 @@ public class MainMenuView implements Screen {
         scrollPane = new ScrollPane(table);
         scrollPane.setFillParent(true);
         stage.addActor(scrollPane);
+        stage.addActor(avatarImage);
 
     }
 
@@ -136,7 +145,6 @@ public class MainMenuView implements Screen {
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
-        GameData.getInstance().getCurrentPlayer().drawAvatar(Main.getBatch(), 100, 450);
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

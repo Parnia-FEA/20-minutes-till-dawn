@@ -86,8 +86,11 @@ public class TalentMenuView implements Screen {
                 else if (GameData.getInstance().getCurrentPlayer().getKeys().get(inputKey).equals(Input.Buttons.RIGHT)) {
                     label = new Label("Right Mouse Button", skin);
                 }
-                else  {
+                else if (GameData.getInstance().getCurrentPlayer().getKeys().get(inputKey).equals(Input.Buttons.MIDDLE)) {
                     label = new Label("Middle Mouse Button", skin);
+                }
+                else {
+                    label = new Label (Input.Keys.toString(GameData.getInstance().getCurrentPlayer().getKeys().get(inputKey)), skin);
                 }
             }
             else {

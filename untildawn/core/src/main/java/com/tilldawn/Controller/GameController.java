@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class GameController {
     private GameView view;
-    private OrthographicCamera camera;
     private PlayerController playerController;
     private WorldController worldController;
     private WeaponController weaponController;
@@ -40,10 +39,8 @@ public class GameController {
 
     public void setView(GameView view) {
         this.view = view;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         playerController = new PlayerController(view.getGame());
-        worldController = new WorldController(playerController);
+        worldController = new WorldController(view.getGame(), playerController);
         weaponController = new WeaponController(view.getGame());
         monsterController = new MonsterController(view.getGame());
         for (Sprite heart : this.view.getHearts()) {
@@ -143,10 +140,10 @@ public class GameController {
                 view.getGame().setGamePaused(true);
             }
             playerController.update();
-            camera.position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
-            camera.update();
-            float cameraXOffset = camera.position.x - camera.viewportWidth / 2;
-            float cameraYOffset = camera.position.y - camera.viewportHeight / 2;
+            view.getGame().getCamera().position.set(view.getGame().getPlayerPosX(), view.getGame().getPlayerPosY(), 0);
+            view.getGame().getCamera().update();
+            float cameraXOffset = view.getGame().getCamera().position.x - view.getGame().getCamera().viewportWidth / 2;
+            float cameraYOffset = view.getGame().getCamera().position.y - view.getGame().getCamera().viewportHeight / 2;
             view.getAmmoIcon().setPosition(cameraXOffset + InitialPositions.AmmoIcon.getX(), cameraYOffset + InitialPositions.AmmoIcon.getY());
             heartsAnimation(view.getHearts());
             for (int i = 0; i < view.getHearts().size(); i++) {
@@ -155,10 +152,10 @@ public class GameController {
             for (int i = 0; i < view.getEmptyHearts().size(); i++) {
                 view.getEmptyHearts().get(i).setPosition(cameraXOffset + InitialPositions.Hearts.getX() + 30 * i, cameraYOffset + InitialPositions.Hearts.getY());
             }
-            Main.getBatch().setProjectionMatrix(camera.combined);
-            worldController.update(camera);
-            weaponController.update(camera);
-            monsterController.update(camera, delta);
+            Main.getBatch().setProjectionMatrix(view.getGame().getCamera().combined);
+            worldController.update(view.getGame().getCamera());
+            weaponController.update(view.getGame().getCamera());
+            monsterController.update(view.getGame().getCamera(), delta);
             handleCollisions();
             updateActors();
         }
@@ -298,7 +295,7 @@ public class GameController {
     }
 
     public OrthographicCamera getCamera() {
-        return camera;
+        return view.getGame().getCamera();
     }
 
     public void handleResumeButton() {

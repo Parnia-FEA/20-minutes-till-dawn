@@ -2,6 +2,7 @@ package com.tilldawn.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,9 +20,11 @@ public class MainMenuView implements Screen {
     private final TextButton settingsMenuButton;
     private final TextButton profileMenuButton;
     private final TextButton preGameMenuButton;
+    private final TextButton continueSavedGameButton;
     private final TextButton scoreboardMenuButton;
     private final TextButton talentMenuButton;
     private final TextButton logoutButton;
+    private final Label conditionMessage;
     public Table table;
     public ScrollPane scrollPane;
     private final MainMenuController controller;
@@ -33,9 +36,12 @@ public class MainMenuView implements Screen {
         this.settingsMenuButton = new TextButton("Settings", skin);
         this.profileMenuButton = new TextButton("Profile Menu", skin);
         this.preGameMenuButton = new TextButton("Pre Game Menu", skin);
+        this.continueSavedGameButton = new TextButton("Continue Game", skin);
         this.scoreboardMenuButton = new TextButton("Scoreboard", skin);
         this.talentMenuButton = new TextButton("Talent Menu", skin);
         this.logoutButton = new TextButton("Logout", skin);
+        this.conditionMessage = new Label("", skin);
+        this.conditionMessage.setColor(Color.RED);
 
         this.table = new Table();
         controller.setView(this);
@@ -54,11 +60,15 @@ public class MainMenuView implements Screen {
         table.add().height(150).colspan(2);
         table.row();
         table.row().pad(10, 0, 10, 0);
+        table.add(conditionMessage).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
         table.add(settingsMenuButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(profileMenuButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(preGameMenuButton).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(continueSavedGameButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(scoreboardMenuButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
@@ -85,6 +95,13 @@ public class MainMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handlePreGameMenuButton();
+            }
+        });
+
+        continueSavedGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleContinueSavedGameButton();
             }
         });
 
@@ -147,5 +164,9 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
+    }
+
+    public Label getConditionMessage() {
+        return conditionMessage;
     }
 }

@@ -69,7 +69,6 @@ public class GameView implements Screen, InputProcessor {
     private GameController controller;
 
     public GameView(TillDawnGame game, GameController controller, Skin skin) {
-        GameData.getInstance().getCurrentPlayer().setGame(this);
         this.game = game;
         this.ammoIcon = new Sprite(GameAssetManager.getInstance().getAmmoIconTexture());
         this.ammoIcon.setPosition(InitialPositions.AmmoIcon.getX(), InitialPositions.AmmoIcon.getY());

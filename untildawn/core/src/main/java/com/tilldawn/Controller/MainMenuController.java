@@ -42,4 +42,13 @@ public class MainMenuController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
     }
+
+    public void handleContinueSavedGameButton() {
+        if (GameData.getInstance().getCurrentPlayer().getGame() == null) {
+            view.getConditionMessage().setText("You do not have a saved game");
+            return;
+        }
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new GameView(GameData.getInstance().getCurrentPlayer().getGame(), new GameController(), GameAssetManager.getInstance().getSkin()));
+    }
 }

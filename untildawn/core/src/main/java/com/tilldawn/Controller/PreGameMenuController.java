@@ -64,6 +64,7 @@ public class PreGameMenuController {
                                 int time = view.getTimeAmount().get(selectedTimeIndex);
                                 TillDawnGame game = new TillDawnGame(hero, new Weapon(weapon), time);
                                 view.setConditionMessage("Loading...", Color.GREEN);
+                                GameData.getInstance().getCurrentPlayer().setGame(game);
                                 Timer.schedule(new Timer.Task() {
                                     @Override
                                     public void run() {

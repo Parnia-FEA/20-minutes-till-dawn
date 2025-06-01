@@ -1,10 +1,12 @@
 package com.tilldawn.Model;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Model.enums.InputKey;
 import com.tilldawn.View.GameView;
 
+import java.awt.image.TileObserver;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -16,7 +18,7 @@ public class Player {
     private int points = 0;
     private boolean isGuest = false;
     private int avatarIndex;
-    private GameView game = null;
+    private TillDawnGame game = null;
     private final HashMap<InputKey, Integer> keys = new HashMap<>();
     private boolean autoReload = false;
 
@@ -91,11 +93,11 @@ public class Player {
         batch.draw(getAvatar(), x, y);
     }
 
-    public GameView getGame() {
+    public TillDawnGame getGame() {
         return game;
     }
 
-    public void setGame(GameView game) {
+    public void setGame(TillDawnGame game) {
         this.game = game;
     }
 

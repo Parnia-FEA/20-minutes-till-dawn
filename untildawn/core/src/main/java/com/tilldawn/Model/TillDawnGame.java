@@ -1,11 +1,13 @@
 package com.tilldawn.Model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.Hero;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.MonsterType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +46,19 @@ public class TillDawnGame {
     private final HashMap<Ability, Integer> abilities = new HashMap<>();
     private boolean isGamePaused = false;
 
+    private final OrthographicCamera camera = new OrthographicCamera();
+    private float backgroundX = 0;
+    private float backgroundY = 0;
+    private final ArrayList<Bullet> bullets = new ArrayList<>();
+
+    private final ArrayList<Monster> monsters = new ArrayList<>();
+    private final ArrayList<Monster> explodedMonsters = new ArrayList<>();
+    private final ArrayList<Drop> drops = new ArrayList<>();
+    private float tentacleSpawnTimer = 0f;
+    private final float tentacleSpawnInterval = 3f;
+    private float eyebatSpawnTimer = 0f;
+    private final float eyebatSpawnInterval = 10f;
+
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
         this.hero = hero;
@@ -59,6 +74,24 @@ public class TillDawnGame {
         this.HP = this.maxHP;
         for (Ability value : Ability.values()) {
             abilities.put(value, 0);
+        }
+
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50 ; j++) {
+                Monster monster = new Monster(MonsterType.Tree);
+                float x, y;
+                Random random = new Random();
+                boolean flag = true;
+                do {
+                    x = random.nextFloat() * ((float) Gdx.graphics.getWidth() / 2);
+                    y = random.nextFloat() * ((float) Gdx.graphics.getHeight() / 2);
+                    monster.getSprite().setPosition(x + (i - 25) * ((float) Gdx.graphics.getWidth() / 2), y + (j - 25) * ((float) Gdx.graphics.getHeight() / 2));
+                    if (playerSprite.getBoundingRectangle().overlaps(monster.getSprite().getBoundingRectangle())) flag = false;
+                } while(!flag);
+                monsters.add(monster);
+            }
         }
     }
 
@@ -325,5 +358,65 @@ public class TillDawnGame {
 
     public void setGamePaused(boolean gamePaused) {
         isGamePaused = gamePaused;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public float getBackgroundX() {
+        return backgroundX;
+    }
+
+    public void setBackgroundX(float backgroundX) {
+        this.backgroundX = backgroundX;
+    }
+
+    public float getBackgroundY() {
+        return backgroundY;
+    }
+
+    public void setBackgroundY(float backgroundY) {
+        this.backgroundY = backgroundY;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
+    }
+
+    public ArrayList<Monster> getExplodedMonsters() {
+        return explodedMonsters;
+    }
+
+    public ArrayList<Drop> getDrops() {
+        return drops;
+    }
+
+    public float getTentacleSpawnTimer() {
+        return tentacleSpawnTimer;
+    }
+
+    public void setTentacleSpawnTimer(float tentacleSpawnTimer) {
+        this.tentacleSpawnTimer = tentacleSpawnTimer;
+    }
+
+    public float getTentacleSpawnInterval() {
+        return tentacleSpawnInterval;
+    }
+
+    public float getEyebatSpawnTimer() {
+        return eyebatSpawnTimer;
+    }
+
+    public void setEyebatSpawnTimer(float eyebatSpawnTimer) {
+        this.eyebatSpawnTimer = eyebatSpawnTimer;
+    }
+
+    public float getEyebatSpawnInterval() {
+        return eyebatSpawnInterval;
     }
 }

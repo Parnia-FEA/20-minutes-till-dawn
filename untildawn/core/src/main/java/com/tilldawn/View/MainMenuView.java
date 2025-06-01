@@ -36,7 +36,7 @@ public class MainMenuView implements Screen {
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
         this.welcomeTitle = new Label("WELCOME " + GameData.getInstance().getCurrentPlayer().getUsername(), skin, "subtitle");
-        this.points = new Label("points : " + GameData.getInstance().getCurrentPlayer().getPoints(), skin, "subtitle");
+        this.points = new Label("Score : " + GameData.getInstance().getCurrentPlayer().getScore(), skin, "subtitle");
         this.settingsMenuButton = new TextButton("Settings", skin);
         this.profileMenuButton = new TextButton("Profile Menu", skin);
         this.preGameMenuButton = new TextButton("Pre Game Menu", skin);

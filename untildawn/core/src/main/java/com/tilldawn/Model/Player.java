@@ -17,12 +17,15 @@ public class Player {
     private String password;
     private String securityQuestion;
     private String answer;
-    private int points = 0;
     private boolean isGuest = false;
     private int avatarIndex;
     private TillDawnGame game = null;
     private final HashMap<InputKey, Integer> keys = new HashMap<>();
     private boolean autoReload = false;
+    private int kill = 0;
+    private int score = 0;
+    private int maxSurvivalTime = 0;
+
 
     public Player(String username, String password, String securityQuestion, String answer) {
         this.username = username;
@@ -57,18 +60,6 @@ public class Player {
 
     public String getAnswer() {
         return answer;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void addPoint(int amount) {
-        this.points += amount;
     }
 
     public boolean isGuest() {
@@ -111,5 +102,29 @@ public class Player {
 
     public void setAutoReload(boolean autoReload) {
         this.autoReload = autoReload;
+    }
+
+    public int getKill() {
+        return kill;
+    }
+
+    public void setKill(int kill) {
+        this.kill = kill;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getMaxSurvivalTime() {
+        return maxSurvivalTime;
+    }
+
+    public void setMaxSurvivalTime(int maxSurvivalTime) {
+        this.maxSurvivalTime = maxSurvivalTime;
     }
 }

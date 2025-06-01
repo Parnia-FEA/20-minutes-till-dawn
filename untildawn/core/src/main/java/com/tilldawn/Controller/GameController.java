@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.Player;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
@@ -51,7 +52,15 @@ public class GameController {
         }
     }
     private void endGame(String result) {
-        GameData.getInstance().getCurrentPlayer().setGame(null);
+        Player player = GameData.getInstance().getCurrentPlayer();
+        player.setGame(null);
+        player.setKill(player.getKill() + view.getGame().getKill());
+        float remaining = Math.min(view.getGame().getTime() - view.getGame().getGameTimer(), view.getGame().getTime());
+        int minutes = (int)(remaining / 60);
+        int seconds = (int)(remaining % 60);
+        int survivalTime = minutes * 60 + seconds;
+        player.setMaxSurvivalTime(Math.max(survivalTime, player.getMaxSurvivalTime()));
+        player.setScore(player.getScore() + survivalTime * view.getGame().getKill());
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new EndGameView(new EndGameController(), GameAssetManager.getInstance().getSkin(), view.getGame(), result));
     }

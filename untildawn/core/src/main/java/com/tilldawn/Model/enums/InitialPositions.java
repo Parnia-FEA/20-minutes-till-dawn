@@ -7,7 +7,9 @@ public enum InitialPositions {
     Ammo(30, (float) Gdx.graphics.getHeight() - 109),
     Hearts(5 , (float) Gdx.graphics.getHeight() - 68),
     Message(5, (float) Gdx.graphics.getHeight() - 35),
-    Timer((float) Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 68);
+    Timer((float) Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 68),
+    Kill((float) Gdx.graphics.getWidth() - 100, (float) Gdx.graphics.getHeight() - 106),
+    Level((float) Gdx.graphics.getWidth() - 120, (float) Gdx.graphics.getHeight() - 144);
 
     private final float x;
     private final float y;

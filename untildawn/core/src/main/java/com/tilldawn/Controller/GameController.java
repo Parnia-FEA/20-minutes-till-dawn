@@ -136,6 +136,7 @@ public class GameController {
                 return;
             }
             handleCheatCodes();
+            updateStage();
             if (Gdx.input.isKeyJustPressed(view.getGame().getKeys().get(InputKey.Pause))) {
                 view.getGame().setGamePaused(true);
             }
@@ -159,6 +160,11 @@ public class GameController {
             handleCollisions();
             updateActors();
         }
+    }
+
+    private void updateStage() {
+        view.getKill().setText("Kill " + view.getGame().getKill());
+        view.getLevel().setText("Level " + view.getGame().getLevel());
     }
 
     private void updateActors() {

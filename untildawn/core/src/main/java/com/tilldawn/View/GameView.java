@@ -18,17 +18,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
-import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.Monster;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InitialPositions;
-import com.tilldawn.Model.enums.MonsterType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GameView implements Screen, InputProcessor {
     private final TillDawnGame game;
@@ -61,6 +56,8 @@ public class GameView implements Screen, InputProcessor {
     private final ArrayList<Label> numOfAbility = new ArrayList<>();
     private final ArrayList<Image> gainedAbilitiesImages = new ArrayList<>();
     private final Label pauseConditionMessage;
+    private final Label kill;
+    private final Label level;
 
     private Table pauseTable;
 
@@ -72,6 +69,8 @@ public class GameView implements Screen, InputProcessor {
         this.game = game;
         this.ammoIcon = new Sprite(GameAssetManager.getInstance().getAmmoIconTexture());
         this.ammoIcon.setPosition(InitialPositions.AmmoIcon.getX(), InitialPositions.AmmoIcon.getY());
+        this.kill = new Label("", skin);
+        this.level = new Label("", skin);
         this.ammo = new Label(String.format(String.format("%02d", game.getWeapon().getAmmo()) + " / " + String.format("%02d", game.getWeapon().getMaxAmmo())) ,skin);
         this.controller = controller;
         this.firstHeartTexture = GameAssetManager.getInstance().getHeartTexture().get(0);
@@ -160,8 +159,15 @@ public class GameView implements Screen, InputProcessor {
         timer.setPosition(InitialPositions.Timer.getX(), InitialPositions.Timer.getY());
         timer.setText(controller.getTimeRemainingFormatted());
         timer.setColor(Color.GREEN);
+        kill.setPosition(InitialPositions.Kill.getX(), InitialPositions.Kill.getY());
+        kill.setText("Kill " + game.getKill());
+        level.setPosition(InitialPositions.Level.getX(), InitialPositions.Level.getY());
+        level.setText("Level " + game.getLevel());
+        level.setColor(Color.GOLD);
         stage.addActor(ammo);
         stage.addActor(timer);
+        stage.addActor(kill);
+        stage.addActor(level);
 
         abilitySelectTable.setVisible(false);
         abilitySelectTable.add(chooseAbilityLabel).colspan(7).center();
@@ -386,5 +392,13 @@ public class GameView implements Screen, InputProcessor {
 
     public Label getPauseConditionMessage() {
         return pauseConditionMessage;
+    }
+
+    public Label getKill() {
+        return kill;
+    }
+
+    public Label getLevel() {
+        return level;
     }
 }

@@ -27,6 +27,10 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        GameAssetManager.getInstance().getMenuMusic().dispose();
+        for (MusicEnum musicEnum : GameAssetManager.getInstance().getBackGroundMusics().keySet()) {
+            GameAssetManager.getInstance().getBackGroundMusics().get(musicEnum).dispose();
+        }
     }
 
     public static Main getMain() {

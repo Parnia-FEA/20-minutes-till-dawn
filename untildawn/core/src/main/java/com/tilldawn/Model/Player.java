@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Main;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.MusicEnum;
 import com.tilldawn.View.GameView;
 
 import java.awt.image.TileObserver;
@@ -26,6 +27,7 @@ public class Player {
     private int score = 0;
     private int maxSurvivalTime = 0;
     private float musicVolume = 0.5f;
+    private MusicEnum music = MusicEnum.Chase;
 
 
     public Player(String username, String password, String securityQuestion, String answer) {
@@ -135,5 +137,13 @@ public class Player {
 
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
+    }
+
+    public MusicEnum getMusic() {
+        return music;
+    }
+
+    public void setMusic(MusicEnum music) {
+        this.music = music;
     }
 }

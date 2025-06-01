@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.GameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.enums.Ability;
 import com.tilldawn.Model.enums.CheatCode;
@@ -155,6 +156,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        GameAssetManager.getInstance().getBackGroundMusics().get(GameData.getInstance().getCurrentPlayer().getMusic()).play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
@@ -285,7 +287,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        GameAssetManager.getInstance().getBackGroundMusics().get(GameData.getInstance().getCurrentPlayer().getMusic()).stop();
     }
 
     @Override

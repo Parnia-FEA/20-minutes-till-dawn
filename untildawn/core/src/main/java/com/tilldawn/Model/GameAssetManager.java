@@ -76,6 +76,10 @@ public class GameAssetManager {
     private final Sound shotSound;
     private final Sound reloadWeaponSound;
 
+    private final ArrayList<String> hitImpactImageFiles = new ArrayList<>();
+    private final ArrayList<Texture> hitImpactTexture = new ArrayList<>();
+    private final Animation<Texture> hitImpactAnimation;
+
 
 
     public GameAssetManager() {
@@ -154,6 +158,13 @@ public class GameAssetManager {
         winSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Win.wav"));
         reloadWeaponSound = Gdx.audio.newSound(Gdx.files.internal("Sound/ReloadWeapon.wav"));
         shotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/Shot.wav"));
+
+        for (int i = 0; i < 2; i++) {
+            String image = "Hit/HitImpactFX_" + i + ".png";
+            hitImpactImageFiles.add(image);
+            hitImpactTexture.add(new Texture(image));
+        }
+        hitImpactAnimation = new Animation<>(0.1f, hitImpactTexture.toArray(new Texture[0]));
     }
 
     private void buildAbilities() {
@@ -463,5 +474,17 @@ public class GameAssetManager {
 
     public Sound getReloadWeaponSound() {
         return reloadWeaponSound;
+    }
+
+    public ArrayList<String> getHitImpactImageFiles() {
+        return hitImpactImageFiles;
+    }
+
+    public ArrayList<Texture> getHitImpactTexture() {
+        return hitImpactTexture;
+    }
+
+    public Animation<Texture> getHitImpactAnimation() {
+        return hitImpactAnimation;
     }
 }

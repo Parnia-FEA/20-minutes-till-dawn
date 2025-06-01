@@ -62,6 +62,11 @@ public class TillDawnGame {
 
     private final int healthToHP = 5;
 
+    private Texture hitImpactTexture;
+    private Sprite hitImpactSprite;
+    private float hitImpactTime = 0f;
+    private boolean isHitImpactOn = false;
+
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
         this.hero = hero;
@@ -97,6 +102,10 @@ public class TillDawnGame {
                 monsters.add(monster);
             }
         }
+
+        this.hitImpactTexture = GameAssetManager.getInstance().getHitImpactTexture().get(0);
+        this.hitImpactSprite = new Sprite(this.hitImpactTexture);
+        this.hitImpactSprite.setScale(3);
     }
 
     public Hero getHero() {
@@ -433,5 +442,29 @@ public class TillDawnGame {
 
     public int getHealthToHP() {
         return healthToHP;
+    }
+
+    public Texture getHitImpactTexture() {
+        return hitImpactTexture;
+    }
+
+    public Sprite getHitImpactSprite() {
+        return hitImpactSprite;
+    }
+
+    public float getHitImpactTime() {
+        return hitImpactTime;
+    }
+
+    public void setHitImpactTime(float hitImpactTime) {
+        this.hitImpactTime = hitImpactTime;
+    }
+
+    public boolean isHitImpactOn() {
+        return isHitImpactOn;
+    }
+
+    public void setHitImpactOn(boolean hitImpactOn) {
+        isHitImpactOn = hitImpactOn;
     }
 }

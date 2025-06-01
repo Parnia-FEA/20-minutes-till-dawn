@@ -37,7 +37,19 @@ public class PlayerController {
             game.changePlayerPosX(direction.x * speed);
             game.changePlayerPosY(direction.y * speed);
         }
+        if (game.isHitImpactOn()) {
+            game.getHitImpactSprite().setPosition(game.getPlayerSprite().getX(), game.getPlayerSprite().getY());
+            hitImpactAnimation();
+        }
+    }
 
+    private void hitImpactAnimation() {
+        Animation<Texture> animation = GameAssetManager.getInstance().getHitImpactAnimation();
+        game.setHitImpactTime(game.getHitImpactTime() + Gdx.graphics.getDeltaTime());
+        game.getHitImpactSprite().setRegion(animation.getKeyFrame(game.getHitImpactTime()));
+        if (animation.isAnimationFinished(game.getHitImpactTime())) {
+            game.setHitImpactOn(false);
+        }
     }
 
     public void draw() {
@@ -48,6 +60,7 @@ public class PlayerController {
 
         game.getPlayerSprite().setPosition(playerX - spriteWidth / 2f, playerY - spriteHeight / 2f);
         game.getPlayerSprite().draw(Main.getBatch());
+        if(game.isHitImpactOn()) game.getHitImpactSprite().draw(Main.getBatch());
     }
 
     private void idleAnimation() {

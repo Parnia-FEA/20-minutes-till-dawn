@@ -260,5 +260,6 @@ public class MonsterController {
         for (Bullet bullet : toBeDeleted) {
             game.getEyebatBullets().remove(bullet);
         }
+        if (!toBeDeleted.isEmpty()) game.setHitImpactOn(true);
     }
 }

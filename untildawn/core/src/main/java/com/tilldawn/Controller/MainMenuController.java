@@ -51,4 +51,8 @@ public class MainMenuController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new GameView(GameData.getInstance().getCurrentPlayer().getGame(), new GameController(), GameAssetManager.getInstance().getSkin()));
     }
+
+    public void handleLanguageSelectBox(String selected) {
+
+    }
 }

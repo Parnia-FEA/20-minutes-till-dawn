@@ -43,7 +43,7 @@ public class SignUpMenuController {
                 }
                 else {
                     view.setSignUpConditionMessage("Signed up Successfully:)", Color.GREEN);
-                    Player player = new Player(username, password, securityQuestion, answer);
+                    Player player = new Player(username, password, securityQuestion, answer, GameData.getInstance().getLanguage());
                     GameData.getInstance().addUser(player);
                     Timer.schedule(new Timer.Task() {
                         @Override
@@ -64,7 +64,7 @@ public class SignUpMenuController {
     }
 
     public void handleGuestButton() {
-        Player guest = new Player("Guest", null, null, null);
+        Player guest = new Player("Guest", null, null, null, GameData.getInstance().getLanguage());
         guest.setGuest(true);
         GameData.getInstance().setCurrentUser(guest);
         Main.getMain().getScreen().dispose();

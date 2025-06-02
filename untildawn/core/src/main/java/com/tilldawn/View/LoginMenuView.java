@@ -3,10 +3,13 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Color;
@@ -26,8 +29,10 @@ public class LoginMenuView implements Screen {
     private final TextButton loginButton;
     private final Label loginConditionMessage;
     private final TextButton signUpButton;
+    private final SelectBox<String> language;
     private final TextButton forgetPasswordButton;
-    public Table table;
+    private Table table;
+    private ScrollPane scrollPane;
     private final LoginMenuController controller;
 
     public LoginMenuView(LoginMenuController controller, Skin skin) {
@@ -41,6 +46,9 @@ public class LoginMenuView implements Screen {
         this.loginButton = new TextButton("Login", skin);
         this.loginConditionMessage = new Label("",skin);
         this.signUpButton = new TextButton("Sign Up", skin);
+        this.language = new SelectBox<>(skin);
+        String[] languages = {"English", "French"};
+        this.language.setItems(languages);
         this.forgetPasswordButton = new TextButton("Forget Password", skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
@@ -54,7 +62,9 @@ public class LoginMenuView implements Screen {
         GameAssetManager.getInstance().getMenuMusic().play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        table.setFillParent(true);
+        table.setFillParent(false);
+        table.top();
+        table.padBottom(100);
 
         table.center();
         table.add(title).colspan(2).center();
@@ -77,6 +87,8 @@ public class LoginMenuView implements Screen {
         table.add(signUpButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(forgetPasswordButton).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.add(language).colspan(2).center();
 
         loginButton.addListener(new ClickListener() {
             @Override
@@ -99,7 +111,17 @@ public class LoginMenuView implements Screen {
             }
         });
 
-        stage.addActor(table);
+        language.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String selected = language.getSelected();
+                controller.handleLanguageSelectBox(selected);
+            }
+        });
+
+        scrollPane = new ScrollPane(table);
+        scrollPane.setFillParent(true);
+        stage.addActor(scrollPane);
     }
 
     @Override

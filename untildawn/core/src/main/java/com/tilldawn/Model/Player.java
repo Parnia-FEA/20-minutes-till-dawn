@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Main;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.Model.enums.MusicEnum;
 import com.tilldawn.View.GameView;
 
@@ -29,9 +30,10 @@ public class Player {
     private float musicVolume = 0.5f;
     private MusicEnum music = MusicEnum.Chase;
     private boolean sfx = true;
+    private Language language;
 
 
-    public Player(String username, String password, String securityQuestion, String answer) {
+    public Player(String username, String password, String securityQuestion, String answer, Language language) {
         this.username = username;
         this.password = password;
         this.securityQuestion = securityQuestion;
@@ -40,6 +42,7 @@ public class Player {
         for (InputKey value : InputKey.values()) {
             keys.put(value,value.getMainKey());
         }
+        this.language = language;
     }
 
     public String getUsername() {
@@ -154,5 +157,13 @@ public class Player {
 
     public void setSfx(boolean sfx) {
         this.sfx = sfx;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 }

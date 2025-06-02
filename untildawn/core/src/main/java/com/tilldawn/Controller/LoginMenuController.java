@@ -50,4 +50,8 @@ public class LoginMenuController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getInstance().getSkin()));
     }
+
+    public void handleLanguageSelectBox(String selected) {
+
+    }
 }

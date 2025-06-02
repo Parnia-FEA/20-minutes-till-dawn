@@ -1,11 +1,14 @@
 package com.tilldawn.Model;
 
+import com.tilldawn.Model.enums.Language;
+
 import java.util.ArrayList;
 
 public class GameData {
     private static GameData instance;
     private final ArrayList<Player> players;
     private Player currentPlayer;
+    private Language language = Language.English;
 
     public GameData() {
         players = new ArrayList<>();
@@ -39,4 +42,11 @@ public class GameData {
         this.currentPlayer = currentPlayer;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 }

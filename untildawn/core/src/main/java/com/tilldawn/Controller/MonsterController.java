@@ -24,6 +24,11 @@ public class MonsterController {
     public void update(OrthographicCamera camera, float delta) {
         game.setTentacleSpawnTimer(game.getTentacleSpawnTimer() + delta);
         game.setEyebatSpawnTimer(game.getEyebatSpawnTimer() + delta);
+        if (!game.isBossSpawned() && game.getGameTimer() <= game.getTime() / 2) {
+            spawnMonster(camera, MonsterType.Boss);
+            game.setBossSpawned(true);
+        }
+        handleBoss(delta);
         updateEyebatBullets();
         if (game.getTentacleSpawnTimer() >= game.getTentacleSpawnInterval()) {
             game.setTentacleSpawnTimer(0);
@@ -43,11 +48,45 @@ public class MonsterController {
         explodedMonsterAnimation();
     }
 
+    private void handleBoss(float delta) {
+        if (game.isBossSpawned() && !game.isBossKilled()) {
+            Boss boss = game.getBoss();
+            if (boss.isAttacking()) {
+                if (boss.isAttackEnded()) {
+                    boss.setAttackEndingTimer(boss.getAttackEndingTimer() + delta);
+                    if (boss.getAttackEndingTimer() >= 1) {
+                        boss.setAttackEnded(false);
+                        boss.setAttacking(false);
+                        boss.setDashTimer(0);
+                        boss.setAttackEndingTimer(0);
+                    }
+                }
+                else {
+                    boss.setAttackTimer(boss.getAttackTimer() + delta);
+                    if (boss.getAttackTimer() >= 1) {
+                        boss.setAttackEnded(true);
+                        boss.setAttackTimer(0);
+                        boss.setAttackEndingTimer(0);
+                    }
+                }
+            }
+            else {
+                boss.setDashTimer(boss.getDashTimer() + delta);
+                if (boss.getDashTimer() >= boss.getDashInterval()) {
+                    boss.setAttacking(true);
+                    boss.setAttackEnded(false);
+                    boss.getAttackSprite().setPosition(boss.getSprite().getX(), boss.getSprite().getY());
+                    boss.setDashTimer(0);
+                }
+            }
+        }
+    }
+
     private void updateEyebatBullets() {
         for(Bullet bullet : game.getEyebatBullets()) {
             bullet.getSprite().translate(
-                bullet.getDirection().x * 5f,
-                bullet.getDirection().y * 5f
+                bullet.getDirection().x * 3f,
+                bullet.getDirection().y * 3f
             );
         }
     }
@@ -89,18 +128,49 @@ public class MonsterController {
     private void moveMonsters() {
         for (int i = 2500; i < game.getMonsters().size(); i++) {
             Monster monster = game.getMonsters().get(i);
-            Vector2 direction = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
-            monster.getSprite().translate(
-                direction.x * 0.2f,
-                direction.y * 0.2f
-            );
-            float angle = direction.angleDeg();
-            monster.getSprite().setRotation(angle - 90);
+            if (monster.getType().equals(MonsterType.Boss) && ((Boss) monster).isAttacking()) {
+                Boss boss = (Boss) monster;
+                if (boss.isAttackEnded()) {
+                    Vector2 direction = new Vector2(boss.getSprite().getX() - boss.getAttackSprite().getX(), boss.getSprite().getY() - boss.getAttackSprite().getY()).nor();
+                    float speed = 4f;
+                    boss.getAttackSprite().translate(
+                        direction.x * speed,
+                        direction.y * speed
+                    );
+                    float angle = direction.angleDeg();
+                    boss.getAttackSprite().setRotation(90 - angle);
+                }
+                else {
+                    Vector2 direction = new Vector2(game.getPlayerPosX() - boss.getAttackSprite().getX(), game.getPlayerPosY() - boss.getAttackSprite().getY()).nor();
+                    float speed = 4f;
+                    boss.getAttackSprite().translate(
+                        direction.x * speed,
+                        direction.y * speed
+                    );
+                    float angle = direction.angleDeg();
+                    boss.getAttackSprite().setRotation(angle);
+                }
+            }
+            else {
+                Vector2 direction = new Vector2(game.getPlayerPosX() - monster.getSprite().getX(), game.getPlayerPosY() - monster.getSprite().getY()).nor();
+                float speed = 0.2f;
+                monster.getSprite().translate(
+                    direction.x * speed,
+                    direction.y * speed
+                );
+                float angle = direction.angleDeg();
+                monster.getSprite().setRotation(angle - 90);
+            }
         }
     }
 
-    private void spawnMonster(OrthographicCamera camera, MonsterType type) {
-        Monster monster = new Monster(type);
+    public void spawnMonster(OrthographicCamera camera, MonsterType type) {
+        Monster monster;
+        if (type.equals(MonsterType.Boss)) {
+            game.setBoss(new Boss(type));
+            monster = game.getBoss();
+        }
+        else monster = new Monster(type);
         Random random = new Random();
         float screenWidth = camera.viewportWidth;
         float screenHeight = camera.viewportHeight;
@@ -131,15 +201,27 @@ public class MonsterController {
 
     private void monsterAnimation() {
         for (Monster monster : game.getMonsters()) {
-            Animation<Texture> animation = getTextureAnimation(monster);
-            monster.getSprite().setRegion(animation.getKeyFrame(monster.getAnimationTime()));
-            if (!animation.isAnimationFinished(monster.getAnimationTime())) {
-                monster.setAnimationTime(monster.getAnimationTime() + Gdx.graphics.getDeltaTime());
+            if (monster.getType().equals(MonsterType.Boss) && ((Boss) monster).isAttacking()) {
+                Boss boss = (Boss) monster;
+                Animation<Texture> animation = GameAssetManager.getInstance().getBossAttackAnimation();
+                boss.getAttackSprite().setRegion(animation.getKeyFrame(boss.getAttackAnimationTime()));
+                if (!animation.isAnimationFinished(boss.getAttackAnimationTime())) {
+                    boss.setAttackAnimationTime(boss.getAttackAnimationTime() + Gdx.graphics.getDeltaTime());
+                } else {
+                    boss.setAttackAnimationTime(0);
+                }
+                animation.setPlayMode(Animation.PlayMode.LOOP);
             }
             else {
-                monster.setAnimationTime(0);
+                Animation<Texture> animation = getTextureAnimation(monster);
+                monster.getSprite().setRegion(animation.getKeyFrame(monster.getAnimationTime()));
+                if (!animation.isAnimationFinished(monster.getAnimationTime())) {
+                    monster.setAnimationTime(monster.getAnimationTime() + Gdx.graphics.getDeltaTime());
+                } else {
+                    monster.setAnimationTime(0);
+                }
+                animation.setPlayMode(Animation.PlayMode.LOOP);
             }
-            animation.setPlayMode(Animation.PlayMode.LOOP);
         }
     }
 
@@ -154,6 +236,9 @@ public class MonsterController {
         else if (monster.getType().equals(MonsterType.Eyebat)) {
             animation = GameAssetManager.getInstance().getEyebatAnimation();
         }
+        else if (monster.getType().equals(MonsterType.Boss)) {
+            animation = GameAssetManager.getInstance().getBossAnimation();
+        }
         return animation;
     }
 
@@ -162,7 +247,10 @@ public class MonsterController {
             drop.getSprite().draw(Main.getBatch());
         }
         for (Monster monster : game.getMonsters()) {
-            monster.getSprite().draw(Main.getBatch());
+            if (monster.getType().equals(MonsterType.Boss) && ((Boss) monster).isAttacking())
+                ((Boss) monster).getAttackSprite().draw(Main.getBatch());
+            else
+                monster.getSprite().draw(Main.getBatch());
         }
         for (Monster monster : game.getExplodedMonsters()) {
             monster.getSprite().draw(Main.getBatch());
@@ -175,11 +263,21 @@ public class MonsterController {
     public void handleCollisionOfPlayerWithMonster() {
         if (!game.isPlayerInvincible()) {
             for (Monster monster : game.getMonsters()) {
-                if (monster.getSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
-                    game.setPlayerHealth(game.getPlayerHealth() - game.getHealthToHP());
-                    game.setPlayerInvincible(true);
-                    game.setInvincibleTime(0);
-                    return;
+                if (monster.getType().equals(MonsterType.Boss) && ((Boss) monster).isAttacking()) {
+                    if (((Boss) monster).getAttackSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
+                        game.setPlayerHealth(game.getPlayerHealth() - game.getHealthToHP());
+                        game.setPlayerInvincible(true);
+                        game.setInvincibleTime(0);
+                        return;
+                    }
+                }
+                else {
+                    if (monster.getSprite().getBoundingRectangle().overlaps(game.getPlayerSprite().getBoundingRectangle())) {
+                        game.setPlayerHealth(game.getPlayerHealth() - game.getHealthToHP());
+                        game.setPlayerInvincible(true);
+                        game.setInvincibleTime(0);
+                        return;
+                    }
                 }
             }
         }
@@ -207,10 +305,19 @@ public class MonsterController {
             Monster monster = game.getMonsters().get(i);
             Bullet collidedBullet = null;
             for (Bullet bullet : bullets) {
-                if (monster.getSprite().getBoundingRectangle().overlaps(bullet.getSprite().getBoundingRectangle())) {
-                    monster.setHP(monster.getHP() - damage);
-                    collidedBullet = bullet;
-                    break;
+                if (monster.getType().equals(MonsterType.Boss) && ((Boss) monster).isAttacking()) {
+                    if (((Boss) monster).getAttackSprite().getBoundingRectangle().overlaps(bullet.getSprite().getBoundingRectangle())) {
+                        monster.setHP(monster.getHP() - damage);
+                        collidedBullet = bullet;
+                        break;
+                    }
+                }
+                else {
+                    if (monster.getSprite().getBoundingRectangle().overlaps(bullet.getSprite().getBoundingRectangle())) {
+                        monster.setHP(monster.getHP() - damage);
+                        collidedBullet = bullet;
+                        break;
+                    }
                 }
             }
             if (monster.getHP() <= 0) killed.add(monster);

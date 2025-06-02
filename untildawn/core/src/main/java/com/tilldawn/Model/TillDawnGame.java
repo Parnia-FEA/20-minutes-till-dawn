@@ -61,10 +61,13 @@ public class TillDawnGame {
 
     private final int healthToHP = 5;
 
-    private Texture hitImpactTexture;
-    private Sprite hitImpactSprite;
+    private final Texture hitImpactTexture;
+    private final Sprite hitImpactSprite;
     private float hitImpactTime = 0f;
     private boolean isHitImpactOn = false;
+    private Boss boss = null;
+    private boolean isBossSpawned = false;
+    private boolean isBossKilled = false;
 
 
     public TillDawnGame(Hero hero, Weapon weapon, int time) {
@@ -459,5 +462,29 @@ public class TillDawnGame {
 
     public void setHitImpactOn(boolean hitImpactOn) {
         isHitImpactOn = hitImpactOn;
+    }
+
+    public Boss getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
+    public boolean isBossSpawned() {
+        return isBossSpawned;
+    }
+
+    public void setBossSpawned(boolean bossSpawned) {
+        isBossSpawned = bossSpawned;
+    }
+
+    public boolean isBossKilled() {
+        return isBossKilled;
+    }
+
+    public void setBossKilled(boolean bossKilled) {
+        isBossKilled = bossKilled;
     }
 }

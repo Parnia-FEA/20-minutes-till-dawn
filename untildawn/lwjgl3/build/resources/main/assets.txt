@@ -96,7 +96,14 @@ Heroes/Shana/walk/Walk_6.png
 Heroes/Shana/walk/Walk_7.png
 Hit/HitImpactFX_0.png
 Hit/HitImpactFX_1.png
-Monsters/Elder/ElderBrain.png
+Monsters/Boss/BossAttack_0.png
+Monsters/Boss/BossAttack_1.png
+Monsters/Boss/Boss_0.png
+Monsters/Boss/Boss_1.png
+Monsters/Boss/Boss_2.png
+Monsters/Boss/Boss_3.png
+Monsters/Boss/Boss_4.png
+Monsters/Boss/Boss_5.png
 Monsters/ExplosionFX/ExplosionFX_0.png
 Monsters/ExplosionFX/ExplosionFX_1.png
 Monsters/ExplosionFX/ExplosionFX_2.png

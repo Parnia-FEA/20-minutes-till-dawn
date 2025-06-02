@@ -46,8 +46,6 @@ public class GameAssetManager {
     private final Animation<Texture> emptyHeartAnimation;
     private final HashMap<String, String> abilityImageFile = new HashMap<>();
     private final HashMap<String, Texture> abilityTexture = new HashMap<>();
-    private final String elderImageFile;
-    private final Texture elderTexture;
     private final ArrayList<String> eyebatImageFile = new ArrayList<>();
     private final ArrayList<Texture> eyebatTexture = new ArrayList<>();
     private final Animation<Texture> eyebatAnimation;
@@ -64,10 +62,19 @@ public class GameAssetManager {
     private final Animation<Texture> explosionAnimation;
     private final String crystalImageFile;
     private final Texture crystalTexture;
+    private final ArrayList<String> hitImpactImageFiles = new ArrayList<>();
+    private final ArrayList<Texture> hitImpactTexture = new ArrayList<>();
+    private final Animation<Texture> hitImpactAnimation;
+    private final ArrayList<String> bossImageFile = new ArrayList<>();
+    private final ArrayList<Texture> bossTexture = new ArrayList<>();
+    private final Animation<Texture> bossAnimation;
+    private final ArrayList<String> bossAttackImageFile = new ArrayList<>();
+    private final ArrayList<Texture> bossAttackTexture = new ArrayList<>();
+    private final Animation<Texture> bossAttackAnimation;
+
     private final HashMap<MusicEnum, String> backGroundMusicFiles = new HashMap<>();
     private final HashMap<MusicEnum, Music> backGroundMusics = new HashMap<>();
     private final Music menuMusic;
-
     private final Sound crystalRewardSound;
     private final Sound explosionSound;
     private final Sound levelUpSound;
@@ -75,12 +82,8 @@ public class GameAssetManager {
     private final Sound winSound;
     private final Sound shotSound;
     private final Sound reloadWeaponSound;
-
-    private final ArrayList<String> hitImpactImageFiles = new ArrayList<>();
-    private final ArrayList<Texture> hitImpactTexture = new ArrayList<>();
-    private final Animation<Texture> hitImpactAnimation;
-
     private final Texture cursor;
+
 
 
 
@@ -105,8 +108,6 @@ public class GameAssetManager {
         emptyHeartTexture = new Texture(emptyHeartImageFile);
         emptyHeartAnimation = new Animation<>(0.1f, emptyHeartTexture);
         buildAbilities();
-        elderImageFile = "Monsters/Elder/ElderBrain.png";
-        elderTexture = new Texture(elderImageFile);
 
         for (int i = 0; i < 4; i++) {
             String image = "Monsters/Eyebat/T" + i + ".png";
@@ -167,8 +168,21 @@ public class GameAssetManager {
             hitImpactTexture.add(new Texture(image));
         }
         hitImpactAnimation = new Animation<>(0.1f, hitImpactTexture.toArray(new Texture[0]));
-
         cursor = new Texture("Cursor.png");
+
+        for (int i = 0; i < 6; i++) {
+            String image = "Monsters/Boss/Boss_" + i + ".png";
+            bossImageFile.add(image);
+            bossTexture.add(new Texture(image));
+        }
+        bossAnimation = new Animation<>(0.1f, bossTexture.toArray(new Texture[0]));
+
+        for (int i = 0; i < 2; i++) {
+            String image = "Monsters/Boss/BossAttack_" + i + ".png";
+            bossAttackImageFile.add(image);
+            bossAttackTexture.add(new Texture(image));
+        }
+        bossAttackAnimation = new Animation<>(0.1f, bossAttackTexture.toArray(new Texture[0]));
     }
 
     private void buildAbilities() {
@@ -368,14 +382,6 @@ public class GameAssetManager {
         return abilityTexture;
     }
 
-    public String getElderImageFile() {
-        return elderImageFile;
-    }
-
-    public Texture getElderTexture() {
-        return elderTexture;
-    }
-
     public ArrayList<String> getEyebatImageFile() {
         return eyebatImageFile;
     }
@@ -494,5 +500,29 @@ public class GameAssetManager {
 
     public Texture getCursor() {
         return cursor;
+    }
+
+    public ArrayList<String> getBossImageFile() {
+        return bossImageFile;
+    }
+
+    public ArrayList<Texture> getBossTexture() {
+        return bossTexture;
+    }
+
+    public Animation<Texture> getBossAnimation() {
+        return bossAnimation;
+    }
+
+    public ArrayList<String> getBossAttackImageFile() {
+        return bossAttackImageFile;
+    }
+
+    public ArrayList<Texture> getBossAttackTexture() {
+        return bossAttackTexture;
+    }
+
+    public Animation<Texture> getBossAttackAnimation() {
+        return bossAttackAnimation;
     }
 }

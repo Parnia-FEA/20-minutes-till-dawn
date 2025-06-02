@@ -17,14 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
-import com.tilldawn.Model.GameAssetManager;
-import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.Player;
-import com.tilldawn.Model.TillDawnGame;
-import com.tilldawn.Model.enums.Ability;
-import com.tilldawn.Model.enums.CheatCode;
-import com.tilldawn.Model.enums.InitialPositions;
-import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.*;
+import com.tilldawn.Model.enums.*;
 import com.tilldawn.View.EndGameView;
 import com.tilldawn.View.GameView;
 import com.tilldawn.View.MainMenuView;
@@ -141,6 +135,12 @@ public class GameController {
                 view.getGame().setEyebatCheatCodeUsed(true);
             }
         }
+        if (Gdx.input.isKeyJustPressed(CheatCode.BossFight.getMainKey())) {
+            if (!view.getGame().isBossSpawned()) {
+                monsterController.spawnMonster(Main.getCamera(), MonsterType.Boss);
+                view.getGame().setBossSpawned(true);
+            }
+        }
 
     }
 
@@ -233,6 +233,7 @@ public class GameController {
         game.getAbilities().put(ability, game.getAbilities().get(ability) + 1);
         if (ability.equals(Ability.Vitality)) {
             game.setMaxHP(game.getMaxHP() + 1);
+            game.setHP(game.getHP() + 1);
             Sprite sprite = new Sprite(view.getFirstHeartTexture());
             sprite.setPosition(InitialPositions.Hearts.getX() + 30 * (view.getHearts().size()), InitialPositions.Hearts.getY());
             view.getHearts().add(sprite);

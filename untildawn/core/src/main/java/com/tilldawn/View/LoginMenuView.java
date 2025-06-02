@@ -50,10 +50,10 @@ public class LoginMenuView implements Screen {
         this.loginConditionMessage = new Label("",skin);
         this.signUpButton = new TextButton(LangKey.LoginMenuSignUpButton.getTranslation(language), skin);
         this.languageSelectBox = new SelectBox<>(skin);
-        String[] languages = {LangKey.LoginMenuEnglishLanguage.getTranslation(language), LangKey.FrenchLanguage.getTranslation(language)};
+        String[] languages = {LangKey.EnglishLanguage.getTranslation(language), LangKey.FrenchLanguage.getTranslation(language)};
         this.languageSelectBox.setItems(languages);
         if (language.equals(Language.English))
-            this.languageSelectBox.setSelected(LangKey.LoginMenuEnglishLanguage.getTranslation(language));
+            this.languageSelectBox.setSelected(LangKey.EnglishLanguage.getTranslation(language));
         else if (language.equals(Language.French))
             this.languageSelectBox.setSelected(LangKey.FrenchLanguage.getTranslation(language));
         this.forgetPasswordButton = new TextButton(LangKey.LoginMenuForgetPasswordButton.getTranslation(language), skin);

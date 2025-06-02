@@ -54,7 +54,7 @@ public class LoginMenuController {
     }
 
     public void handleLanguageSelectBox(String selected) {
-        if (selected.equalsIgnoreCase(LangKey.LoginMenuEnglishLanguage.getTranslation(GameData.getInstance().getLanguage()))) {
+        if (selected.equalsIgnoreCase(LangKey.EnglishLanguage.getTranslation(GameData.getInstance().getLanguage()))) {
             GameData.getInstance().setLanguage(Language.English);
         }
         else if (selected.equalsIgnoreCase(LangKey.FrenchLanguage.getTranslation(GameData.getInstance().getLanguage()))) {

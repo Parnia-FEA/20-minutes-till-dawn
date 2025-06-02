@@ -9,6 +9,7 @@ import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.enums.CheatCode;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.Model.enums.MusicEnum;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
@@ -104,12 +105,12 @@ public class SettingsMenuController {
             }
         }
         if (!flag) {
-            view.getConditionMessage().setText("Invalid or Already Taken!");
+            view.getConditionMessage().setText(LangKey.SettingsInvalidMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
             view.getConditionMessage().setColor(Color.RED);
             return;
         }
         GameData.getInstance().getCurrentPlayer().getKeys().put(key, inputKey);
-        view.getConditionMessage().setText("Changed");
+        view.getConditionMessage().setText(LangKey.SettingsChangedMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
         view.getConditionMessage().setColor(Color.GREEN);
         fillKeysFields();
     }

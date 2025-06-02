@@ -52,10 +52,10 @@ public class SettingsMenuView implements Screen {
         this.controller = controller;
         Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
         title = new Label(LangKey.SettingsLabel.getTranslation(language), skin, "title");
-        musicVolumeLabel = new Label("Music Volume", skin, "subtitle");
+        musicVolumeLabel = new Label(LangKey.SettingsMusicVolumeLabel.getTranslation(language), skin, "subtitle");
         musicVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
         musicVolumeSlider.setValue(GameData.getInstance().getCurrentPlayer().getMusicVolume());
-        musicLabel = new Label("Music", skin, "subtitle");
+        musicLabel = new Label(LangKey.SettingsMusicLabel.getTranslation(language), skin, "subtitle");
         for (MusicEnum music : MusicEnum.values()) {
             CheckBox checkBox = new CheckBox(music.toString(), skin);
             musicCheckBox.add(checkBox);
@@ -64,20 +64,20 @@ public class SettingsMenuView implements Screen {
         musicGroup.setMaxCheckCount(1);
         musicGroup.setMinCheckCount(1);
         sfx = new CheckBox("sfx", skin);
-        autoReload = new CheckBox("Auto-Reload", skin);
+        autoReload = new CheckBox(LangKey.SettingsAutoReloadLabel.getTranslation(language), skin);
 
-        changeInputKeysButton = new TextButton("Change KeyBoard Controllers", skin);
+        changeInputKeysButton = new TextButton(LangKey.SettingsChangeControllersButton.getTranslation(language), skin);
         for (InputKey key : GameData.getInstance().getCurrentPlayer().getKeys().keySet()) {
             inputKeysDescription.add(new Label(key.getDescription(), skin));
             inputKeys.add(new Label("", skin));
             inputKeysTextFields.add(new TextField("", skin));
-            changeButton.add(new TextButton("Change", skin));
+            changeButton.add(new TextButton(LangKey.SettingsChangeButton.getTranslation(language), skin));
         }
         conditionMessage = new Label("", skin);
-        backToSettingsButton = new TextButton("Back", skin);
+        backToSettingsButton = new TextButton(LangKey.Back.getTranslation(language), skin);
 
-        changeSettingsButton = new TextButton("Change", skin);
-        backButton = new TextButton("Back", skin);
+        changeSettingsButton = new TextButton(LangKey.SettingsChangeButton.getTranslation(language), skin);
+        backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

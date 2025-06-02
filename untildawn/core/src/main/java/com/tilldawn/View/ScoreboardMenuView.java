@@ -42,15 +42,15 @@ public class ScoreboardMenuView implements Screen {
         this.controller = controller;
         Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
         this.title = new Label(LangKey.ScoreboardLabel.getTranslation(language), skin, "subtitle");
-        this.usernameLabel = new Label("Username", skin);
+        this.usernameLabel = new Label(LangKey.EndGameUsernameLabel.getTranslation(language), skin);
         this.usernameLabel.setColor(Color.CYAN);
-        this.scoreLabel = new Label("Score", skin);
+        this.scoreLabel = new Label(LangKey.MainMenuScoreLabel.getTranslation(language), skin);
         this.scoreLabel.setColor(Color.CYAN);
-        this.killLabel = new Label("Kill", skin);
+        this.killLabel = new Label(LangKey.GameKillLabel.getTranslation(language), skin);
         this.killLabel.setColor(Color.CYAN);
-        this.timeLabel = new Label("Max Survival Time", skin);
+        this.timeLabel = new Label(LangKey.ScoreboardTimeLabel.getTranslation(language), skin);
         this.timeLabel.setColor(Color.CYAN);
-        this.backButton = new TextButton("Back", skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         for (int i = 0; i < num; i++) {
             usernames.add(new Label("", skin));
             scores.add(new Label("", skin));

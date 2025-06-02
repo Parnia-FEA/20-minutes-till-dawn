@@ -9,6 +9,7 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.Player;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.ScoreboardMenuView;
@@ -36,7 +37,7 @@ public class ScoreboardMenuController {
             view.getKills().get(i).setText(players.get(i).getKill());
             view.getTimes().get(i).setText(players.get(i).getMaxSurvivalTime() + "s");
             if (players.get(i).getUsername().equals(GameData.getInstance().getCurrentPlayer().getUsername())) {
-                view.getUsernames().get(i).setText(players.get(i).getUsername() + "(You)");
+                view.getUsernames().get(i).setText(players.get(i).getUsername() + "(" + LangKey.ScoreboardYou.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) +")");
             }
         }
     }

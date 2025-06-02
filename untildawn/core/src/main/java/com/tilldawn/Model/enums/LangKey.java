@@ -362,6 +362,51 @@ public enum LangKey {
         put(Language.French, "Quitter au menu");
     }}),
 
+    ScoreboardTimeLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Max Survival Time");
+        put(Language.French, "Temps de survie maximum");
+    }}),
+
+    ScoreboardYou(new HashMap<Language, String>() {{
+        put(Language.English, "You");
+        put(Language.French, "Toi");
+    }}),
+
+    SettingsMusicVolumeLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Music Volume");
+        put(Language.French, "Volume de la musique");
+    }}),
+
+    SettingsMusicLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Music");
+        put(Language.French, "Musique");
+    }}),
+
+    SettingsAutoReloadLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Auto-Reload");
+        put(Language.French, "Rechargement automatique");
+    }}),
+
+    SettingsChangeControllersButton(new HashMap<Language, String>() {{
+        put(Language.English, "Change KeyBoard Controllers");
+        put(Language.French, "Changer les contrôleurs du clavier");
+    }}),
+
+    SettingsChangeButton(new HashMap<Language, String>() {{
+        put(Language.English, "Change");
+        put(Language.French, "Changement");
+    }}),
+
+    SettingsInvalidMessage(new HashMap<Language, String>() {{
+        put(Language.English, "Invalid or Already Taken!");
+        put(Language.French, "Invalide ou déjà pris!");
+    }}),
+
+    SettingsChangedMessage(new HashMap<Language, String>() {{
+        put(Language.English, "Changed");
+        put(Language.French, "Modifié");
+    }}),
+
 
     ;
 

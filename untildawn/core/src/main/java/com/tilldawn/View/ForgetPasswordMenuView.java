@@ -14,7 +14,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ForgetPasswordMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.Player;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 public class ForgetPasswordMenuView implements Screen {
     private Stage stage;
@@ -41,17 +44,18 @@ public class ForgetPasswordMenuView implements Screen {
 
     public ForgetPasswordMenuView(ForgetPasswordMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("Change Password", skin, "subtitle");
-        this.usernameLabel = new Label("username", skin);
+        Language language = GameData.getInstance().getLanguage();
+        this.title = new Label(LangKey.ForgetMenuTitle.getTranslation(language), skin, "subtitle");
+        this.usernameLabel = new Label(LangKey.UsernameLabel.getTranslation(language), skin);
         this.username = new TextField("", skin);
-        this.passwordLabel = new Label("new password", skin);
+        this.passwordLabel = new Label(LangKey.ForgetMenuNewPasswordLabel.getTranslation(language), skin);
         this.password = new TextField("", skin);
         this.questionLabel = new Label("", skin);
         this.answer = new TextField("", skin);
-        this.continueButton = new TextButton("continue", skin);
-        this.submitAnswerButton = new TextButton("submit answer", skin);
-        this.changePasswordButton = new TextButton("change password", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.continueButton = new TextButton(LangKey.ForgetMenuContinueButton.getTranslation(language), skin);
+        this.submitAnswerButton = new TextButton(LangKey.ForgetMenuSubmitAnswerButton.getTranslation(language), skin);
+        this.changePasswordButton = new TextButton(LangKey.ForgetMenuTitle.getTranslation(language).toLowerCase(), skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
 
         this.usernameConditionMessage = new Label("", skin);
         this.securityQuestionConditionMessage = new Label("", skin);

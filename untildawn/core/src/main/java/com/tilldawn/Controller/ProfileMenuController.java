@@ -1,11 +1,13 @@
 package com.tilldawn.Controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.ProfileMenuView;
@@ -22,14 +24,14 @@ public class ProfileMenuController {
 
     public void handleChangeUsernameButton() {
         if (GameData.getInstance().getCurrentPlayer().isGuest())
-            view.setGuestConditionMessage("You are a guest", Color.RED);
+            view.setGuestConditionMessage(LangKey.ProfileMenuGuestMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
         else
             view.setupChangeUsernameStage();
     }
 
     public void handleChangePasswordButton() {
         if (GameData.getInstance().getCurrentPlayer().isGuest())
-            view.setGuestConditionMessage("You are a guest", Color.RED);
+            view.setGuestConditionMessage(LangKey.ProfileMenuGuestMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
         else
             view.setupChangePasswordStage();
     }
@@ -40,7 +42,7 @@ public class ProfileMenuController {
 
     public void handleDeleteAccountButton() {
         if (GameData.getInstance().getCurrentPlayer().isGuest())
-            view.setGuestConditionMessage("You are a guest", Color.RED);
+            view.setGuestConditionMessage(LangKey.ProfileMenuGuestMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
         else
             view.setupDeleteAccountStage();
     }
@@ -57,7 +59,7 @@ public class ProfileMenuController {
     public void handleSetUsernameButton() {
         String username = view.getUsername().getText();
         if (GameData.getInstance().findPlayerByUsername(username) == null) {
-            view.setChangeUsernameConditionMessage("Username Changed Successfully:)", Color.GREEN);
+            view.setChangeUsernameConditionMessage(LangKey.ProfileMenuSuccessfulChangeUsernameMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.GREEN);
             GameData.getInstance().getCurrentPlayer().setUsername(username);
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -71,7 +73,7 @@ public class ProfileMenuController {
             }, 2);
         }
         else {
-            view.setChangeUsernameConditionMessage("Username is already taken.", Color.RED);
+            view.setChangeUsernameConditionMessage(LangKey.UsernameTaken.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
         }
     }
 
@@ -83,7 +85,7 @@ public class ProfileMenuController {
     public void handleSetPasswordButton() {
         String password = view.getPassword().getText();
         if (isPasswordValid(password)) {
-            view.setChangePasswordConditionMessage("Password Changed Successfully:)", Color.GREEN);
+            view.setChangePasswordConditionMessage(LangKey.SuccessfulChangePassword.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.GREEN);
             GameData.getInstance().getCurrentPlayer().setPassword(password);
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -97,7 +99,7 @@ public class ProfileMenuController {
             }, 2);
         }
         else {
-            view.setChangePasswordConditionMessage("Password is too weak.", Color.RED);
+            view.setChangePasswordConditionMessage(LangKey.WeakPassword.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
         }
     }
 
@@ -105,13 +107,13 @@ public class ProfileMenuController {
         CheckBox selectedCheckBox = view.getDeleteAccount().getChecked();
         if (selectedCheckBox != null) {
             String text = selectedCheckBox.getText().toString();
-            if (text.equals("Yes")) {
+            if (text.equals(LangKey.ProfileMenuYes.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()))) {
                 GameData.getInstance().getPlayers().remove(GameData.getInstance().getCurrentPlayer());
                 GameData.getInstance().setCurrentUser(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
             }
-            else if (text.equals("No")) {
+            else if (text.equals(LangKey.ProfileMenuNo.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()))) {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getInstance().getSkin()));
             }
@@ -133,7 +135,7 @@ public class ProfileMenuController {
 
             if (selectedIndex != -1) {
                 GameData.getInstance().getCurrentPlayer().setAvatarIndex(selectedIndex);
-                view.setChangeAvatarConditionMessage("Avatar Changed Successfully:)", Color.GREEN);
+                view.setChangeAvatarConditionMessage(LangKey.ProfileMenuSuccessfulChangeAvatarMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.GREEN);
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -146,7 +148,7 @@ public class ProfileMenuController {
                 }, 2);
             }
             else {
-                view.setChangeAvatarConditionMessage("Please select an avatar!", Color.RED);
+                view.setChangeAvatarConditionMessage(LangKey.ProfileMenuSelectAvatarMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()), Color.RED);
             }
         }
     }

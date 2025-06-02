@@ -6,6 +6,7 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.Player;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.View.ForgetPasswordMenuView;
 import com.tilldawn.View.LoginMenuView;
 
@@ -21,11 +22,11 @@ public class ForgetPasswordMenuController {
     public void handleContinueButton() {
         Player player = GameData.getInstance().findPlayerByUsername(view.getUsername().getText());
         if (player == null) {
-            view.setUsernameConditionMessage("Invalid Username", Color.RED);
+            view.setUsernameConditionMessage(LangKey.ForgetMenuInvalidUsername.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
         }
         else {
             view.setUser(player);
-            view.setQuestion(player.getSecurityQuestion());
+            view.setQuestion(player.getSecurityQuestion().getTranslation(GameData.getInstance().getLanguage()));
             view.setupSecurityQuestionStage();
         }
     }
@@ -36,7 +37,7 @@ public class ForgetPasswordMenuController {
             view.setupNewPasswordStage();
         }
         else {
-            view.setSecurityQuestionConditionMessage("The answer is incorrect!", Color.RED);
+            view.setSecurityQuestionConditionMessage(LangKey.ForgetMenuIncorrectAnswer.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
         }
     }
 
@@ -49,7 +50,7 @@ public class ForgetPasswordMenuController {
         Player player = view.getUser();
         String password = view.getPassword().getText();
         if (isPasswordValid(password)) {
-            view.setPasswordConditionMessage("Password is changed successfully:)", Color.GREEN);
+            view.setPasswordConditionMessage(LangKey.SuccessfulChangePassword.getTranslation(GameData.getInstance().getLanguage()), Color.GREEN);
             player.setPassword(password);
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -63,7 +64,7 @@ public class ForgetPasswordMenuController {
             }, 2);
         }
         else {
-            view.setPasswordConditionMessage("The new password is too weak!", Color.RED);
+            view.setPasswordConditionMessage(LangKey.WeakPassword.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
         }
     }
 

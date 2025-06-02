@@ -24,9 +24,7 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
-import com.tilldawn.Model.enums.Ability;
-import com.tilldawn.Model.enums.CheatCode;
-import com.tilldawn.Model.enums.InitialPositions;
+import com.tilldawn.Model.enums.*;
 
 import java.util.ArrayList;
 
@@ -74,6 +72,7 @@ public class GameView implements Screen, InputProcessor {
 
     public GameView(TillDawnGame game, GameController controller, Skin skin) {
         this.game = game;
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
         this.ammoIcon = new Sprite(GameAssetManager.getInstance().getAmmoIconTexture());
         this.ammoIcon.setPosition(InitialPositions.AmmoIcon.getX(), InitialPositions.AmmoIcon.getY());
         this.kill = new Label("", skin);
@@ -91,7 +90,7 @@ public class GameView implements Screen, InputProcessor {
         );
         abilitySelectTable.setBackground(skin.getDrawable("shadow"));
 
-        this.chooseAbilityLabel = new Label("Choose an Ability", skin, "subtitle");
+        this.chooseAbilityLabel = new Label(LangKey.GameChooseAbilityLabel.getTranslation(language), skin, "subtitle");
         this.chooseAbilityLabel.setColor(Color.MAROON);
         for (int i = 0 ; i < 3; i++) {
             CheckBox checkBox = new CheckBox("", skin);
@@ -105,7 +104,7 @@ public class GameView implements Screen, InputProcessor {
         }
         this.abilitiesGroup.setMinCheckCount(1);
         this.abilitiesGroup.setMaxCheckCount(1);
-        this.chooseAbilityButton = new TextButton("Choose", skin);
+        this.chooseAbilityButton = new TextButton(LangKey.GameChooseButton.getTranslation(language), skin);
         this.timer = new Label("", skin);
 
         this.pauseTable = new Table();
@@ -116,13 +115,13 @@ public class GameView implements Screen, InputProcessor {
         );
         pauseTable.setBackground(skin.getDrawable("shadow"));
 
-        this.resumeButton = new TextButton("Resume", skin);
-        this.giveUpButton = new TextButton("Give Up!", skin);
-        this.saveButton = new TextButton("Save and Exit", skin);
+        this.resumeButton = new TextButton(LangKey.GameResumeButton.getTranslation(language), skin);
+        this.giveUpButton = new TextButton(LangKey.GameGiveUpButton.getTranslation(language), skin);
+        this.saveButton = new TextButton(LangKey.GameSaveAndExitButton.getTranslation(language), skin);
         this.pauseConditionMessage = new Label("", skin);
         this.pauseConditionMessage.setColor(Color.GREEN);
 
-        this.cheatCodesInformationLabel = new Label("Cheat Codes", skin, "subtitle");
+        this.cheatCodesInformationLabel = new Label(LangKey.CheatCodesLabel.getTranslation(language), skin, "subtitle");
         for (CheatCode cheatCode : CheatCode.values()) {
             Label label = new Label(cheatCode.getDescription(), skin);
             label.setColor(Color.CYAN);
@@ -131,7 +130,7 @@ public class GameView implements Screen, InputProcessor {
             this.cheatCodes.add(label);
         }
 
-        this.abilitiesInformationLabel = new Label("Gained Abilities", skin, "subtitle");
+        this.abilitiesInformationLabel = new Label(LangKey.GameGainedAbilitiesLabel.getTranslation(language), skin, "subtitle");
         for (Ability ability : Ability.values()) {
             Image image = new Image(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
             this.gainedAbilitiesImages.add(image);
@@ -170,9 +169,9 @@ public class GameView implements Screen, InputProcessor {
         timer.setText(controller.getTimeRemainingFormatted());
         timer.setColor(Color.GREEN);
         kill.setPosition(InitialPositions.Kill.getX(), InitialPositions.Kill.getY());
-        kill.setText("Kill " + game.getKill());
+        kill.setText(LangKey.GameKillLabel.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) + " " + game.getKill());
         level.setPosition(InitialPositions.Level.getX(), InitialPositions.Level.getY());
-        level.setText("Level " + game.getLevel());
+        level.setText(LangKey.GameLevelLabel.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) + " " + game.getLevel());
         level.setColor(Color.GOLD);
         stage.addActor(ammo);
         stage.addActor(timer);

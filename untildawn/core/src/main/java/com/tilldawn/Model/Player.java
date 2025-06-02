@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Main;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.Model.enums.Language;
 import com.tilldawn.Model.enums.MusicEnum;
 import com.tilldawn.View.GameView;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class Player {
     private String username;
     private String password;
-    private String securityQuestion;
+    private LangKey securityQuestion;
     private String answer;
     private boolean isGuest = false;
     private int avatarIndex;
@@ -33,7 +34,7 @@ public class Player {
     private Language language;
 
 
-    public Player(String username, String password, String securityQuestion, String answer, Language language) {
+    public Player(String username, String password, LangKey securityQuestion, String answer, Language language) {
         this.username = username;
         this.password = password;
         this.securityQuestion = securityQuestion;
@@ -61,7 +62,7 @@ public class Player {
         this.password = password;
     }
 
-    public String getSecurityQuestion() {
+    public LangKey getSecurityQuestion() {
         return securityQuestion;
     }
 

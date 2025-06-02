@@ -19,6 +19,8 @@ import com.tilldawn.Controller.MainMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 public class MainMenuView implements Screen {
     private Stage stage;
@@ -33,27 +35,28 @@ public class MainMenuView implements Screen {
     private final TextButton logoutButton;
     private final Label conditionMessage;
     private final Image avatarImage;
-    private final SelectBox<String> language;
+    private final SelectBox<String> languageSelectBox;
     public Table table;
     public ScrollPane scrollPane;
     private final MainMenuController controller;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
-        this.welcomeTitle = new Label("WELCOME " + GameData.getInstance().getCurrentPlayer().getUsername(), skin, "subtitle");
-        this.points = new Label("Score : " + GameData.getInstance().getCurrentPlayer().getScore(), skin, "subtitle");
-        this.settingsMenuButton = new TextButton("Settings", skin);
-        this.profileMenuButton = new TextButton("Profile Menu", skin);
-        this.preGameMenuButton = new TextButton("Pre Game Menu", skin);
-        this.continueSavedGameButton = new TextButton("Continue Game", skin);
-        this.scoreboardMenuButton = new TextButton("Scoreboard", skin);
-        this.talentMenuButton = new TextButton("Talent Menu", skin);
-        this.logoutButton = new TextButton("Logout", skin);
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.welcomeTitle = new Label(LangKey.MainMenuWelcome.getTranslation(language) + " " + GameData.getInstance().getCurrentPlayer().getUsername(), skin, "subtitle");
+        this.points = new Label(LangKey.MainMenuScoreLabel.getTranslation(language) + " : " + GameData.getInstance().getCurrentPlayer().getScore(), skin, "subtitle");
+        this.settingsMenuButton = new TextButton(LangKey.SettingsLabel.getTranslation(language), skin);
+        this.profileMenuButton = new TextButton(LangKey.ProfileMenuLabel.getTranslation(language), skin);
+        this.preGameMenuButton = new TextButton(LangKey.PreGameMenuLabel.getTranslation(language), skin);
+        this.continueSavedGameButton = new TextButton(LangKey.MainMenuContinueGameButton.getTranslation(language), skin);
+        this.scoreboardMenuButton = new TextButton(LangKey.ScoreboardLabel.getTranslation(language), skin);
+        this.talentMenuButton = new TextButton(LangKey.TalentMenuLabel.getTranslation(language), skin);
+        this.logoutButton = new TextButton(LangKey.MainMenuLogoutButton.getTranslation(language), skin);
         this.conditionMessage = new Label("", skin);
         this.conditionMessage.setColor(Color.RED);
-        this.language = new SelectBox<>(skin);
-        String[] languages = {"English", "French"};
-        this.language.setItems(languages);
+        this.languageSelectBox = new SelectBox<>(skin);
+        String[] languages = {LangKey.EnglishLanguage.getTranslation(language), LangKey.FrenchLanguage.getTranslation(language)};
+        this.languageSelectBox.setItems(languages);
         this.avatarImage = new Image(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAvatars().get(GameData.getInstance().getCurrentPlayer().getAvatarIndex()))));
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
@@ -93,7 +96,7 @@ public class MainMenuView implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(logoutButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
-        table.add(language).colspan(2).center();
+        table.add(languageSelectBox).colspan(2).center();
         avatarImage.setPosition(100, 400);
 
         settingsMenuButton.addListener(new ClickListener() {
@@ -145,10 +148,10 @@ public class MainMenuView implements Screen {
             }
         });
 
-        language.addListener(new ChangeListener() {
+        languageSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                String selected = language.getSelected();
+                String selected = languageSelectBox.getSelected();
                 controller.handleLanguageSelectBox(selected);
             }
         });

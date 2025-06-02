@@ -6,6 +6,8 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.Player;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.View.LoginMenuView;
 import com.tilldawn.View.MainMenuView;
 import com.tilldawn.View.SignUpMenuView;
@@ -34,16 +36,31 @@ public class SignUpMenuController {
         String securityQuestion = view.getSecurityQuestionsBox().getSelected();
         String answer = view.getAnswer().getText();
         if (isUsernameTaken(username)) {
-            view.setSignUpConditionMessage("Username is already taken.", Color.RED);
+            view.setSignUpConditionMessage(LangKey.UsernameTaken.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
         }
         else {
             if (isPasswordValid(password)) {
                 if (answer == null || answer.isEmpty()) {
-                    view.setSignUpConditionMessage("Please answer the security question", Color.RED);
+                    view.setSignUpConditionMessage(LangKey.SignUpMenuAnswerSecurityQuestion.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
                 }
                 else {
-                    view.setSignUpConditionMessage("Signed up Successfully:)", Color.GREEN);
-                    Player player = new Player(username, password, securityQuestion, answer, GameData.getInstance().getLanguage());
+                    LangKey[] questions = {
+                        LangKey.FavoriteColorQuestion,
+                        LangKey.PetNameQuestion,
+                        LangKey.MotherNameQuestion,
+                        LangKey.SchoolNameQuestion,
+                        LangKey.FavoriteMovieQuestion,
+                        LangKey.BornQuestion,
+                        LangKey.FriendNameQuestion
+                    };
+                    LangKey securityQuestionLangKey = null;
+                    for (LangKey question : questions) {
+                        if (question.getTranslation(GameData.getInstance().getLanguage()).equals(securityQuestion)) {
+                            securityQuestionLangKey = question;
+                        }
+                    }
+                    view.setSignUpConditionMessage(LangKey.SignUpMenuSuccessful.getTranslation(GameData.getInstance().getLanguage()), Color.GREEN);
+                    Player player = new Player(username, password, securityQuestionLangKey, answer, GameData.getInstance().getLanguage());
                     GameData.getInstance().addUser(player);
                     Timer.schedule(new Timer.Task() {
                         @Override
@@ -58,13 +75,13 @@ public class SignUpMenuController {
                 }
             }
             else {
-                view.setSignUpConditionMessage("Password is too weak!", Color.RED);
+                view.setSignUpConditionMessage(LangKey.WeakPassword.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
             }
         }
     }
 
     public void handleGuestButton() {
-        Player guest = new Player("Guest", null, null, null, GameData.getInstance().getLanguage());
+        Player guest = new Player(LangKey.GuestUsername.getTranslation(GameData.getInstance().getLanguage()), null, null, null, GameData.getInstance().getLanguage());
         guest.setGuest(true);
         GameData.getInstance().setCurrentUser(guest);
         Main.getMain().getScreen().dispose();

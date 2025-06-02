@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ScoreboardMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import sun.tools.jconsole.Tab;
 
 import java.util.ArrayList;
@@ -37,7 +40,8 @@ public class ScoreboardMenuView implements Screen {
 
     public ScoreboardMenuView(ScoreboardMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("Scoreboard", skin, "subtitle");
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.title = new Label(LangKey.ScoreboardLabel.getTranslation(language), skin, "subtitle");
         this.usernameLabel = new Label("Username", skin);
         this.usernameLabel.setColor(Color.CYAN);
         this.scoreLabel = new Label("Score", skin);

@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.SignUpMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 import java.util.MissingFormatArgumentException;
 
@@ -38,31 +41,32 @@ public class SignUpMenuView implements Screen {
 
     public SignUpMenuView(SignUpMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("SIGN UP", skin, "subtitle");
-        this.usernameLabel = new Label("username", skin);
-        this.passwordLabel = new Label("password", skin);
+        Language language = GameData.getInstance().getLanguage();
+        this.title = new Label(LangKey.SignUpMenuTitle.getTranslation(language), skin, "subtitle");
+        this.usernameLabel = new Label(LangKey.UsernameLabel.getTranslation(language), skin);
+        this.passwordLabel = new Label(LangKey.PasswordLabel.getTranslation(language), skin);
         this.username = new TextField("", skin);
         this.password = new TextField("", skin);
-        this.pickQuestionLabel = new Label("Pick a security question", skin);
+        this.pickQuestionLabel = new Label(LangKey.SignUpMenuPickQuestionLabel.getTranslation(language), skin);
 
         String[] questions = {
-            "What is your favorite color?",
-            "What is your pet's name?",
-            "What is your mother's maiden name?",
-            "What was the name of your first school?",
-            "What is your favorite movie?",
-            "Where were you born?",
-            "What is your best friend's name?"
+            LangKey.FavoriteColorQuestion.getTranslation(language),
+            LangKey.PetNameQuestion.getTranslation(language),
+            LangKey.MotherNameQuestion.getTranslation(language),
+            LangKey.SchoolNameQuestion.getTranslation(language),
+            LangKey.FavoriteMovieQuestion.getTranslation(language),
+            LangKey.BornQuestion.getTranslation(language),
+            LangKey.FriendNameQuestion.getTranslation(language)
         };
         this.securityQuestionsBox = new SelectBox<>(skin);
         this.securityQuestionsBox.setItems(questions);
 
-        this.answerLabel = new Label("answer", skin);
+        this.answerLabel = new Label(LangKey.SignUpMenuAnswerLabel.getTranslation(language), skin);
         this.answer = new TextField("", skin);
-        this.signUpButton = new TextButton("Sign Up", skin);
+        this.signUpButton = new TextButton(LangKey.SignUpMenuSignUpButton.getTranslation(language), skin);
         this.signUpConditionMessage = new Label("",skin);
-        this.guestButton = new TextButton("Play as a Guest", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.guestButton = new TextButton(LangKey.SignUpMenuGuestButton.getTranslation(language), skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

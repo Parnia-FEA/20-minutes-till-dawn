@@ -19,10 +19,7 @@ import com.tilldawn.Controller.TalentMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
-import com.tilldawn.Model.enums.Ability;
-import com.tilldawn.Model.enums.CheatCode;
-import com.tilldawn.Model.enums.Hero;
-import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.*;
 
 import java.util.ArrayList;
 
@@ -60,7 +57,8 @@ public class TalentMenuView implements Screen {
 
     public TalentMenuView(TalentMenuController controller, Skin skin) {
         this.controller = controller;
-        this.talentMenuLabel = new Label("Talent Menu", skin, "subtitle");
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.talentMenuLabel = new Label(LangKey.TalentMenuLabel.getTranslation(language), skin, "subtitle");
 
         this.heroesButton = new TextButton("Heroes Information", skin);
         this.heroesInformationLabel = new Label("Heroes Information", skin, "subtitle");

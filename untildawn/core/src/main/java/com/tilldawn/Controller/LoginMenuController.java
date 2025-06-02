@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Main;
 import com.tilldawn.Model.*;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.View.*;
 
 public class LoginMenuController {
@@ -23,7 +25,7 @@ public class LoginMenuController {
     public void handleLoginButton() {
         Player player = getUserIfInfoValid(view.getUsername().getText(), view.getPassword().getText());
         if (player != null) {
-            view.setLoginConditionMessage("Logged in Successfully:)", Color.GREEN);
+            view.setLoginConditionMessage(LangKey.LoginMenuSuccessfulConditionMessage.getTranslation(GameData.getInstance().getLanguage()), Color.GREEN);
             GameData.getInstance().setCurrentUser(player);
             Timer.schedule(new Timer.Task() {
                 @Override
@@ -37,7 +39,7 @@ public class LoginMenuController {
             }, 2);
         }
         else {
-            view.setLoginConditionMessage("Incorrect Username or Password!", Color.RED);
+            view.setLoginConditionMessage(LangKey.LoginMenuFailedConditionMessage.getTranslation(GameData.getInstance().getLanguage()), Color.RED);
         }
     }
 
@@ -52,6 +54,14 @@ public class LoginMenuController {
     }
 
     public void handleLanguageSelectBox(String selected) {
-
+        if (selected.equalsIgnoreCase(LangKey.LoginMenuEnglishLanguage.getTranslation(GameData.getInstance().getLanguage()))) {
+            GameData.getInstance().setLanguage(Language.English);
+        }
+        else if (selected.equalsIgnoreCase(LangKey.FrenchLanguage.getTranslation(GameData.getInstance().getLanguage()))) {
+            GameData.getInstance().setLanguage(Language.French);
+        }
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new LoginMenuView(new LoginMenuController(), GameAssetManager.getInstance().getSkin()));
     }
+
 }

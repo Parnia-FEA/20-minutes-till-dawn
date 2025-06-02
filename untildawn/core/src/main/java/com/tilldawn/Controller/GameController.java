@@ -72,7 +72,7 @@ public class GameController {
         view.getGame().setGameTimer(view.getGame().getGameTimer() - delta);
 
         if (view.getGame().getGameTimer() <= 0) {
-            endGame("YOU SURVIVED:)");
+            endGame(LangKey.EndGameSurvived.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
             if (GameData.getInstance().getCurrentPlayer().isSfx())
                 GameAssetManager.getInstance().getWinSound().play();
         }
@@ -150,7 +150,7 @@ public class GameController {
             if (view.getGame().getHP() <= 0) {
                 if (GameData.getInstance().getCurrentPlayer().isSfx())
                     GameAssetManager.getInstance().getLoseSound().play();
-                endGame("GAME OVER!");
+                endGame(LangKey.EndGameGameOver.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
             }
             handleTimer(delta);
             handleInvincibleTimer(delta);
@@ -192,8 +192,8 @@ public class GameController {
     }
 
     private void updateStage() {
-        view.getKill().setText("Kill " + view.getGame().getKill());
-        view.getLevel().setText("Level " + view.getGame().getLevel());
+        view.getKill().setText(LangKey.GameKillLabel.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) + " " + view.getGame().getKill());
+        view.getLevel().setText(LangKey.GameLevelLabel.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) + " " + view.getGame().getLevel());
     }
 
     private void updateActors() {
@@ -338,13 +338,13 @@ public class GameController {
     }
 
     public void handleGiveUpButton() {
-        endGame("GAME OVER!");
+        endGame(LangKey.EndGameGameOver.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
         if (GameData.getInstance().getCurrentPlayer().isSfx())
             GameAssetManager.getInstance().getLoseSound().play();
     }
 
     public void handleSaveButton() {
-        view.getPauseConditionMessage().setText("Game Saved Successfully");
+        view.getPauseConditionMessage().setText(LangKey.GameSuccessfulSaveMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {

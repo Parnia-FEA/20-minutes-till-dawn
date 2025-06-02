@@ -14,6 +14,8 @@ import com.tilldawn.Controller.EndGameController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 public class EndGameView implements Screen {
     private Stage stage;
@@ -31,12 +33,13 @@ public class EndGameView implements Screen {
         this.game = game;
         this.controller = controller;
         controller.setView(this);
-        this.username = new Label("Username : " + GameData.getInstance().getCurrentPlayer().getUsername(), skin);
-        this.timeOfSurvival = new Label("Survival Time : " + controller.getTimeRemainingFormatted(), skin);
-        this.kill = new Label("Kill : " + game.getKill(), skin);
-        this.score = new Label("Score : " + controller.getPoints(), skin);
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.username = new Label(LangKey.EndGameUsernameLabel.getTranslation(language) + " : " + GameData.getInstance().getCurrentPlayer().getUsername(), skin);
+        this.timeOfSurvival = new Label(LangKey.EndGameTimeLabel.getTranslation(language) + " : " + controller.getTimeRemainingFormatted(), skin);
+        this.kill = new Label(LangKey.GameKillLabel.getTranslation(language) + " : " + game.getKill(), skin);
+        this.score = new Label(LangKey.MainMenuScoreLabel.getTranslation(language) + " : " + controller.getPoints(), skin);
         this.result = new Label(condition, skin, "title");
-        this.quitButton = new TextButton("Quit to Menu", skin);
+        this.quitButton = new TextButton(LangKey.EndGameQuitButton.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

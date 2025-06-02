@@ -17,6 +17,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.ProfileMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 import java.util.ArrayList;
 
@@ -53,20 +56,21 @@ public class ProfileMenuView implements Screen {
 
     public ProfileMenuView(ProfileMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("PROFILE MENU", skin, "subtitle");
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.title = new Label(LangKey.ProfileMenuLabel.getTranslation(language).toUpperCase(), skin, "subtitle");
         this.guestConditionMessage = new Label("", skin);
-        this.changeUsernameButton = new TextButton("Change Username", skin);
-        this.setUsernameButton = new TextButton("Change Username", skin);
-        this.changePasswordButton = new TextButton("Change Password", skin);
-        this.setPasswordButton = new TextButton("Change Password", skin);
-        this.usernameLabel = new Label("new username", skin);
-        this.passwordLabel = new Label("new password", skin);
+        this.changeUsernameButton = new TextButton(LangKey.ProfileMenuChangeUsernameLabel.getTranslation(language), skin);
+        this.setUsernameButton = new TextButton(LangKey.ProfileMenuChangeUsernameLabel.getTranslation(language), skin);
+        this.changePasswordButton = new TextButton(LangKey.ProfileMenuChangePasswordLabel.getTranslation(language), skin);
+        this.setPasswordButton = new TextButton(LangKey.ProfileMenuChangePasswordLabel.getTranslation(language), skin);
+        this.usernameLabel = new Label(LangKey.ProfileMenuNewUsernameLabel.getTranslation(language), skin);
+        this.passwordLabel = new Label(LangKey.ProfileMenuNewPasswordLabel.getTranslation(language), skin);
         this.username = new TextField("", skin);
         this.password = new TextField("", skin);
         this.changeUsernameConditionMessage = new Label("", skin);
         this.changePasswordConditionMessage = new Label("", skin);
         this.changeAvatarConditionMessage = new Label("", skin);
-        this.changeAvatarButton = new TextButton("Change Avatar", skin);
+        this.changeAvatarButton = new TextButton(LangKey.ProfileMenuChangeAvatarButton.getTranslation(language), skin);
         for (Texture avatar : GameAssetManager.getInstance().getAvatars()) {
             CheckBox checkBox = new CheckBox("", skin);
             this.avatars.add(checkBox);
@@ -76,17 +80,17 @@ public class ProfileMenuView implements Screen {
         }
         this.avatarsGroup.setMaxCheckCount(1);
         this.avatarsGroup.setMinCheckCount(1);
-        this.selectAvatarButton = new TextButton("Select", skin);
-        this.deleteAccountButton = new TextButton("Delete Account", skin);
-        this.deleteButton = new TextButton("OK", skin);
-        this.deleteAccountLabel = new Label("Do you want to delete your account?", skin);
-        this.yes = new CheckBox("Yes", skin);
-        this.no = new CheckBox("No", skin);
+        this.selectAvatarButton = new TextButton(LangKey.ProfileMenuSelectButton.getTranslation(language), skin);
+        this.deleteAccountButton = new TextButton(LangKey.ProfileMenuDeleteAccountButton.getTranslation(language), skin);
+        this.deleteButton = new TextButton(LangKey.ProfileMenuOKButton.getTranslation(language), skin);
+        this.deleteAccountLabel = new Label(LangKey.ProfileMenuDeleteAccountLabel.getTranslation(language), skin);
+        this.yes = new CheckBox(LangKey.ProfileMenuYes.getTranslation(language), skin);
+        this.no = new CheckBox(LangKey.ProfileMenuNo.getTranslation(language), skin);
         this.deleteAccount = new ButtonGroup<>(yes, no);
         this.deleteAccount.setMaxCheckCount(1);
         this.deleteAccount.setMinCheckCount(1);
-        this.backButton = new TextButton("Back", skin);
-        this.backToProfileMenuButton = new TextButton("Back", skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
+        this.backToProfileMenuButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

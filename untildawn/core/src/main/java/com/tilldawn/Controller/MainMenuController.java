@@ -3,6 +3,8 @@ package com.tilldawn.Controller;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.View.*;
 
 public class MainMenuController {
@@ -45,7 +47,7 @@ public class MainMenuController {
 
     public void handleContinueSavedGameButton() {
         if (GameData.getInstance().getCurrentPlayer().getGame() == null) {
-            view.getConditionMessage().setText("You do not have a saved game");
+            view.getConditionMessage().setText(LangKey.MainMenuNoSaveGameMessage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()));
             return;
         }
         Main.getMain().getScreen().dispose();
@@ -53,6 +55,15 @@ public class MainMenuController {
     }
 
     public void handleLanguageSelectBox(String selected) {
-
+        if (selected.equals(LangKey.EnglishLanguage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()))) {
+            GameData.getInstance().setLanguage(Language.English);
+            GameData.getInstance().getCurrentPlayer().setLanguage(Language.English);
+        }
+        else if (selected.equals(LangKey.FrenchLanguage.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()))) {
+            GameData.getInstance().setLanguage(Language.French);
+            GameData.getInstance().getCurrentPlayer().setLanguage(Language.French);
+        }
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getInstance().getSkin()));
     }
 }

@@ -16,6 +16,8 @@ import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
 import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.enums.InputKey;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.Model.enums.MusicEnum;
 
 import java.util.ArrayList;
@@ -48,7 +50,8 @@ public class SettingsMenuView implements Screen {
 
     public SettingsMenuView(SettingsMenuController controller, Skin skin) {
         this.controller = controller;
-        title = new Label("Settings", skin, "title");
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        title = new Label(LangKey.SettingsLabel.getTranslation(language), skin, "title");
         musicVolumeLabel = new Label("Music Volume", skin, "subtitle");
         musicVolumeSlider = new Slider(0f, 1f, 0.01f, false, skin);
         musicVolumeSlider.setValue(GameData.getInstance().getCurrentPlayer().getMusicVolume());

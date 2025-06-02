@@ -3,7 +3,6 @@ package com.tilldawn.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,11 +16,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.LoginMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 
 public class LoginMenuView implements Screen {
     private Stage stage;
     private final Label title;
-    private final Label login;
+    private final Label loginLabel;
     private final Label usernameLabel;
     private final Label passwordLabel;
     private final TextField username;
@@ -29,7 +31,7 @@ public class LoginMenuView implements Screen {
     private final TextButton loginButton;
     private final Label loginConditionMessage;
     private final TextButton signUpButton;
-    private final SelectBox<String> language;
+    private final SelectBox<String> languageSelectBox;
     private final TextButton forgetPasswordButton;
     private Table table;
     private ScrollPane scrollPane;
@@ -37,19 +39,24 @@ public class LoginMenuView implements Screen {
 
     public LoginMenuView(LoginMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("20 MINUTES TILL DAWN", skin, "title");
-        this.login = new Label("LOGIN", skin, "subtitle");
-        this.usernameLabel = new Label("username", skin);
-        this.passwordLabel = new Label("password", skin);
+        Language language = GameData.getInstance().getLanguage();
+        this.title = new Label(LangKey.LoginMenuTitle.getTranslation(language), skin, "title");
+        this.loginLabel = new Label(LangKey.LoginMenuLoginLabel.getTranslation(language), skin, "subtitle");
+        this.usernameLabel = new Label(LangKey.UsernameLabel.getTranslation(language), skin);
+        this.passwordLabel = new Label(LangKey.PasswordLabel.getTranslation(language), skin);
         this.username = new TextField("", skin);
         this.password = new TextField("", skin);
-        this.loginButton = new TextButton("Login", skin);
+        this.loginButton = new TextButton(LangKey.LoginMenuLoginButton.getTranslation(language), skin);
         this.loginConditionMessage = new Label("",skin);
-        this.signUpButton = new TextButton("Sign Up", skin);
-        this.language = new SelectBox<>(skin);
-        String[] languages = {"English", "French"};
-        this.language.setItems(languages);
-        this.forgetPasswordButton = new TextButton("Forget Password", skin);
+        this.signUpButton = new TextButton(LangKey.LoginMenuSignUpButton.getTranslation(language), skin);
+        this.languageSelectBox = new SelectBox<>(skin);
+        String[] languages = {LangKey.LoginMenuEnglishLanguage.getTranslation(language), LangKey.FrenchLanguage.getTranslation(language)};
+        this.languageSelectBox.setItems(languages);
+        if (language.equals(Language.English))
+            this.languageSelectBox.setSelected(LangKey.LoginMenuEnglishLanguage.getTranslation(language));
+        else if (language.equals(Language.French))
+            this.languageSelectBox.setSelected(LangKey.FrenchLanguage.getTranslation(language));
+        this.forgetPasswordButton = new TextButton(LangKey.LoginMenuForgetPasswordButton.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
@@ -71,13 +78,13 @@ public class LoginMenuView implements Screen {
         table.add().height(150).colspan(2);
         table.row();
         table.row().pad(10, 0, 10, 0);
-        table.add(login).colspan(2).center();
+        table.add(loginLabel).colspan(2).center();
         table.add().height(30).colspan(2);
         table.row().pad(10, 0, 10, 0);
-        table.add(usernameLabel).width(150).right();
+        table.add(usernameLabel).width(300).right();
         table.add(username).width(600).left();
         table.row().pad(10, 0, 10, 0);
-        table.add(passwordLabel).width(150).right();
+        table.add(passwordLabel).width(300).right();
         table.add(password).width(600).left();
         table.row().pad(10, 0, 10, 0);
         table.add(loginButton).colspan(2).center();
@@ -88,7 +95,7 @@ public class LoginMenuView implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(forgetPasswordButton).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
-        table.add(language).colspan(2).center();
+        table.add(languageSelectBox).colspan(2).center();
 
         loginButton.addListener(new ClickListener() {
             @Override
@@ -111,10 +118,10 @@ public class LoginMenuView implements Screen {
             }
         });
 
-        language.addListener(new ChangeListener() {
+        languageSelectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                String selected = language.getSelected();
+                String selected = languageSelectBox.getSelected();
                 controller.handleLanguageSelectBox(selected);
             }
         });

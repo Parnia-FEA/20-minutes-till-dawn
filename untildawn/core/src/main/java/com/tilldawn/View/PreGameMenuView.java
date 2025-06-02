@@ -16,6 +16,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tilldawn.Controller.PreGameMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Model.GameAssetManager;
+import com.tilldawn.Model.GameData;
+import com.tilldawn.Model.enums.LangKey;
+import com.tilldawn.Model.enums.Language;
 import com.tilldawn.Model.enums.WeaponEnum;
 
 import java.util.ArrayList;
@@ -47,7 +50,8 @@ public class PreGameMenuView implements Screen {
 
     public PreGameMenuView(PreGameMenuController controller, Skin skin) {
         this.controller = controller;
-        this.title = new Label("Pre Game Menu", skin, "title");
+        Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
+        this.title = new Label(LangKey.PreGameMenuLabel.getTranslation(language), skin, "title");
 
         this.heroLabel = new Label("Hero", skin, "subtitle");
         for (String hero : GameAssetManager.getInstance().getHeroes().keySet()) {

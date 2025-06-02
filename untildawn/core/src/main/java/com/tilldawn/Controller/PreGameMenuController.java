@@ -9,6 +9,7 @@ import com.tilldawn.Model.GameData;
 import com.tilldawn.Model.TillDawnGame;
 import com.tilldawn.Model.Weapon;
 import com.tilldawn.Model.enums.Hero;
+import com.tilldawn.Model.enums.LangKey;
 import com.tilldawn.Model.enums.WeaponEnum;
 import com.tilldawn.View.GameView;
 import com.tilldawn.View.PreGameMenuView;
@@ -63,7 +64,7 @@ public class PreGameMenuController {
                                 WeaponEnum weapon = WeaponEnum.valueOf(selectedWeapon.getText().toString());
                                 int time = view.getTimeAmount().get(selectedTimeIndex);
                                 TillDawnGame game = new TillDawnGame(hero, new Weapon(weapon), time);
-                                view.setConditionMessage("Loading...", Color.GREEN);
+                                view.setConditionMessage(LangKey.PreGameMenuLoading.getTranslation(GameData.getInstance().getCurrentPlayer().getLanguage()) + "...", Color.GREEN);
                                 GameData.getInstance().getCurrentPlayer().setGame(game);
                                 Timer.schedule(new Timer.Task() {
                                     @Override
@@ -73,18 +74,9 @@ public class PreGameMenuController {
                                     }
                                 }, 2);
                             }
-                            else {
-                                view.setConditionMessage("Please select a time", Color.RED);
-                            }
                         }
                     }
-                    else {
-                        view.setConditionMessage("Please select a weapon", Color.RED);
-                    }
                 }
-            }
-            else {
-                view.setConditionMessage("Please select a hero", Color.RED);
             }
         }
     }

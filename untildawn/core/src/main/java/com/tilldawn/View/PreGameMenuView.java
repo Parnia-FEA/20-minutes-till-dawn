@@ -53,7 +53,7 @@ public class PreGameMenuView implements Screen {
         Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
         this.title = new Label(LangKey.PreGameMenuLabel.getTranslation(language), skin, "title");
 
-        this.heroLabel = new Label("Hero", skin, "subtitle");
+        this.heroLabel = new Label(LangKey.PreGameMenuHeroLabel.getTranslation(language), skin, "subtitle");
         for (String hero : GameAssetManager.getInstance().getHeroes().keySet()) {
             CheckBox checkBox = new CheckBox(hero, skin);
             this.heroesCheckBox.add(checkBox);
@@ -64,7 +64,7 @@ public class PreGameMenuView implements Screen {
         this.heroesGroup.setMaxCheckCount(1);
         this.heroesGroup.setMinCheckCount(1);
 
-        this.weaponLabel = new Label("Weapon", skin, "subtitle");
+        this.weaponLabel = new Label(LangKey.PreGameMenuWeaponLabel.getTranslation(language), skin, "subtitle");
         for (WeaponEnum value : WeaponEnum.values()) {
             CheckBox checkBox = new CheckBox(value.toString(), skin);
             this.weaponsCheckBox.add(checkBox);
@@ -73,7 +73,7 @@ public class PreGameMenuView implements Screen {
         this.weaponsGroup.setMaxCheckCount(1);
         this.weaponsGroup.setMinCheckCount(1);
 
-        this.timeLabel = new Label("Time", skin, "subtitle");
+        this.timeLabel = new Label(LangKey.PreGameMenuTimeLabel.getTranslation(language), skin, "subtitle");
         timeAmount.add(2);
         timeAmount.add(5);
         timeAmount.add(10);
@@ -88,8 +88,8 @@ public class PreGameMenuView implements Screen {
         this.timesGroup.setMinCheckCount(1);
         this.conditionMessage = new Label("", skin);
 
-        this.startGameButton = new TextButton("Start Game", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.startGameButton = new TextButton(LangKey.PreGameMenuStartButton.getTranslation(language), skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

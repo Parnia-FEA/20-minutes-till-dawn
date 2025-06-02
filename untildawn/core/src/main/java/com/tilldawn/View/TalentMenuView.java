@@ -60,8 +60,8 @@ public class TalentMenuView implements Screen {
         Language language = GameData.getInstance().getCurrentPlayer().getLanguage();
         this.talentMenuLabel = new Label(LangKey.TalentMenuLabel.getTranslation(language), skin, "subtitle");
 
-        this.heroesButton = new TextButton("Heroes Information", skin);
-        this.heroesInformationLabel = new Label("Heroes Information", skin, "subtitle");
+        this.heroesButton = new TextButton(LangKey.TalentMenuHeroesInformationLabel.getTranslation(language), skin);
+        this.heroesInformationLabel = new Label(LangKey.TalentMenuHeroesInformationLabel.getTranslation(language), skin, "subtitle");
         for (Hero hero : Hero.values()) {
             CheckBox checkBox = new CheckBox(hero.toString(), skin);
             this.heroes.add(checkBox);
@@ -73,8 +73,8 @@ public class TalentMenuView implements Screen {
         this.heroDescription = new Label(Hero.valueOf(this.heroesGroup.getChecked().getText().toString()).getDescription(), skin);
         this.heroDescription.setColor(Color.MAROON);
 
-        this.keysButton = new TextButton("Input Keys Information", skin);
-        this.inputKeysInformationLabel = new Label("Input Keys Information", skin, "subtitle");
+        this.keysButton = new TextButton(LangKey.TalentMenuKeysInformationLabel.getTranslation(language), skin);
+        this.inputKeysInformationLabel = new Label(LangKey.TalentMenuKeysInformationLabel.getTranslation(language), skin, "subtitle");
         for (InputKey inputKey : GameData.getInstance().getCurrentPlayer().getKeys().keySet()) {
             Label label = new Label(inputKey.getDescription(), skin);
             label.setColor(Color.CYAN);
@@ -99,8 +99,8 @@ public class TalentMenuView implements Screen {
             this.inputKeys.add(label);
         }
 
-        this.cheatCodesButton = new TextButton("Cheat Codes Information", skin);
-        this.cheatCodesInformationLabel = new Label("Cheat Codes Information", skin, "subtitle");
+        this.cheatCodesButton = new TextButton(LangKey.TalentMenuCheatCodesInformationLabel.getTranslation(language), skin);
+        this.cheatCodesInformationLabel = new Label(LangKey.TalentMenuCheatCodesInformationLabel.getTranslation(language), skin, "subtitle");
         for (CheatCode cheatCode : CheatCode.values()) {
             Label label = new Label(cheatCode.getDescription(), skin);
             label.setColor(Color.CYAN);
@@ -109,8 +109,8 @@ public class TalentMenuView implements Screen {
             this.cheatCodes.add(label);
         }
 
-        this.abilitiesButton = new TextButton("Abilities Information", skin);
-        this.abilitiesInformationLabel = new Label("Abilities Information", skin, "subtitle");
+        this.abilitiesButton = new TextButton(LangKey.TalentMenuAbilitiesInformationLabel.getTranslation(language), skin);
+        this.abilitiesInformationLabel = new Label(LangKey.TalentMenuAbilitiesInformationLabel.getTranslation(language), skin, "subtitle");
         for (Ability ability : Ability.values()) {
             Image image = new Image(new TextureRegionDrawable(new TextureRegion(GameAssetManager.getInstance().getAbilityTexture().get(ability.toString()))));
             this.abilitiesImages.add(image);
@@ -121,8 +121,8 @@ public class TalentMenuView implements Screen {
             this.abilitiesDescription.add(label);
         }
 
-        this.backToTalentMenuButton = new TextButton("Back", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.backToTalentMenuButton = new TextButton(LangKey.Back.getTranslation(language), skin);
+        this.backButton = new TextButton(LangKey.Back.getTranslation(language), skin);
         this.table = new Table();
         Gdx.input.setCursorCatched(true);
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

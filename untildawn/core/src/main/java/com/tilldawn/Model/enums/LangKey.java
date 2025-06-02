@@ -407,6 +407,51 @@ public enum LangKey {
         put(Language.French, "Modifié");
     }}),
 
+    TalentMenuHeroesInformationLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Heroes Information");
+        put(Language.French, "Informations sur les héros");
+    }}),
+
+    TalentMenuKeysInformationLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Input Keys Information");
+        put(Language.French, "Informations sur les touches d'entrée");
+    }}),
+
+    TalentMenuCheatCodesInformationLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Cheat Codes Information");
+        put(Language.French, "Informations sur les codes de triche");
+    }}),
+
+    TalentMenuAbilitiesInformationLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Abilities Information");
+        put(Language.French, "Informations sur les capacités");
+    }}),
+
+    PreGameMenuHeroLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Hero");
+        put(Language.French, "Héros");
+    }}),
+
+    PreGameMenuWeaponLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Weapon");
+        put(Language.French, "Arme");
+    }}),
+
+    PreGameMenuTimeLabel(new HashMap<Language, String>() {{
+        put(Language.English, "Time");
+        put(Language.French, "Heure");
+    }}),
+
+    PreGameMenuStartButton(new HashMap<Language, String>() {{
+        put(Language.English, "Start Game");
+        put(Language.French, "Commencer le jeu");
+    }}),
+
+    PreGameMenuLoading(new HashMap<Language, String>() {{
+        put(Language.English, "Loading");
+        put(Language.French, "Chargement");
+    }}),
+
 
     ;
 

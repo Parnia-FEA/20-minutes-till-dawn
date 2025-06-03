@@ -7,7 +7,6 @@ import com.tilldawn.Model.enums.MonsterType;
 public class Monster {
     private final MonsterType type;
     private Integer HP;
-    private final Texture texture;
     private final Sprite sprite;
     private float animationTime = 0f;
     private float shotTime = 0f;
@@ -16,8 +15,7 @@ public class Monster {
     public Monster(MonsterType type) {
         this.type = type;
         this.HP= type.getHP();
-        this.texture = type.getTexture();
-        sprite = new Sprite(this.texture);
+        sprite = new Sprite(type.getTexture());
     }
 
     public MonsterType getType() {

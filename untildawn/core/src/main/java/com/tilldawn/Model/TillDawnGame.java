@@ -15,19 +15,15 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class TillDawnGame {
-    private Hero hero;
-    private Weapon weapon;
+    private final Hero hero;
+    private final Weapon weapon;
     private final float time;
     private float gameTimer;
-    private Texture playerTexture;
-    private Sprite playerSprite;
+    private final Sprite playerSprite;
     private float playerPosX = (float) Gdx.graphics.getWidth() / 2;
     private float playerPosY = (float) Gdx.graphics.getHeight() / 2;
     private float playerHealth;
-    private float playerSpeed;
-    private boolean isPlayerIdle = true;
-    private boolean isPlayerRunning = false;
-    private boolean isPlayerWalking = false;
+    private final float playerSpeed;
     private float playerTime = 0f;
     private int maxHP;
     private int HP;
@@ -45,11 +41,9 @@ public class TillDawnGame {
     private int kill = 0;
     private final HashMap<Ability, Integer> abilities = new HashMap<>();
     private boolean isGamePaused = false;
-
     private float backgroundX = 0;
     private float backgroundY = 0;
     private final ArrayList<Bullet> bullets = new ArrayList<>();
-
     private final ArrayList<Monster> monsters = new ArrayList<>();
     private final ArrayList<Monster> explodedMonsters = new ArrayList<>();
     private final ArrayList<Drop> drops = new ArrayList<>();
@@ -58,10 +52,7 @@ public class TillDawnGame {
     private float eyebatSpawnTimer = 0f;
     private final float eyebatSpawnInterval = 10f;
     private final ArrayList<Bullet> eyebatBullets = new ArrayList<>();
-
     private final int healthToHP = 5;
-
-    private final Texture hitImpactTexture;
     private final Sprite hitImpactSprite;
     private float hitImpactTime = 0f;
     private boolean isHitImpactOn = false;
@@ -76,7 +67,7 @@ public class TillDawnGame {
         this.time = time * 60;
         this.gameTimer = time * 60;
         this.playerSpeed = hero.getSpeed();
-        this.playerTexture = GameAssetManager.getInstance().getIdleTexture().get(hero.toString()).get(0);
+        Texture playerTexture = GameAssetManager.getInstance().getIdleTexture().get(hero.toString()).get(0);
         this.playerSprite = new Sprite(playerTexture);
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
         playerSprite.setSize(playerTexture.getWidth() * 3, playerTexture.getHeight() * 3);
@@ -102,9 +93,7 @@ public class TillDawnGame {
                 monsters.add(monster);
             }
         }
-
-        this.hitImpactTexture = GameAssetManager.getInstance().getHitImpactTexture().get(0);
-        this.hitImpactSprite = new Sprite(this.hitImpactTexture);
+        this.hitImpactSprite = new Sprite(GameAssetManager.getInstance().getHitImpactTexture().get(0));
         this.hitImpactSprite.setScale(3);
     }
 
@@ -112,16 +101,8 @@ public class TillDawnGame {
         return hero;
     }
 
-    public void setHero(Hero hero) {
-        this.hero = hero;
-    }
-
     public Weapon getWeapon() {
         return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
     }
 
     public float getTime() {
@@ -140,36 +121,16 @@ public class TillDawnGame {
         return GameData.getInstance().getCurrentPlayer();
     }
 
-    public Texture getPlayerTexture() {
-        return playerTexture;
-    }
-
-    public void setPlayerTexture(Texture playerTexture) {
-        this.playerTexture = playerTexture;
-    }
-
     public Sprite getPlayerSprite() {
         return playerSprite;
-    }
-
-    public void setPlayerSprite(Sprite playerSprite) {
-        this.playerSprite = playerSprite;
     }
 
     public float getPlayerPosX() {
         return playerPosX;
     }
 
-    public void setPlayerPosX(float playerPosX) {
-        this.playerPosX = playerPosX;
-    }
-
     public float getPlayerPosY() {
         return playerPosY;
-    }
-
-    public void setPlayerPosY(float playerPosY) {
-        this.playerPosY = playerPosY;
     }
 
     public float getPlayerHealth() {
@@ -184,34 +145,6 @@ public class TillDawnGame {
     public float getPlayerSpeed() {
         if (isSpeedyAbilityOn) return playerSpeed * 2;
         return playerSpeed;
-    }
-
-    public void setPlayerSpeed(float playerSpeed) {
-        this.playerSpeed = playerSpeed;
-    }
-
-    public boolean isPlayerIdle() {
-        return isPlayerIdle;
-    }
-
-    public void setPlayerIdle(boolean playerIdle) {
-        isPlayerIdle = playerIdle;
-    }
-
-    public boolean isPlayerRunning() {
-        return isPlayerRunning;
-    }
-
-    public void setPlayerRunning(boolean playerRunning) {
-        isPlayerRunning = playerRunning;
-    }
-
-    public boolean isPlayerWalking() {
-        return isPlayerWalking;
-    }
-
-    public void setPlayerWalking(boolean playerWalking) {
-        isPlayerWalking = playerWalking;
     }
 
     public HashMap<InputKey, Integer> getKeys() {
@@ -438,10 +371,6 @@ public class TillDawnGame {
 
     public int getHealthToHP() {
         return healthToHP;
-    }
-
-    public Texture getHitImpactTexture() {
-        return hitImpactTexture;
     }
 
     public Sprite getHitImpactSprite() {

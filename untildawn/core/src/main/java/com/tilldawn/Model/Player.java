@@ -18,8 +18,8 @@ import java.util.Random;
 public class Player {
     private String username;
     private String password;
-    private LangKey securityQuestion;
-    private String answer;
+    private final LangKey securityQuestion;
+    private final String answer;
     private boolean isGuest = false;
     private int avatarIndex;
     private TillDawnGame game = null;
@@ -84,12 +84,6 @@ public class Player {
 
     public void setAvatarIndex(int avatarIndex) {
         this.avatarIndex = avatarIndex;
-    }
-
-    public void drawAvatar(float x, float y) {
-        Sprite sprite = new Sprite(GameAssetManager.getInstance().getAvatars().get(this.avatarIndex));
-        sprite.setPosition(x, y);
-        sprite.draw(Main.getBatch());
     }
 
     public TillDawnGame getGame() {

@@ -20,9 +20,7 @@ public class PlayerController {
     }
 
     public void update() {
-        if(game.isPlayerIdle()){
-            idleAnimation();
-        }
+        idleAnimation();
         Vector2 direction = new Vector2(0, 0);
         if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Up))) direction.y += 1;
         if (Gdx.input.isKeyPressed(game.getKeys().get(InputKey.Down))) direction.y -= 1;

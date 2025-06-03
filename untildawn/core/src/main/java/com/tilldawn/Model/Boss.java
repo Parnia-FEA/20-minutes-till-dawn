@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.tilldawn.Model.enums.MonsterType;
 
 public class Boss extends Monster{
-    private final Texture attackTexture;
     private final Sprite attackSprite;
     private float attackAnimationTime = 0f;
     private float DashTimer = 0f;
@@ -17,14 +16,9 @@ public class Boss extends Monster{
 
     public Boss(MonsterType type) {
         super(type);
-        attackTexture = GameAssetManager.getInstance().getBossAttackTexture().get(0);
-        attackSprite = new Sprite(attackTexture);
+        attackSprite = new Sprite(GameAssetManager.getInstance().getBossAttackTexture().get(0));
     }
 
-
-    public Texture getAttackTexture() {
-        return attackTexture;
-    }
 
     public Sprite getAttackSprite() {
         return attackSprite;

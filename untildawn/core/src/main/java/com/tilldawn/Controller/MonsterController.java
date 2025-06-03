@@ -333,6 +333,7 @@ public class MonsterController {
     private void monsterExploded(Monster monster) {
         if (GameData.getInstance().getCurrentPlayer().isSfx())
             GameAssetManager.getInstance().getExplosionSound().play();
+        if (monster.getType().equals(MonsterType.Boss)) game.setBossKilled(true);
         Monster explodedMonster = new Monster(MonsterType.Exploded);
         explodedMonster.getSprite().setPosition(monster.getSprite().getX(), monster.getSprite().getY());
         game.getExplodedMonsters().add(explodedMonster);
